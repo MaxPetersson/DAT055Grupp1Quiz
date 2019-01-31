@@ -26,6 +26,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import java.awt.ComponentOrientation;
+import java.awt.Dimension;
 
 public class main_view {
 
@@ -69,43 +70,73 @@ public class main_view {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setOpaque(false);
-		panel_1.setBackground(new Color(0, 0, 0, 0));
-		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
-		flowLayout.setAlignment(FlowLayout.LEFT);
-		panel.add(panel_1, BorderLayout.NORTH);
+		panel_1.setMinimumSize(new Dimension(100, 100));
+		panel.add(panel_1, BorderLayout.WEST);
+		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
+		JButton btnNewButton = new JButton("+ Ny Fr\u00E5ga");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton.setVerticalAlignment(SwingConstants.TOP);
 		panel_1.add(btnNewButton);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setOpaque(false);
 		panel.add(panel_2, BorderLayout.CENTER);
-		panel_2.setLayout(new GridLayout(4, 0, 0, 0));
-		
-		JPanel panel_5 = new JPanel();
-		panel_2.add(panel_5);
-		panel_5.setOpaque(false);
+		panel_2.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel_3 = new JPanel();
-		panel_2.add(panel_3);
+		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
+		flowLayout.setVgap(50);
 		panel_3.setOpaque(false);
+		panel_2.add(panel_3, BorderLayout.NORTH);
 		
-		JButton btnStartQuiz = new JButton("Start Quiz");
-		btnStartQuiz.setFont(new Font("Tahoma", Font.PLAIN, 28));
-		panel_3.add(btnStartQuiz);
+		JLabel lblMainView = new JLabel("Main View");
+		lblMainView.setFont(new Font("Tahoma", Font.PLAIN, 38));
+		panel_3.add(lblMainView);
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setOpaque(false);
-		panel_2.add(panel_4);
-		panel_4.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		panel_2.add(panel_4, BorderLayout.WEST);
 		
-		JLabel lblAntalFrgor = new JLabel("Antal fr\u00E5gor: ");
-		lblAntalFrgor.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_4.add(lblAntalFrgor);
+		JPanel panel_5 = new JPanel();
+		panel_5.setOpaque(false);
+		panel_2.add(panel_5, BorderLayout.SOUTH);
+		
+		JPanel panel_6 = new JPanel();
+		panel_6.setOpaque(false);
+		panel_2.add(panel_6, BorderLayout.EAST);
+		
+		JPanel panel_7 = new JPanel();
+		panel_7.setOpaque(false);
+		panel_2.add(panel_7, BorderLayout.CENTER);
+		panel_7.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		Box verticalBox = Box.createVerticalBox();
+		panel_7.add(verticalBox);
+		
+		JButton btnStartaQuiz = new JButton("Starta Quiz");
+		verticalBox.add(btnStartaQuiz);
+		btnStartaQuiz.setFont(new Font("Tahoma", Font.PLAIN, 28));
+		
+		Component verticalStrut = Box.createVerticalStrut(30);
+		verticalBox.add(verticalStrut);
+		
+		Box horizontalBox = Box.createHorizontalBox();
+		horizontalBox.setAlignmentX(Component.LEFT_ALIGNMENT);
+		verticalBox.add(horizontalBox);
+		
+		JLabel lblAntalFrgor = new JLabel("Antal Fr\u00E5gor: ");
+		lblAntalFrgor.setHorizontalAlignment(SwingConstants.RIGHT);
+		horizontalBox.add(lblAntalFrgor);
+		lblAntalFrgor.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		textField = new JTextField();
-		panel_4.add(textField);
+		textField.setHorizontalAlignment(SwingConstants.RIGHT);
+		textField.setMaximumSize(new Dimension(30, 50));
+		horizontalBox.add(textField);
 		textField.setColumns(3);
 		frame.setAlwaysOnTop(true);
 		frame.setBackground(Color.DARK_GRAY);
