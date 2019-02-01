@@ -2,3 +2,4 @@
 Quiz-app projektarbete
 
 wohoo
+nej
