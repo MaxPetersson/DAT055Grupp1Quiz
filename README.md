@@ -1,5 +1,4 @@
 # DAT055Grupp1Quiz
 Quiz-app projektarbete
 
-wohoo
-nej
+m
