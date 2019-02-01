@@ -1,9 +1,13 @@
+import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
+import java.io.Serializable;
+import java.util.ArrayList;
 
-public class Question {
+public class Question implements Serializable {
     private String category;
     private String questionText;
-    private String[] answers;
+    private ArrayList<String> answers;
     private LocalDateTime created;
 
 
@@ -11,12 +15,12 @@ public class Question {
     public Question(){
         this.category = "";
         this.questionText = "";
-        this.answers = new String[0];
+        this.answers.add("");
         this.created = LocalDateTime.now();
     }
 
     //Constructor for category, text and answers
-    public Question(String category, String questionText, String[] answers){
+    public Question(String category, String questionText, ArrayList<String> answers){
         this.category = category;
         this.questionText = questionText;
         this.answers = answers;
@@ -32,7 +36,7 @@ public class Question {
         return this.questionText;
     }
 
-    public String[] getAnswers(){
+    public ArrayList<String> getAnswers(){
         return this.answers;
     }
 
@@ -49,7 +53,7 @@ public class Question {
         this.questionText = questionText;
     }
 
-    public void setAnswers(String[] answers){
+    public void setAnswers(ArrayList<String> answers){
         this.answers = answers;
     }
 
