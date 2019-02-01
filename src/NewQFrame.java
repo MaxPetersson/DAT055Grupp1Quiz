@@ -6,8 +6,10 @@ public class NewQFrame extends JFrame  {
 	
 	private JButton submit;
 	private JFrame questionSubmitted;
+	private JLabel categorylabel;
 	private JLabel questionlabel;
 	private JLabel answerlabel;
+	private JTextField entercategory;
 	private JTextField enterquestion;
 	private JTextField enteranswer;
 
@@ -16,6 +18,11 @@ public class NewQFrame extends JFrame  {
 	//Constructor
 	public NewQFrame(String title) {
 		super(title);
+		
+		categorylabel = new JLabel();
+		categorylabel.setText("Category:");
+		categorylabel.setBounds(10, 10, 100, 100);
+		
 		questionlabel = new JLabel();
 		questionlabel.setText("Question:");
 		questionlabel.setBounds(10, 10, 100, 100);
@@ -23,6 +30,9 @@ public class NewQFrame extends JFrame  {
 		answerlabel = new JLabel();
 		answerlabel.setText("Answer:");
 		answerlabel.setBounds(10, 10, 100, 100);
+		
+		entercategory = new JTextField("Enter category here");
+		entercategory.setBounds(110, 50, 130, 30);
 		
 		enterquestion = new JTextField("Enter question here");
 		enterquestion.setBounds(110, 50, 130, 30);
@@ -43,6 +53,8 @@ public class NewQFrame extends JFrame  {
 		
 		this.setSize(400,400);
 		this.setLayout(new GridLayout(4,2,5,5));
+		this.add(categorylabel);
+		this.add(entercategory);
 		this.add(questionlabel);
 		this.add(enterquestion);
 		this.add(answerlabel);

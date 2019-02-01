@@ -82,6 +82,8 @@ public class main_view {
 		JButton btnNewButton = new JButton("+ Ny Fr\u00E5ga");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				NewQFrame newQuestion = new NewQFrame("Create new question");
+				newQuestion.setVisible(true);
 			}
 		});
 		btnNewButton.setVerticalAlignment(SwingConstants.TOP);
