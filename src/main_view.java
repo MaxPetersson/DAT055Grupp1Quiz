@@ -36,7 +36,7 @@ import com.jgoodies.forms.factories.FormFactory;
 public class main_view {
 
 	private JFrame frame;
-	private JTextField textField;
+	private JTextField qAmount;
 	private JTextField answerField;
 	private JPanel card_pane = new JPanel();
 	private JTextArea qtextarea = new JTextArea();
@@ -45,6 +45,7 @@ public class main_view {
 	private String[] qtextarray = {"En båt kör med en hastighet av fyra knop mot en brygga. En meter från bryggan saktar båten ner till tre knop. Har långt tid tar det att laga bryggan?","What is the air-speed velocity of an unladen swallow?","How much wood could a woodchuck chuck if a woodchuck could chuck wood? "};
 	private String[] answerArr = {"1","2","3"};
 	JLabel answerFeedbackLabel = new JLabel(" ");
+	private int qtot;
 	private int qnumber;
 
 	/**
@@ -160,11 +161,11 @@ public class main_view {
 		horizontalBox.add(lblAntalFrgor);
 		lblAntalFrgor.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
-		textField = new JTextField();
-		textField.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField.setMaximumSize(new Dimension(30, 50));
-		horizontalBox.add(textField);
-		textField.setColumns(3);
+		qAmount = new JTextField();
+		qAmount.setHorizontalAlignment(SwingConstants.RIGHT);
+		qAmount.setMaximumSize(new Dimension(30, 50));
+		horizontalBox.add(qAmount);
+		qAmount.setColumns(3);
 		
 		JPanel question_pane = new JPanel();
 		question_pane.setOpaque(false);
@@ -302,8 +303,11 @@ public class main_view {
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.RELATED_GAP_ROWSPEC,
 				RowSpec.decode("default:grow"),}));
+		
+		
 		qtextarea.setFont(new Font("Calibri", Font.PLAIN, 18));
 		qtextarea.setLineWrap(true);
+		qtextarea.setWrapStyleWord(true);
 		
 		
 		qtextarea.setMargin(new Insets(2, 2, 20, 2));
@@ -333,9 +337,18 @@ public class main_view {
 		
 	private void requestQuestion() {
 		
+		String []tempquestions = new String[qtot];
+		
+		for(int i=0; i<qtot; i++) {
+			
+			tempquestions[i] = qtextarray[i];
+			
+		}
+		
+		
 		try{
 			
-			openQuestion(qtextarray[qnumber-1], qtextarray.length);
+			openQuestion(tempquestions[qnumber-1]);
 
 		} catch (ArrayIndexOutOfBoundsException   e)
 		{
@@ -348,7 +361,7 @@ public class main_view {
 	}
 	
 	
-	private void openQuestion(String qtext, int qtot) {
+	private void openQuestion(String qtext) {
 		
 		qtextarea.setText(qtext);
 		qnolabel.setText(Integer.toString(qnumber));
@@ -364,8 +377,10 @@ public class main_view {
 	private void startQuiz() {
 	
 		qnumber=1;
+		qtot=Integer.parseInt(qAmount.getText());
 		
 		requestQuestion();
+		
 				
 		CardLayout cardLayout = (CardLayout) card_pane.getLayout();
         cardLayout.next(card_pane);
