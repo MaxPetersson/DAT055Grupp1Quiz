@@ -377,11 +377,20 @@ public class main_view {
 	private void startQuiz() {
 	
 		qnumber=1;
-		qtot=Integer.parseInt(qAmount.getText());
+		
+		if(qAmount.getText().equals("")) {
+			
+			qtot=0;
+			
+		}
+		else {
+			
+			qtot=Integer.parseInt(qAmount.getText());
+		
+		}
 		
 		requestQuestion();
-		
-				
+						
 		CardLayout cardLayout = (CardLayout) card_pane.getLayout();
         cardLayout.next(card_pane);
 		
