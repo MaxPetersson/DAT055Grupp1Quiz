@@ -1,37 +1,28 @@
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import java.awt.GridBagLayout;
 import java.awt.BorderLayout;
-import javax.swing.JTextField;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.Box;
-import javax.swing.JInternalFrame;
-import java.awt.FlowLayout;
-import javax.swing.JPanel;
-import javax.swing.JToolBar;
-import javax.swing.SwingConstants;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-import java.awt.event.ActionEvent;
-import java.awt.Panel;
-import java.awt.Font;
-import java.awt.Component;
-import java.awt.GridLayout;
-import javax.swing.JLabel;
-import java.awt.Color;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import java.awt.ComponentOrientation;
-import java.awt.Dimension;
 import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
 import com.jgoodies.forms.factories.FormFactory;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.RowSpec;
 
 public class main_view {
 
@@ -44,6 +35,7 @@ public class main_view {
 	private JLabel qtotlabel = new JLabel("X");
 	private String[] qtextarray = {"En båt kör med en hastighet av fyra knop mot en brygga. En meter från bryggan saktar båten ner till tre knop. Har långt tid tar det att laga bryggan?","What is the air-speed velocity of an unladen swallow?","How much wood could a woodchuck chuck if a woodchuck could chuck wood? "};
 	private String[] answerArr = {"1","2","3"};
+	private JLabel amountErrorLabel = new JLabel(" ");
 	JLabel answerFeedbackLabel = new JLabel(" ");
 	private int qtot;
 	private int qnumber;
@@ -166,6 +158,10 @@ public class main_view {
 		qAmount.setMaximumSize(new Dimension(30, 50));
 		horizontalBox.add(qAmount);
 		qAmount.setColumns(3);
+		
+		
+		amountErrorLabel.setForeground(Color.RED);
+		verticalBox.add(amountErrorLabel);
 		
 		JPanel question_pane = new JPanel();
 		question_pane.setOpaque(false);
@@ -378,21 +374,23 @@ public class main_view {
 	
 		qnumber=1;
 		
-		if(qAmount.getText().equals("")) {
+		if(qAmount.getText().equals("") || Integer.parseInt(qAmount.getText()) < 1 || Integer.parseInt(qAmount.getText()) > qtextarray.length) {
 			
-			qtot=0;
-			
+			amountErrorLabel.setText("Felaktigt antal");			
 		}
 		else {
 			
 			qtot=Integer.parseInt(qAmount.getText());
-		
+			amountErrorLabel.setText(" ");
+			
+			requestQuestion();
+			
+			CardLayout cardLayout = (CardLayout) card_pane.getLayout();
+	        cardLayout.next(card_pane);
+	        
 		}
 		
-		requestQuestion();
-						
-		CardLayout cardLayout = (CardLayout) card_pane.getLayout();
-        cardLayout.next(card_pane);
+		
 		
 	}
 	
