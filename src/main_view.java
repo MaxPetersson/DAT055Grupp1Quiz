@@ -1,41 +1,44 @@
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import java.awt.GridBagLayout;
 import java.awt.BorderLayout;
-import javax.swing.JTextField;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.Box;
-import javax.swing.JInternalFrame;
-import java.awt.FlowLayout;
-import javax.swing.JPanel;
-import javax.swing.JToolBar;
-import javax.swing.SwingConstants;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Panel;
-import java.awt.Font;
-import java.awt.Component;
-import java.awt.GridLayout;
-import javax.swing.JLabel;
-import java.awt.Color;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import java.awt.ComponentOrientation;
-import java.awt.Dimension;
 import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
 import com.jgoodies.forms.factories.FormFactory;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.RowSpec;
 
 public class main_view {
 
 	private JFrame frame;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField qAmount;
+	private JTextField answerField;
+	private JPanel card_pane = new JPanel();
+	private JTextArea qtextarea = new JTextArea();
+	private JLabel qnolabel = new JLabel("X");
+	private JLabel qtotlabel = new JLabel("X");
+	private String[] qtextarray = {"En b�t k�r med en hastighet av fyra knop mot en brygga. En meter fr�n bryggan saktar b�ten ner till tre knop. Har l�ngt tid tar det att laga bryggan?","What is the air-speed velocity of an unladen swallow?","How much wood could a woodchuck chuck if a woodchuck could chuck wood? "};
+	private String[] answerArr = {"1","2","3"};
+	private JLabel amountErrorLabel = new JLabel(" ");
+	JLabel answerFeedbackLabel = new JLabel(" ");
+	private int qtot;
+	private int qnumber;
 
 	/**
 	 * Launch the application.
@@ -58,6 +61,7 @@ public class main_view {
 	 */
 	public main_view() {
 		initialize();
+	
 	}
 
 	/**
@@ -82,14 +86,12 @@ public class main_view {
 		JButton btnNewButton = new JButton("+ Ny Fr\u00E5ga");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				NewQFrame newQuestion = new NewQFrame("Create new question");
-				newQuestion.setVisible(true);
 			}
 		});
 		btnNewButton.setVerticalAlignment(SwingConstants.TOP);
 		panel_1.add(btnNewButton);
 		
-		JPanel card_pane = new JPanel();
+		
 		card_pane.setOpaque(false);
 		panel.add(card_pane, BorderLayout.CENTER);
 		card_pane.setLayout(new CardLayout(0, 0));
@@ -133,9 +135,7 @@ public class main_view {
 		btnStartaQuiz.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				CardLayout cardLayout = (CardLayout) card_pane.getLayout();
-	            cardLayout.next(card_pane);
-		
+				startQuiz();						
 			}
 		});
 		verticalBox.add(btnStartaQuiz);
@@ -153,11 +153,15 @@ public class main_view {
 		horizontalBox.add(lblAntalFrgor);
 		lblAntalFrgor.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
-		textField = new JTextField();
-		textField.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField.setMaximumSize(new Dimension(30, 50));
-		horizontalBox.add(textField);
-		textField.setColumns(3);
+		qAmount = new JTextField();
+		qAmount.setHorizontalAlignment(SwingConstants.RIGHT);
+		qAmount.setMaximumSize(new Dimension(30, 50));
+		horizontalBox.add(qAmount);
+		qAmount.setColumns(3);
+		
+		
+		amountErrorLabel.setForeground(Color.RED);
+		verticalBox.add(amountErrorLabel);
 		
 		JPanel question_pane = new JPanel();
 		question_pane.setOpaque(false);
@@ -175,12 +179,24 @@ public class main_view {
 		panel_2.setOpaque(false);
 		panel_2.setPreferredSize(new Dimension(100, 100));
 		question_pane.add(panel_2, "1, 1, 3, 1, fill, top");
-		panel_2.setLayout(new GridLayout(0, 1, 0, 0));
+		panel_2.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JLabel lblFrga = new JLabel("Fr\u00E5ga");
 		lblFrga.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		lblFrga.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_2.add(lblFrga);
+		
+		
+		qnolabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		panel_2.add(qnolabel);
+		
+		JLabel lblAv = new JLabel("av");
+		lblAv.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		panel_2.add(lblAv);
+		
+		
+		qtotlabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		panel_2.add(qtotlabel);
 		
 		JPanel panel_8 = new JPanel();
 		panel_8.setMinimumSize(new Dimension(1000, 10));
@@ -201,7 +217,7 @@ public class main_view {
 		JButton returnbutton = new JButton("<- \u00C5terg\u00E5");
 		returnbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				CardLayout cardLayout = (CardLayout) card_pane.getLayout();
 	            cardLayout.next(card_pane);
 				
@@ -216,11 +232,47 @@ public class main_view {
 		JPanel panel_10 = new JPanel();
 		panel_10.setOpaque(false);
 		question_pane.add(panel_10, "3, 2, left, fill");
+		panel_10.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panel_13 = new JPanel();
+		panel_13.setOpaque(false);
+		panel_10.add(panel_13, BorderLayout.SOUTH);
+		
+		JButton submitbutton = new JButton("Submit");
+		submitbutton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				checkAnswer();
+				
+				new java.util.Timer().schedule( 
+				        new java.util.TimerTask() {
+				            @Override
+				            public void run() {
+				            	requestQuestion();
+				            }
+				        }, 
+				        2000 
+				);
+				
+				
+				
+			}
+		});
+		panel_13.add(submitbutton);
+		
+		JPanel panel_14 = new JPanel();
+		panel_14.setOpaque(false);
+		panel_10.add(panel_14, BorderLayout.NORTH);
+		panel_14.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		Component horizontalStrut_1 = Box.createHorizontalStrut(150);
+		panel_14.add(horizontalStrut_1);
 		horizontalStrut_1.setMinimumSize(new Dimension(1000, 0));
 		horizontalStrut_1.setMaximumSize(new Dimension(4000, 32767));
-		panel_10.add(horizontalStrut_1);
+		
+
+		answerFeedbackLabel.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		panel_14.add(answerFeedbackLabel);
 		
 		JPanel panel_11 = new JPanel();
 		panel_11.setOpaque(false);
@@ -229,7 +281,7 @@ public class main_view {
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 				ColumnSpec.decode("40px"),
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("374px"),
+				ColumnSpec.decode("374px:grow"),
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 				ColumnSpec.decode("1px"),
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
@@ -244,16 +296,20 @@ public class main_view {
 				FormFactory.LINE_GAP_ROWSPEC,
 				RowSpec.decode("1px"),
 				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,}));
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("default:grow"),}));
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setMargin(new Insets(2, 2, 20, 2));
-		textArea.setRows(10);
-		textArea.setColumns(50);
-		panel_11.add(textArea, "2, 2, 3, 1, right, top");
 		
-		JLabel label = new JLabel("");
-		panel_11.add(label, "6, 2, left, center");
+		qtextarea.setFont(new Font("Calibri", Font.PLAIN, 18));
+		qtextarea.setLineWrap(true);
+		qtextarea.setWrapStyleWord(true);
+		
+		
+		qtextarea.setMargin(new Insets(2, 2, 20, 2));
+		qtextarea.setRows(10);
+		qtextarea.setColumns(50);
+		panel_11.add(qtextarea, "4, 2, right, top");
 		
 		Component verticalStrut_1 = Box.createVerticalStrut(20);
 		panel_11.add(verticalStrut_1, "4, 4, fill, center");
@@ -263,23 +319,96 @@ public class main_view {
 		lblSvar.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblSvar.setHorizontalAlignment(SwingConstants.LEFT);
 		
-		textField_1 = new JTextField();
-		panel_11.add(textField_1, "4, 6");
-		textField_1.setMaximumSize(new Dimension(2147483647, 30));
-		textField_1.setColumns(10);
-		
-		JLabel label_1 = new JLabel("");
-		panel_11.add(label_1, "4, 8, center, top");
-		
-		Box verticalBox_1 = Box.createVerticalBox();
-		verticalBox_1.setPreferredSize(new Dimension(400, 100));
-		verticalBox_1.setAlignmentY(Component.TOP_ALIGNMENT);
-		panel_11.add(verticalBox_1, "4, 10, left, top");
+		answerField = new JTextField();
+		panel_11.add(answerField, "4, 6");
+		answerField.setMaximumSize(new Dimension(2147483647, 30));
+		answerField.setColumns(10);
 		frame.setAlwaysOnTop(false);
 		frame.setBackground(Color.DARK_GRAY);
 		frame.setForeground(Color.DARK_GRAY);
 		frame.setBounds(100, 100, 896, 544);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
+	
+		
+	private void requestQuestion() {
+		
+		String []tempquestions = new String[qtot];
+		
+		for(int i=0; i<qtot; i++) {
+			
+			tempquestions[i] = qtextarray[i];
+			
+		}
+		
+		
+		try{
+			
+			openQuestion(tempquestions[qnumber-1]);
+
+		} catch (ArrayIndexOutOfBoundsException   e)
+		{
+			CardLayout cardLayout = (CardLayout) card_pane.getLayout();
+	        cardLayout.next(card_pane);
+	        
+		}finally {}
+			
+		
+	}
+	
+	
+	private void openQuestion(String qtext) {
+		
+		qtextarea.setText(qtext);
+		qnolabel.setText(Integer.toString(qnumber));
+		qtotlabel.setText(Integer.toString(qtot));
+		answerField.setText("");
+		answerFeedbackLabel.setText(" ");
+
+		qnumber++;
+		
+		
+	}
+	
+	private void startQuiz() {
+	
+		qnumber=1;
+		
+		if(qAmount.getText().equals("") || Integer.parseInt(qAmount.getText()) < 1 || Integer.parseInt(qAmount.getText()) > qtextarray.length) {
+			
+			amountErrorLabel.setText("Felaktigt antal");			
+		}
+		else {
+			
+			qtot=Integer.parseInt(qAmount.getText());
+			amountErrorLabel.setText(" ");
+			
+			requestQuestion();
+			
+			CardLayout cardLayout = (CardLayout) card_pane.getLayout();
+	        cardLayout.next(card_pane);
+	        
+		}
+		
+		
+		
+	}
+	
+	private void checkAnswer() {
+		
+		if(answerArr[qnumber-2].equals(answerField.getText())) {
+		
+			answerFeedbackLabel.setText("R�tt!");
+		
+		}
+		else {
+			
+			answerFeedbackLabel.setText("Fel!");
+			
+		}
+		
+		
+	}
+	
 
 }
