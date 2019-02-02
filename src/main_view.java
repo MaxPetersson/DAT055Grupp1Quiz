@@ -33,7 +33,7 @@ public class main_view {
 	private JTextArea qtextarea = new JTextArea();
 	private JLabel qnolabel = new JLabel("X");
 	private JLabel qtotlabel = new JLabel("X");
-	private String[] qtextarray = {"En b�t k�r med en hastighet av fyra knop mot en brygga. En meter fr�n bryggan saktar b�ten ner till tre knop. Har l�ngt tid tar det att laga bryggan?","What is the air-speed velocity of an unladen swallow?","How much wood could a woodchuck chuck if a woodchuck could chuck wood? "};
+	private String[] qtextarray = {"En båt kör med en hastighet av fyra knop mot en brygga. En meter från bryggan saktar båten ner till tre knop. Har långt tid tar det att laga bryggan?","What is the air-speed velocity of an unladen swallow?","How much wood could a woodchuck chuck if a woodchuck could chuck wood? "};
 	private String[] answerArr = {"1","2","3"};
 	private JLabel amountErrorLabel = new JLabel(" ");
 	JLabel answerFeedbackLabel = new JLabel(" ");
