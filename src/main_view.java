@@ -24,6 +24,7 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
+
 public class main_view {
 
 	private JFrame frame;
@@ -35,14 +36,14 @@ public class main_view {
 	private JLabel qtotlabel = new JLabel("X");
 	private String[] qtextarray = {"En båt kör med en hastighet av fyra knop mot en brygga. En meter från bryggan saktar båten ner till tre knop. Har långt tid tar det att laga bryggan?","What is the air-speed velocity of an unladen swallow?","How much wood could a woodchuck chuck if a woodchuck could chuck wood? "};
 	private String[] answerArr = {"1","2","3"};
+	private String[] catArr = {"Gåtor","Monty Python","Trivia"};
 	private JLabel amountErrorLabel = new JLabel(" ");
-	JLabel answerFeedbackLabel = new JLabel(" ");
+	private JLabel catLabel = new JLabel("Kategori");
+	private JLabel answerFeedbackLabel = new JLabel(" ");
 	private int qtot;
 	private int qnumber;
 
-	/**
-	 * Launch the application.
-	 */
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -56,17 +57,13 @@ public class main_view {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
+	
 	public main_view() {
 		initialize();
 	
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
+	
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setForeground(Color.WHITE);
@@ -179,24 +176,50 @@ public class main_view {
 		panel_2.setOpaque(false);
 		panel_2.setPreferredSize(new Dimension(100, 100));
 		question_pane.add(panel_2, "1, 1, 3, 1, fill, top");
-		panel_2.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		panel_2.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblFrga = new JLabel("Fr\u00E5ga");
-		lblFrga.setFont(new Font("Tahoma", Font.PLAIN, 40));
-		lblFrga.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_2.add(lblFrga);
+		JPanel panel_15 = new JPanel();
+		panel_15.setOpaque(false);
+		panel_2.add(panel_15, BorderLayout.NORTH);
+		
+
+		catLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		panel_15.add(catLabel);
+		catLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		JPanel panel_16 = new JPanel();
+		panel_16.setOpaque(false);
+		panel_2.add(panel_16, BorderLayout.SOUTH);
+		
+		Box horizontalBox_1 = Box.createHorizontalBox();
+		panel_16.add(horizontalBox_1);
+		
+		JLabel lblFrga = new JLabel("Fr\u00E5ga ");
+		horizontalBox_1.add(lblFrga);
+		lblFrga.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblFrga.setVerticalTextPosition(SwingConstants.BOTTOM);
+		lblFrga.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		lblFrga.setHorizontalAlignment(SwingConstants.RIGHT);
+		horizontalBox_1.add(qnolabel);
+		qnolabel.setVerticalAlignment(SwingConstants.BOTTOM);
+		qnolabel.setVerticalTextPosition(SwingConstants.BOTTOM);
+		qnolabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		
-		qnolabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
-		panel_2.add(qnolabel);
+		qnolabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		
-		JLabel lblAv = new JLabel("av");
-		lblAv.setFont(new Font("Tahoma", Font.PLAIN, 40));
-		panel_2.add(lblAv);
+		JLabel lblAv = new JLabel(" av ");
+		horizontalBox_1.add(lblAv);
+		lblAv.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblAv.setVerticalTextPosition(SwingConstants.BOTTOM);
+		lblAv.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblAv.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		horizontalBox_1.add(qtotlabel);
+		qtotlabel.setVerticalTextPosition(SwingConstants.BOTTOM);
+		qtotlabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		
 		
-		qtotlabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
-		panel_2.add(qtotlabel);
+		qtotlabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		
 		JPanel panel_8 = new JPanel();
 		panel_8.setMinimumSize(new Dimension(1000, 10));
@@ -219,7 +242,7 @@ public class main_view {
 			public void actionPerformed(ActionEvent e) {
 
 				CardLayout cardLayout = (CardLayout) card_pane.getLayout();
-	            cardLayout.next(card_pane);
+	            cardLayout.first(card_pane);
 				
 			}
 		});
@@ -344,12 +367,12 @@ public class main_view {
 		
 		try{
 			
-			openQuestion(tempquestions[qnumber-1]);
+			openQuestion(tempquestions[qnumber-1], catArr[qnumber-1] );
 
 		} catch (ArrayIndexOutOfBoundsException   e)
 		{
 			CardLayout cardLayout = (CardLayout) card_pane.getLayout();
-	        cardLayout.next(card_pane);
+	        cardLayout.first(card_pane);
 	        
 		}finally {}
 			
@@ -357,10 +380,11 @@ public class main_view {
 	}
 	
 	
-	private void openQuestion(String qtext) {
+	private void openQuestion(String qtext, String category) {
 		
 		qtextarea.setText(qtext);
 		qnolabel.setText(Integer.toString(qnumber));
+		catLabel.setText(category);
 		qtotlabel.setText(Integer.toString(qtot));
 		answerField.setText("");
 		answerFeedbackLabel.setText(" ");
@@ -386,7 +410,7 @@ public class main_view {
 			requestQuestion();
 			
 			CardLayout cardLayout = (CardLayout) card_pane.getLayout();
-	        cardLayout.next(card_pane);
+	        cardLayout.last(card_pane);
 	        
 		}
 		
