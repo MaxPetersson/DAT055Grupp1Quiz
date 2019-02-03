@@ -34,6 +34,7 @@ public class main_view {
 	private JTextArea qtextarea = new JTextArea();
 	private JLabel qnolabel = new JLabel("X");
 	private JLabel qtotlabel = new JLabel("X");
+
 	private String[] qtextarray = {"En båt kör med en hastighet av fyra knop mot en brygga. En meter från bryggan saktar båten ner till tre knop. Har långt tid tar det att laga bryggan?","What is the air-speed velocity of an unladen swallow?","How much wood could a woodchuck chuck if a woodchuck could chuck wood? "};
 	private String[] answerArr = {"1","2","3"};
 	private String[] catArr = {"Gåtor","Monty Python","Trivia"};
@@ -42,6 +43,7 @@ public class main_view {
 	private JLabel answerFeedbackLabel = new JLabel(" ");
 	private int qtot;
 	private int qnumber;
+
 
 
 	public static void main(String[] args) {
@@ -176,6 +178,7 @@ public class main_view {
 		panel_2.setOpaque(false);
 		panel_2.setPreferredSize(new Dimension(100, 100));
 		question_pane.add(panel_2, "1, 1, 3, 1, fill, top");
+
 		panel_2.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel_15 = new JPanel();
@@ -204,6 +207,7 @@ public class main_view {
 		qnolabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		qnolabel.setVerticalTextPosition(SwingConstants.BOTTOM);
 		qnolabel.setHorizontalAlignment(SwingConstants.RIGHT);
+
 		
 		
 		qnolabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
@@ -220,6 +224,18 @@ public class main_view {
 		
 		
 		qtotlabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		
+		
+		qnolabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		panel_2.add(qnolabel);
+		
+		JLabel lblAv = new JLabel("av");
+		lblAv.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		panel_2.add(lblAv);
+		
+		
+		qtotlabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		panel_2.add(qtotlabel);
 		
 		JPanel panel_8 = new JPanel();
 		panel_8.setMinimumSize(new Dimension(1000, 10));
@@ -322,13 +338,14 @@ public class main_view {
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.RELATED_GAP_ROWSPEC,
 				RowSpec.decode("default:grow"),}));
-		
+
 		
 		qtextarea.setFont(new Font("Calibri", Font.PLAIN, 18));
 		qtextarea.setLineWrap(true);
 		qtextarea.setWrapStyleWord(true);
 		
 		
+
 		qtextarea.setMargin(new Insets(2, 2, 20, 2));
 		qtextarea.setRows(10);
 		qtextarea.setColumns(50);
@@ -366,25 +383,29 @@ public class main_view {
 		
 		
 		try{
-			
+
 			openQuestion(tempquestions[qnumber-1], catArr[qnumber-1] );
+
 
 		} catch (ArrayIndexOutOfBoundsException   e)
 		{
 			CardLayout cardLayout = (CardLayout) card_pane.getLayout();
+
 	        cardLayout.first(card_pane);
-	        
+
 		}finally {}
 			
 		
 	}
 	
 	
+
 	private void openQuestion(String qtext, String category) {
 		
 		qtextarea.setText(qtext);
 		qnolabel.setText(Integer.toString(qnumber));
 		catLabel.setText(category);
+
 		qtotlabel.setText(Integer.toString(qtot));
 		answerField.setText("");
 		answerFeedbackLabel.setText(" ");
@@ -410,8 +431,10 @@ public class main_view {
 			requestQuestion();
 			
 			CardLayout cardLayout = (CardLayout) card_pane.getLayout();
+
 	        cardLayout.last(card_pane);
-	        
+
+
 		}
 		
 		
@@ -422,7 +445,9 @@ public class main_view {
 		
 		if(answerArr[qnumber-2].equals(answerField.getText())) {
 		
+
 			answerFeedbackLabel.setText("Rätt!");
+
 		
 		}
 		else {
