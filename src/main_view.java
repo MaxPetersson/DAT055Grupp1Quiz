@@ -24,7 +24,6 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
-
 public class main_view {
 
 	private JFrame frame;
@@ -209,7 +208,6 @@ public class main_view {
 		qnolabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		
-		
 		qnolabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		
 		JLabel lblAv = new JLabel(" av ");
@@ -225,18 +223,7 @@ public class main_view {
 		
 		qtotlabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		
-		
-		qnolabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
-		panel_2.add(qnolabel);
-		
-		JLabel lblAv = new JLabel("av");
-		lblAv.setFont(new Font("Tahoma", Font.PLAIN, 40));
-		panel_2.add(lblAv);
-		
-		
-		qtotlabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
-		panel_2.add(qtotlabel);
-		
+
 		JPanel panel_8 = new JPanel();
 		panel_8.setMinimumSize(new Dimension(1000, 10));
 		panel_8.setOpaque(false);
@@ -339,12 +326,10 @@ public class main_view {
 				FormFactory.RELATED_GAP_ROWSPEC,
 				RowSpec.decode("default:grow"),}));
 
-		
 		qtextarea.setFont(new Font("Calibri", Font.PLAIN, 18));
 		qtextarea.setLineWrap(true);
 		qtextarea.setWrapStyleWord(true);
-		
-		
+
 
 		qtextarea.setMargin(new Insets(2, 2, 20, 2));
 		qtextarea.setRows(10);
