@@ -34,9 +34,9 @@ public class main_view {
 	private JLabel qnolabel = new JLabel("X");
 	private JLabel qtotlabel = new JLabel("X");
 
-	private String[] qtextarray = {"En bï¿½t kï¿½r med en hastighet av fyra knop mot en brygga. En meter frï¿½n bryggan saktar bï¿½ten ner till tre knop. Har lï¿½ngt tid tar det att laga bryggan?","What is the air-speed velocity of an unladen swallow?","How much wood could a woodchuck chuck if a woodchuck could chuck wood? "};
+	private String[] qtextarray = {"En båt kör med en hastighet av fyra knop mot en brygga. En meter från bryggan saktar båten ner till tre knop. Har långt tid tar det att laga bryggan?","What is the air-speed velocity of an unladen swallow?","How much wood could a woodchuck chuck if a woodchuck could chuck wood? "};
 	private String[] answerArr = {"1","2","3"};
-	private String[] catArr = {"Gï¿½tor","Monty Python","Trivia"};
+	private String[] catArr = {"Gåtor","Monty Python","Trivia"};
 	private JLabel amountErrorLabel = new JLabel(" ");
 	private JLabel catLabel = new JLabel("Kategori");
 	private JLabel answerFeedbackLabel = new JLabel(" ");
@@ -81,7 +81,7 @@ public class main_view {
 		panel.add(panel_1, BorderLayout.WEST);
 		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton btnNewButton = new JButton("+ Ny Frï¿½ga");
+		JButton btnNewButton = new JButton("+ Ny Fråga");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				NewQFrame newQuestion = new NewQFrame("Create new question");
@@ -148,7 +148,7 @@ public class main_view {
 		horizontalBox.setAlignmentX(Component.LEFT_ALIGNMENT);
 		verticalBox.add(horizontalBox);
 		
-		JLabel lblAntalFrgor = new JLabel("Antal Frï¿½gor: ");
+		JLabel lblAntalFrgor = new JLabel("Antal Frågor: ");
 		lblAntalFrgor.setHorizontalAlignment(SwingConstants.RIGHT);
 		horizontalBox.add(lblAntalFrgor);
 		lblAntalFrgor.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -198,7 +198,7 @@ public class main_view {
 		Box horizontalBox_1 = Box.createHorizontalBox();
 		panel_16.add(horizontalBox_1);
 		
-		JLabel lblFrga = new JLabel("Frï¿½ga ");
+		JLabel lblFrga = new JLabel("Fråga ");
 		horizontalBox_1.add(lblFrga);
 		lblFrga.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblFrga.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -242,7 +242,7 @@ public class main_view {
 		panel_8.add(panel_12, BorderLayout.SOUTH);
 		panel_12.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton returnbutton = new JButton("<- ï¿½tergï¿½");
+		JButton returnbutton = new JButton("<- återgå");
 		returnbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -433,7 +433,7 @@ public class main_view {
 		if(answerArr[qnumber-2].equals(answerField.getText())) {
 		
 
-			answerFeedbackLabel.setText("Rï¿½tt!");
+			answerFeedbackLabel.setText("Rätt!");
 
 		
 		}
