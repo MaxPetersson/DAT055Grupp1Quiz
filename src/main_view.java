@@ -80,7 +80,7 @@ public class main_view {
 		panel.add(panel_1, BorderLayout.WEST);
 		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton btnNewButton = new JButton("+ Ny Fr\u00E5ga");
+		JButton btnNewButton = new JButton("+ Ny Fråga");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -145,7 +145,7 @@ public class main_view {
 		horizontalBox.setAlignmentX(Component.LEFT_ALIGNMENT);
 		verticalBox.add(horizontalBox);
 		
-		JLabel lblAntalFrgor = new JLabel("Antal Fr\u00E5gor: ");
+		JLabel lblAntalFrgor = new JLabel("Antal Frågor: ");
 		lblAntalFrgor.setHorizontalAlignment(SwingConstants.RIGHT);
 		horizontalBox.add(lblAntalFrgor);
 		lblAntalFrgor.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -194,7 +194,7 @@ public class main_view {
 		Box horizontalBox_1 = Box.createHorizontalBox();
 		panel_16.add(horizontalBox_1);
 		
-		JLabel lblFrga = new JLabel("Fr\u00E5ga ");
+		JLabel lblFrga = new JLabel("Fråga ");
 		horizontalBox_1.add(lblFrga);
 		lblFrga.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblFrga.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -237,7 +237,7 @@ public class main_view {
 		panel_8.add(panel_12, BorderLayout.SOUTH);
 		panel_12.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton returnbutton = new JButton("<- \u00C5terg\u00E5");
+		JButton returnbutton = new JButton("<- Återgå");
 		returnbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
