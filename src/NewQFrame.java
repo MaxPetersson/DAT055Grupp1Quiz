@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class NewQFrame extends JFrame  {
 	private JPanel panel;
@@ -12,7 +13,7 @@ public class NewQFrame extends JFrame  {
 	private JTextField enteranswer;
 	private String category;
 	private String question;
-	private String[] answers;
+	private ArrayList<String> answers;
 	//private int numCreated = 0;	perhaps for later use
 
 
@@ -72,8 +73,12 @@ public class NewQFrame extends JFrame  {
 	private boolean fieldsOK() {
 		category = entercategory.getText();
 		question = enterquestion.getText();
-		answers = new String[10];
-		answers = enteranswer.getText().split(",");
+		answers = new ArrayList<String>();
+		String[] tempAnswers = enteranswer.getText().split(",");
+		for(String s: tempAnswers)
+		{
+			answers.add(s);
+		}
 		
 		if (category.equals("Enter category here") || category.replaceAll("\\s+","").equals("")) {
 			JOptionPane.showMessageDialog(this, "Please enter category");
@@ -83,7 +88,7 @@ public class NewQFrame extends JFrame  {
 			JOptionPane.showMessageDialog(this, "Please enter question");
 			return false;
 		}
-		else if (answers[0].equals("Enter answer here") || answers[0].replaceAll("\\s+","").equals("")) {
+		else if (tempAnswers[0].equals("Enter answer here") || tempAnswers[0].replaceAll("\\s+","").equals("")) {
 			JOptionPane.showMessageDialog(this, "Please enter answer");
 			return false;
 		}
@@ -91,7 +96,7 @@ public class NewQFrame extends JFrame  {
 	}
 	
 	
-	private void submitQuestion(String category, String question, String[] answers) {
+	private void submitQuestion(String category, String question, ArrayList<String> answers) {
 		Question newQ = new Question(category, question, answers);
 		//tempArrayListofQuestions.add(newQ);		store newQ somewhere
 		JOptionPane.showMessageDialog(this, "New question created in category: "+category);
