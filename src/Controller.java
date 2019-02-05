@@ -17,6 +17,11 @@ public class Controller {
 		this.v_main_view = v_main_view;
 		this.v_NewQFrame = v_NewQFrame;
 		this.m_game = m_game;
+		
+		//this.v_main_view.addNewGameListener(new NewGameListener ());
+		//this.v_main_view.addSubmitAnswerListener(new SubmitAnswerListener());
+		//this.v_main_view.addCreateNewQuestionListener(new CreateNewQuestionListener());
+		//this.v_main_view.addSubmitNewQuestionListener(new SubmitNewQuestionListener());
 	}
 	
 
@@ -30,7 +35,7 @@ public class Controller {
 	 */
 	
 	
-//	
+	
 //	class NewGameListener implements ActionListener {
 //		public void actionPerformed(ActionEvent e) {
 //			String userInput = "";
