@@ -7,13 +7,15 @@ public class Controller {
 	 * Instances of classes in the category Model will be labelled by m_ followed by class name.
 	 */
 	private main_view v_main_view;
+	private NewQFrame v_NewQFrame;
 	private Game m_game;
 	
 	
 	//Controller constructor.
 	
-	public Controller (main_view v_main_view, Game m_game) {
+	public Controller (main_view v_main_view, NewQFrame v_NewQFrame, Game m_game) {
 		this.v_main_view = v_main_view;
+		this.v_NewQFrame = v_NewQFrame;
 		this.m_game = m_game;
 	}
 	
