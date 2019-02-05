@@ -13,11 +13,6 @@ public class Controller {
 	//Controller constructor.
 	
 	public Controller (main_view v_main_view, Game m_game) {
-		/* 
-		 * # to do:
-		 * 			1. Implement Game in constructor when class is created in workspace.
-		 */
-		
 		this.v_main_view = v_main_view;
 		this.m_game = m_game;
 	}
@@ -53,14 +48,14 @@ public class Controller {
 				v_main_view.openQuestion(firstQuestion.getQuestionText(), firstQuestion.getCategory());
 			}
 			catch (NumberFormatException nfex) {
-				v_main_view.showError("Bad input: '" + userInput + "'");
+				//v_main_view.showError("Bad input: '" + userInput + "'");
 			}
 		}
 		
 		
 	}
 	
-	///// INNER CLASS SubmitAwserListener ////////////////////////////////////////////////////////////////////////////
+	///// INNER CLASS SubmitAnswerListener ////////////////////////////////////////////////////////////////////////////
 	/*
 	 * When AWNSER is submitted.
 	 * 1. Get answer from UI.
@@ -70,5 +65,49 @@ public class Controller {
 	 * 5. Get next question from Game.
 	 * 6. Tell UI to display question from Game.
 	 * 7. End game if there is no more questions.
+	 */
+	class SubmitAnswerListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			String userAnswer = "";
+			
+			try {
+				//1. get answer from user and store in userAnswer
+				userAnswer = v_main_view.getAnswer();
+				
+				//2. Compare userAwnser to the current question's answer.
+				m_game.compareAwnser(userAnswer);
+				
+				//3 & 4. Tell UI to display the result from Game.
+				v_main_view.displayResult(m_game.getResult());
+				
+				
+				if(m_game.existNextQuestion()) {
+					//5. Get next question from Game.
+					Question nextQuestion = m_game.getNextQuestion();
+					//6. Tell UI to display next question. 
+					v_main_view.openQuestion(nextQuestion.getQuestionText(), nextQuestion.getCategory());
+					}
+				else {
+					//7. End game.
+					v_main_view.endGame();
+				}
+					
+			}
+			catch (IOException e) {
+				;
+			}
+		}
+	}
+	
+	///// INNER CLASS CreateNewQuestionListener ///////////////////////////////////////////////////////////////////////
+	/*
+	 * 1. Tell UI to show NewQuestionFrame
+	 */
+	
+	///// INNER CLASS SubmitNewQuestionListener ///////////////////////////////////////////////////////////////////////
+	/*
+	 * 1. Get Category, Question & Answer from UI.
+	 * 2. Create New Question.
+	 * 3. Tell UI to clear question form.
 	 */
 }
