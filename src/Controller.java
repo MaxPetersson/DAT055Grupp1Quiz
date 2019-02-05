@@ -26,34 +26,39 @@ public class Controller {
 	 * 3. Get first question from Game.
 	 * 4. Tell UI to display question.
 	 */
-	class NewGameListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			String userInput = "";
-			int quizSize = 0;
-			try {
-				/* 1.
-				 * Get size of Quiz from UI and save in userInput.
-				 * parse to integer and save in quizSize.
-				 */
-				userInput = v_main_view.getQuizSize;
-				quizSize = Integer.parseInt(userInput);
-				
-				//2. Call Game to create new Quiz with size quizSize.
-				m_game.createNewQuiz(quizSize);
-				
-				//3. Get first question from Game.
-				Question firstQuestion = m_game.getNextQuestion();
-				
-				//4. Tell UI to display first question.
-				v_main_view.openQuestion(firstQuestion.getQuestionText(), firstQuestion.getCategory());
-			}
-			catch (NumberFormatException nfex) {
-				//v_main_view.showError("Bad input: '" + userInput + "'");
-			}
-		}
-		
-		
-	}
+	
+	
+//	
+//	class NewGameListener implements ActionListener {
+//		public void actionPerformed(ActionEvent e) {
+//			String userInput = "";
+//			int quizSize = 0;
+//			try {
+//				/* 1.
+//				 * Get size of Quiz from UI and save in userInput.
+//				 * parse to integer and save in quizSize.
+//				 */
+//				userInput = v_main_view.getQuizSize;
+//				quizSize = Integer.parseInt(userInput);
+//				
+//				//2. Call Game to create new Quiz with size quizSize.
+//				m_game.createNewQuiz(quizSize);
+//				
+//				//3. Get first question from Game.
+//				Question firstQuestion = m_game.getNextQuestion();
+//				
+//				//4. Tell UI to display first question.
+//				v_main_view.openQuestion(firstQuestion.getQuestionText(), firstQuestion.getCategory());
+//			}
+//			catch (NumberFormatException nfex) {
+//				//v_main_view.showError("Bad input: '" + userInput + "'");
+//			}
+//		}
+//		
+//		
+//	}
+	
+	
 	
 	///// INNER CLASS SubmitAnswerListener ////////////////////////////////////////////////////////////////////////////
 	/*
@@ -66,38 +71,37 @@ public class Controller {
 	 * 6. Tell UI to display question from Game.
 	 * 7. End game if there is no more questions.
 	 */
-	class SubmitAnswerListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			String userAnswer = "";
-			
-			try {
-				//1. get answer from user and store in userAnswer
-				userAnswer = v_main_view.getAnswer();
-				
-				//2. Compare userAwnser to the current question's answer.
-				m_game.compareAwnser(userAnswer);
-				
-				//3 & 4. Tell UI to display the result from Game.
-				v_main_view.displayResult(m_game.getResult());
-				
-				
-				if(m_game.existNextQuestion()) {
-					//5. Get next question from Game.
-					Question nextQuestion = m_game.getNextQuestion();
-					//6. Tell UI to display next question. 
-					v_main_view.openQuestion(nextQuestion.getQuestionText(), nextQuestion.getCategory());
-					}
-				else {
-					//7. End game.
-					v_main_view.endGame();
-				}
-					
-			}
-			catch (IOException e) {
-				;
-			}
-		}
-	}
+//	class SubmitAnswerListener implements ActionListener {
+//		public void actionPerformed(ActionEvent e) {
+//			String userAnswer = "";
+//			
+//			try {
+//				//1. get answer from user and store in userAnswer
+//				userAnswer = v_main_view.getAnswer();
+//				
+//				//2. Compare userAwnser to the current question's answer.
+//				m_game.compareAwnser(userAnswer);
+//				
+//				//3 & 4. Tell UI to display the result from Game.
+//				v_main_view.displayResult(m_game.getResult());
+//				
+//				
+//				if(m_game.existNextQuestion()) {
+//					//5. Get next question from Game.
+//					Question nextQuestion = m_game.getNextQuestion();
+//					//6. Tell UI to display next question. 
+//					v_main_view.openQuestion(nextQuestion.getQuestionText(), nextQuestion.getCategory());
+//					}
+//				else {
+//					//7. End game.
+//					v_main_view.endGame();
+//				}
+//					
+//			}
+//			catch (NullPointerException npex) {
+//			}
+//		}
+//	}
 	
 	///// INNER CLASS CreateNewQuestionListener ///////////////////////////////////////////////////////////////////////
 	/*
