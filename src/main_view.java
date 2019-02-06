@@ -242,7 +242,7 @@ public class main_view {
 		panel_8.add(panel_12, BorderLayout.SOUTH);
 		panel_12.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton returnbutton = new JButton("<- återgå");
+		JButton returnbutton = new JButton("<- Återgå");
 		returnbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -281,9 +281,7 @@ public class main_view {
 				        }, 
 				        2000 
 				);
-				
-				
-				
+
 			}
 		});
 		panel_13.add(submitbutton);
