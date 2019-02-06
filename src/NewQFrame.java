@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.event.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class NewQFrame extends JFrame  {
@@ -8,9 +9,9 @@ public class NewQFrame extends JFrame  {
 	private JLabel categorylabel;
 	private JLabel questionlabel;
 	private JLabel answerlabel;
-	private JTextField entercategory;
-	private JTextField enterquestion;
-	private JTextField enteranswer;
+	private JTextArea entercategory;
+	private JTextArea enterquestion;
+	private JTextArea enteranswer;
 	private String category;
 	private String question;
 	private ArrayList<String> answers;
@@ -21,34 +22,46 @@ public class NewQFrame extends JFrame  {
 	public NewQFrame(String title) {
 		super(title);
 		setupPanel();
-		this.setSize(400,400);
+		this.setBounds(120, 200, 350, 300);
+		this.setPreferredSize(new Dimension(350,300));
+		this.setMinimumSize(new Dimension(350,300));
+		this.setMaximumSize(new Dimension(350,500));
 		this.add(panel);
 	}
 	
 	private void setupPanel() {
-		categorylabel = new JLabel();
-		categorylabel.setText("Category:");
-		categorylabel.setBounds(10, 10, 50, 50);
+		categorylabel = new JLabel("Category:");
+		questionlabel = new JLabel("Question:");
+		answerlabel = new JLabel("Answer:");
 		
-		questionlabel = new JLabel();
-		questionlabel.setText("Question:");
-		questionlabel.setBounds(10, 10, 50, 100);
+		entercategory = new JTextArea(2, 30);
+		entercategory.setPreferredSize(new Dimension(100,30));
+		entercategory.setMinimumSize(new Dimension(100,30));
+		entercategory.setMaximumSize(new Dimension(100,30));
+		entercategory.setLineWrap(true);
+		entercategory.setWrapStyleWord(true);
+		TextPrompt c = new TextPrompt("Enter category", entercategory); //display if text area is empty
+		c.setForeground(Color.GRAY);
+		c.changeStyle(Font.ITALIC);
 		
-		answerlabel = new JLabel();
-		answerlabel.setText("Answer:");
-		answerlabel.setBounds(10, 10, 50, 100);
+		enterquestion = new JTextArea(5, 50);
+		enterquestion.setPreferredSize(new Dimension (100,50));
+		enterquestion.setLineWrap(true);
+		enterquestion.setWrapStyleWord(true);
+		TextPrompt q = new TextPrompt("Enter question", enterquestion); 
+		q.setForeground(Color.GRAY);
+		q.changeStyle(Font.ITALIC);
 		
-		entercategory = new JTextField("Enter category here");
-		entercategory.setBounds(110, 50, 130, 30);
-		
-		enterquestion = new JTextField("Enter question here");
-		enterquestion.setBounds(110, 50, 130, 30);
-		
-		enteranswer = new JTextField("Enter answer here");
-		enteranswer.setBounds(110, 50, 130, 30);
+		enteranswer = new JTextArea(5, 50);
+		enteranswer.setPreferredSize(new Dimension (100,50));
+		enteranswer.setLineWrap(true);
+		enteranswer.setWrapStyleWord(true);
+		TextPrompt a = new TextPrompt("Enter answer", enteranswer); 
+		a.setForeground(Color.GRAY);
+		a.changeStyle(Font.ITALIC);
 		
 		submit = new JButton("Submit");
-		submit.setBounds(100,100,150,50);
+		submit.setBounds(1,1,10,10);
 		submit.addActionListener(new ActionListener() {	//When submit button is pressed, add new question with user inserted text
 				public void actionPerformed(ActionEvent e) {
 					if(fieldsOK()) {
@@ -80,15 +93,15 @@ public class NewQFrame extends JFrame  {
 			answers.add(s);
 		}
 		
-		if (category.equals("Enter category here") || category.replaceAll("\\s+","").equals("")) {
+		if (category.replaceAll("\\s+","").equals("")) {
 			JOptionPane.showMessageDialog(this, "Please enter category");
 			return false;
 		}
-		else if (question.equals("Enter question here") || question.replaceAll("\\s+","").equals("")) {
+		else if (question.replaceAll("\\s+","").equals("")) {
 			JOptionPane.showMessageDialog(this, "Please enter question");
 			return false;
 		}
-		else if (tempAnswers[0].equals("Enter answer here") || tempAnswers[0].replaceAll("\\s+","").equals("")) {
+		else if (tempAnswers[0].replaceAll("\\s+","").equals("")) {
 			JOptionPane.showMessageDialog(this, "Please enter answer");
 			return false;
 		}
@@ -97,6 +110,7 @@ public class NewQFrame extends JFrame  {
 	
 	
 	private void submitQuestion(String category, String question, ArrayList<String> answers) {
+		
 		Question newQ = new Question(category, question, answers);
 		//tempArrayListofQuestions.add(newQ);		store newQ somewhere
 		JOptionPane.showMessageDialog(this, "New question created in category: "+category);
