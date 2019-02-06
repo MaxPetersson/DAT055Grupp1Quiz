@@ -34,7 +34,9 @@ public class Controller {
 	 * 4. Tell UI to display question.
 	 */
 	
-	
+	//public void addNewGameListener(ActionListener e) {
+	//	newGame.addActionListener(e)
+	//}
 	
 //	class NewGameListener implements ActionListener {
 //		public void actionPerformed(ActionEvent e) {
