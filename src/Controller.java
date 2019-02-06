@@ -18,10 +18,10 @@ public class Controller {
 		this.v_NewQFrame = v_NewQFrame;
 		this.m_game = m_game;
 		
-		//this.v_main_view.addNewGameListener(new NewGameListener ());
-		//this.v_main_view.addSubmitAnswerListener(new SubmitAnswerListener());
-		//this.v_main_view.addCreateNewQuestionListener(new CreateNewQuestionListener());
-		//this.v_main_view.addSubmitNewQuestionListener(new SubmitNewQuestionListener());
+		this.v_main_view.addNewGameListener(new NewGameListener ());
+		this.v_main_view.addSubmitAnswerListener(new SubmitAnswerListener());
+		this.v_main_view.addCreateNewQuestionListener(new CreateNewQuestionListener());
+		this.v_NewQFrame.addSubmitNewQuestionListener(new SubmitNewQuestionListener());
 	}
 	
 
@@ -60,7 +60,7 @@ public class Controller {
 				v_main_view.openQuestion(firstQuestion.getQuestionText(), firstQuestion.getCategory());
 			}
 			catch (NumberFormatException nfex) {
-				//v_main_view.showError("Bad input: '" + userInput + "'");
+				v_main_view.showErrorMessage("Bad input: '" + userInput + "'");
 			}
 		}
 		
@@ -108,6 +108,7 @@ public class Controller {
 					
 			}
 			catch (NullPointerException npex) {
+				v_main_view.displayErrorMessage("The error message")
 			}
 		}
 	}
@@ -116,6 +117,11 @@ public class Controller {
 	/*
 	 * 1. Tell UI to show NewQuestionFrame
 	 */
+	class CreateNewQuestionListener implements ActionListener{
+		public void actionPreformed(ActionEvent e) {
+			v_NewQFrame.makeNewWindow();
+		}
+	}
 	
 	///// INNER CLASS SubmitNewQuestionListener ///////////////////////////////////////////////////////////////////////
 	/*
@@ -123,4 +129,18 @@ public class Controller {
 	 * 2. Create New Question.
 	 * 3. Tell UI to clear question form.
 	 */
+	class SubmitNewQuestionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			String question = "";
+			String category = "";
+			String answer = "";
+			try {
+				v_NewQFrame.getQuestion();	
+			}
+			catch(NullPointerException ex) {
+				v_NewQFrame.displayErrorMessage("The error message")
+			}
+			
+		}
+	}
 }
