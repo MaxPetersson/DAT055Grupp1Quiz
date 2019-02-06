@@ -73,7 +73,9 @@ public class Game {
 
     }
 
-
+    public boolean compareAnswer(String userAnswer) {
+    	return currentQuiz.get(currentQuestion).getAnswers().get(0).equals(userAnswer);
+    }
 
     public Question getNextQuestion(){
         return currentQuiz.get(currentQuestion++);
