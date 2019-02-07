@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.event.*;
 import java.awt.event.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -9,9 +10,13 @@ public class NewQFrame extends JFrame  {
 	private JLabel categorylabel;
 	private JLabel questionlabel;
 	private JLabel answerlabel;
-	private JTextArea entercategory;
-	private JTextArea enterquestion;
-	private JTextArea enteranswer;
+	private JTextArea categoryTextArea;
+	private JTextArea questionTextArea;
+	private JTextArea answerTextArea;
+	private JScrollPane categoryScrollPane = new JScrollPane();
+	private JScrollPane questionScrollPane = new JScrollPane();
+	private JScrollPane answerScrollPane = new JScrollPane();
+	private TextPrompt tp;
 	private String category;
 	private String question;
 	private ArrayList<String> answers;
@@ -22,11 +27,10 @@ public class NewQFrame extends JFrame  {
 	public NewQFrame(String title) {
 		super(title);
 		setupPanel();
-		this.setBounds(120, 200, 350, 300);
-		this.setPreferredSize(new Dimension(350,300));
-		this.setMinimumSize(new Dimension(350,300));
-		this.setMaximumSize(new Dimension(350,500));
+		this.setBounds(120, 200, 350, 350);
+		this.setResizable(false);
 		this.add(panel);
+		this.pack();
 	}
 	
 	private void setupPanel() {
@@ -34,32 +38,18 @@ public class NewQFrame extends JFrame  {
 		questionlabel = new JLabel("Question:");
 		answerlabel = new JLabel("Answer:");
 		
-		entercategory = new JTextArea(2, 30);
-		entercategory.setPreferredSize(new Dimension(100,30));
-		entercategory.setMinimumSize(new Dimension(100,30));
-		entercategory.setMaximumSize(new Dimension(100,30));
-		entercategory.setLineWrap(true);
-		entercategory.setWrapStyleWord(true);
-		TextPrompt c = new TextPrompt("Enter category", entercategory); //display if text area is empty
-		c.setForeground(Color.GRAY);
-		c.changeStyle(Font.ITALIC);
+		categoryTextArea = new JTextArea(2, 25);
+		initializeTextArea(categoryTextArea, "Enter category", 2);
+		setScrollable(categoryScrollPane, categoryTextArea);
 		
-		enterquestion = new JTextArea(5, 50);
-		enterquestion.setPreferredSize(new Dimension (100,50));
-		enterquestion.setLineWrap(true);
-		enterquestion.setWrapStyleWord(true);
-		TextPrompt q = new TextPrompt("Enter question", enterquestion); 
-		q.setForeground(Color.GRAY);
-		q.changeStyle(Font.ITALIC);
+		questionTextArea = new JTextArea(6, 25);
+		initializeTextArea(questionTextArea, "Enter question", 6);
+		setScrollable(questionScrollPane, questionTextArea);
 		
-		enteranswer = new JTextArea(5, 50);
-		enteranswer.setPreferredSize(new Dimension (100,50));
-		enteranswer.setLineWrap(true);
-		enteranswer.setWrapStyleWord(true);
-		TextPrompt a = new TextPrompt("Enter answer", enteranswer); 
-		a.setForeground(Color.GRAY);
-		a.changeStyle(Font.ITALIC);
-		
+		answerTextArea = new JTextArea(6, 25);
+		initializeTextArea(answerTextArea, "Enter answer", 6);
+		setScrollable(answerScrollPane, answerTextArea);
+
 		submit = new JButton("Submit");
 		submit.setBounds(1,1,10,10);
 		submit.addActionListener(new ActionListener() {	//When submit button is pressed, add new question with user inserted text
@@ -71,41 +61,61 @@ public class NewQFrame extends JFrame  {
 		});
 		
 		panel = new JPanel(new SpringLayout());
+		//panel.setPreferredSize(new Dimension(350,350));
 		panel.add(categorylabel);
-		panel.add(entercategory);
+		panel.add(categoryScrollPane);
 		panel.add(questionlabel);
-		panel.add(enterquestion);
+		panel.add(questionScrollPane);
 		panel.add(answerlabel);
-		panel.add(enteranswer);
+		panel.add(answerScrollPane);
 		panel.add(new JLabel("")); //empty label
 		panel.add(submit);
 		SpringUtilities.makeCompactGrid(panel, 4, 2, 10, 10, 10, 10); //4 rows, 2 columns
 	}
 	
+	//initialize text area, add text prompt and limit number of rows visible
+	private void initializeTextArea(JTextArea textArea, String text, int rows) {
+		tp = new TextPrompt(text, textArea); 
+		tp.setForeground(Color.GRAY);
+		tp.changeStyle(Font.ITALIC);
+		textArea.setLineWrap(true);
+		textArea.setWrapStyleWord(true);
+	}
 	
+	//make text area scrollable
+	private void setScrollable(JScrollPane sp, JTextArea ta) {
+		sp.setViewportView(ta);
+		sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+	}
+	
+	//check if ok to submit
 	private boolean fieldsOK() {
-		category = entercategory.getText();
-		question = enterquestion.getText();
+		category = categoryTextArea.getText();
+		question = questionTextArea.getText();
 		answers = new ArrayList<String>();
-		String[] tempAnswers = enteranswer.getText().split(",");
+		String[] tempAnswers = answerTextArea.getText().split(",");
 		for(String s: tempAnswers)
 		{
 			answers.add(s);
 		}
 		
 		if (category.replaceAll("\\s+","").equals("")) {
-			JOptionPane.showMessageDialog(this, "Please enter category");
+			displayErrorMessage("Please enter category");
 			return false;
 		}
 		else if (question.replaceAll("\\s+","").equals("")) {
-			JOptionPane.showMessageDialog(this, "Please enter question");
+			displayErrorMessage("Please enter question");
 			return false;
 		}
 		else if (tempAnswers[0].replaceAll("\\s+","").equals("")) {
-			JOptionPane.showMessageDialog(this, "Please enter answer");
+			displayErrorMessage("Please enter answer");
 			return false;
 		}
 		else return true;
+	}
+	
+	public void displayErrorMessage(String error) {
+		JOptionPane.showMessageDialog(this, error);
 	}
 	
 	
@@ -114,9 +124,9 @@ public class NewQFrame extends JFrame  {
 		Question newQ = new Question(category, question, answers);
 		//tempArrayListofQuestions.add(newQ);		store newQ somewhere
 		JOptionPane.showMessageDialog(this, "New question created in category: "+category);
-		entercategory.setText(""); //clear fields. User may enter new question(?)
-		enterquestion.setText("");
-		enteranswer.setText("");
+		categoryTextArea.setText(""); //clear fields. User may enter new question(?)
+		questionTextArea.setText("");
+		answerTextArea.setText("");
 		//numCreated++;
 	}
 
