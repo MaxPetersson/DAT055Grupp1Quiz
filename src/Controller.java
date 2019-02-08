@@ -57,10 +57,10 @@ public class Controller {
 				Question firstQuestion = m_game.getNextQuestion();
 				
 				//4. Tell UI to display first question.
-				v_main_view.openQuestion(firstQuestion.getQuestionText(), firstQuestion.getCategory());
+				v_main_view.changeToQuizScreen();
 			}
 			catch (NumberFormatException nfex) {
-				v_main_view.showErrorMessage("Bad input: '" + userInput + "'");
+				v_main_view.displayErrorMessage("Bad input: '" + userInput + "'");
 			}
 		}
 		
@@ -102,8 +102,8 @@ public class Controller {
 					v_main_view.openQuestion(nextQuestion.getQuestionText(), nextQuestion.getCategory());
 					}
 				else {
-					//7. End game.
-					v_main_view.endGame();
+					//7. Show the start screen.
+					v_main_view.changeToStartScreen();
 				}
 					
 			}

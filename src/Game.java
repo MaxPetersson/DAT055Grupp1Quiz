@@ -5,6 +5,7 @@ public class Game {
     ArrayList<Question> localQuestionBank = new ArrayList<Question>();
     ArrayList<Question> currentQuiz;
     int currentQuestion;
+    boolean result;
 
 
 
@@ -45,6 +46,10 @@ public class Game {
     public int getCurrentQuestion(){
         return currentQuestion;
     }
+    
+    public boolean getResult() {
+    	return result;
+    }
 
 
     //SETTER
@@ -73,13 +78,21 @@ public class Game {
 
     }
 
-    public boolean compareAnswer(String userAnswer) {
-    	return currentQuiz.get(currentQuestion).getAnswers().get(0).equals(userAnswer);
+    public void compareAnswer(String userAnswer) {
+    	result = currentQuiz.get(currentQuestion).getAnswers().get(0).equals(userAnswer);
     }
 
     public Question getNextQuestion(){
         return currentQuiz.get(currentQuestion++);
 
+    }
+    
+    public boolean existNextQuestion() {
+    	if (currentQuestion < currentQuiz.size())
+    	{
+    		return true;
+    	}
+    	return false;
     }
 
 }
