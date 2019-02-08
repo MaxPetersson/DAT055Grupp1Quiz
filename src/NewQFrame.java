@@ -1,6 +1,6 @@
 import javax.swing.*;
-import javax.swing.event.*;
 import java.awt.event.*;
+import java.awt.event.KeyEvent;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -27,7 +27,7 @@ public class NewQFrame extends JFrame  {
 	public NewQFrame(String title) {
 		super(title);
 		setupPanel();
-		this.setBounds(120, 200, 350, 350);
+		this.setBounds(120, 200, 350, 400);
 		this.setResizable(false);
 		this.add(panel);
 		this.pack();
@@ -38,8 +38,8 @@ public class NewQFrame extends JFrame  {
 		questionlabel = new JLabel("Question:");
 		answerlabel = new JLabel("Answer:");
 		
-		categoryTextArea = new JTextArea(2, 25);
-		initializeTextArea(categoryTextArea, "Enter category", 2);
+		categoryTextArea = new JTextArea(1, 25);
+		initializeTextArea(categoryTextArea, "Enter category", 1);
 		setScrollable(categoryScrollPane, categoryTextArea);
 		
 		questionTextArea = new JTextArea(6, 25);
@@ -61,7 +61,6 @@ public class NewQFrame extends JFrame  {
 		});
 		
 		panel = new JPanel(new SpringLayout());
-		//panel.setPreferredSize(new Dimension(350,350));
 		panel.add(categorylabel);
 		panel.add(categoryScrollPane);
 		panel.add(questionlabel);
@@ -73,13 +72,28 @@ public class NewQFrame extends JFrame  {
 		SpringUtilities.makeCompactGrid(panel, 4, 2, 10, 10, 10, 10); //4 rows, 2 columns
 	}
 	
-	//initialize text area, add text prompt and limit number of rows visible
+	//initialize text area and add text prompt
 	private void initializeTextArea(JTextArea textArea, String text, int rows) {
 		tp = new TextPrompt(text, textArea); 
 		tp.setForeground(Color.GRAY);
 		tp.changeStyle(Font.ITALIC);
 		textArea.setLineWrap(true);
 		textArea.setWrapStyleWord(true);
+		
+		//move focus forward to next textArea (or to the 'submit' button) when TAB key is pressed. If modifier key is held down, move focus backward.
+		textArea.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                    if (e.getModifiersEx() > 0) {
+                        textArea.transferFocusBackward();
+                    } else {
+                        textArea.transferFocus();
+                    }
+                    e.consume();
+                }
+            }
+        });
 	}
 	
 	//make text area scrollable
