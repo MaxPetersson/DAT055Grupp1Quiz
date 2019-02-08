@@ -68,7 +68,7 @@ public class Game {
         else
         {
             currentQuiz = new ArrayList<Question>();
-            for (int i = 0; i <= nrOfQuestions; i++){
+            for (int i = 0; i < nrOfQuestions; i++){
                 currentQuiz.add(localQuestionBank.get(i));
             }
             currentQuestion = 0;
@@ -78,7 +78,7 @@ public class Game {
     }
 
     public void compareAnswer(String userAnswer) {
-    	result = currentQuiz.get(currentQuestion).getAnswers().get(0).equals(userAnswer);
+    	result = currentQuiz.get(currentQuestion - 1).getAnswers().get(0).equals(userAnswer);
     }
 
     public Question getNextQuestion(){
