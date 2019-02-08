@@ -64,6 +64,9 @@ public class Controller {
 			catch (NumberFormatException nfex) {
 				v_main_view.displayErrorMessage("Bad input: '" + userInput + "'");
 			}
+			catch (BadUserInputException buiex) {
+				v_main_view.displayErrorMessage(buiex.getMessage());
+			}
 		}
 		
 		

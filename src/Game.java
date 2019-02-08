@@ -61,9 +61,9 @@ public class Game {
     //returns true if quiz generated successfully
     //returns false if it didnt (most likely because there wasnt enough questions
     //Set nrOfQuestions to max?
-    public boolean generateQuiz(int nrOfQuestions){
+    public boolean generateQuiz(int nrOfQuestions) throws BadUserInputException{
         if (nrOfQuestions > localQuestionBank.size()){
-            return false;
+            throw new BadUserInputException("There are only " +localQuestionBank.size()+ " questions to choose from.");
         }
         else
         {
@@ -93,5 +93,4 @@ public class Game {
     	}
     	return false;
     }
-
 }
