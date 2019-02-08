@@ -9,6 +9,8 @@ import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,9 +25,8 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 import com.sun.javafx.geom.Point2D;
-import com.sun.prism.j2d.paint.RadialGradientPaint;
 
-public class main_view {
+public class main_view{
 
 	private JFrame frame;
 	private JTextField qAmount;
@@ -37,19 +38,13 @@ public class main_view {
 	private JButton submitbutton = new JButton("Submit");
 	private JButton startQuizButton = new JButton("Starta Quiz");
 	private String[] qtextarray = {"En båt kör med en hastighet av fyra knop mot en brygga. En meter från bryggan saktar båten ner till tre knop. Har långt tid tar det att laga bryggan?","What is the air-speed velocity of an unladen swallow?","How much wood could a woodchuck chuck if a woodchuck could chuck wood? "};
-	private String[] answerArr = {"1","2","3"};
-	private String[] catArr = {"Gåtor","Monty Python","Trivia"};
 	private JLabel amountErrorLabel = new JLabel(" ");
 	private JLabel catLabel = new JLabel("Kategori");
 	private JLabel answerFeedbackLabel = new JLabel(" ");
-	private int qtot;
-	private int qnumber;
 
-
-
+	
 	public static void main(String[] args) {
-		
-		
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -67,7 +62,7 @@ public class main_view {
 	public main_view() {
 		
 		initialize();
-		displayErrorMessage("test");
+		
 	}
 
 	
@@ -89,26 +84,23 @@ public class main_view {
 		JButton btnNewButton = new JButton("+ Ny Fråga");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				NewQFrame newQuestion = new NewQFrame("Create new question");
 				newQuestion.setVisible(true);
+				
 			}
 		});
 		btnNewButton.setVerticalAlignment(SwingConstants.TOP);
 		panel_1.add(btnNewButton);
 		
-		
-		
 		card_pane.setOpaque(false);
 		panel.add(card_pane, BorderLayout.CENTER);
 		card_pane.setLayout(new CardLayout(0, 0));
-		
-
 		
 		JPanel main_pane = new JPanel();
 		main_pane.setOpaque(false);
 		card_pane.add(main_pane, "name_278414619626250");
 		main_pane.setLayout(new BorderLayout(0, 0));
-		//panel.setComponentZOrder(main_pane, 1);
 		
 		JPanel panel_3 = new JPanel();	    
 		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
@@ -140,8 +132,6 @@ public class main_view {
 		Box verticalBox = Box.createVerticalBox();
 		panel_7.add(verticalBox);
 		
-
-		
 		verticalBox.add(startQuizButton);
 		startQuizButton.setFont(new Font("Tahoma", Font.PLAIN, 28));
 		
@@ -162,7 +152,6 @@ public class main_view {
 		qAmount.setMaximumSize(new Dimension(30, 50));
 		horizontalBox.add(qAmount);
 		qAmount.setColumns(3);
-		
 		
 		amountErrorLabel.setForeground(Color.RED);
 		verticalBox.add(amountErrorLabel);
@@ -213,7 +202,6 @@ public class main_view {
 		qnolabel.setVerticalTextPosition(SwingConstants.BOTTOM);
 		qnolabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
-		
 		qnolabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		
 		JLabel lblAv = new JLabel(" av ");
@@ -226,10 +214,8 @@ public class main_view {
 		qtotlabel.setVerticalTextPosition(SwingConstants.BOTTOM);
 		qtotlabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		
-		
 		qtotlabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		
-
 		JPanel panel_8 = new JPanel();
 		panel_8.setMinimumSize(new Dimension(1000, 10));
 		panel_8.setOpaque(false);
@@ -299,7 +285,6 @@ public class main_view {
 		horizontalStrut_1.setMinimumSize(new Dimension(1000, 0));
 		horizontalStrut_1.setMaximumSize(new Dimension(4000, 32767));
 		
-
 		answerFeedbackLabel.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		panel_14.add(answerFeedbackLabel);
 		
@@ -332,7 +317,6 @@ public class main_view {
 		qtextarea.setFont(new Font("Calibri", Font.PLAIN, 18));
 		qtextarea.setLineWrap(true);
 		qtextarea.setWrapStyleWord(true);
-
 
 		qtextarea.setMargin(new Insets(2, 2, 20, 2));
 		qtextarea.setRows(10);
@@ -383,14 +367,13 @@ public class main_view {
 		
 	}
 
-	public void openQuestion(String category, String qtext, String qtot, String qnumber) {
+	public void displayQuestion(String category, String qtext, int qtot, int qnumber) {
 		
 		qtextarea.setText(qtext);
-		qnolabel.setText(qnumber);
+		qnolabel.setText(Integer.toString(qnumber));
 		catLabel.setText(category);
-		qtotlabel.setText(qtot);
-		
-		
+		qtotlabel.setText(Integer.toString(qtot));
+
 		clearAnsFields();
 
 	}
@@ -402,16 +385,15 @@ public class main_view {
 		
 	}
 	
-	private void changeToQuizScreen() {
+	public void changeToQuizScreen() {
 
 		//MVC
-		if(qAmount.getText().equals("") || Integer.parseInt(qAmount.getText()) < 1 || Integer.parseInt(qAmount.getText()) > qtextarray.length) {
+		if(qAmount.getText().equals("") || Integer.parseInt(qAmount.getText()) < 1 ) {
 			
 			amountErrorLabel.setText("Felaktigt antal");			
 		}
 		else {
 			
-			qtot=Integer.parseInt(qAmount.getText());
 			amountErrorLabel.setText(" ");
 			
 		//MVC
@@ -427,10 +409,24 @@ public class main_view {
 		
 	}
 	
-	private String getAnswer() {
+	public void displayResult ( boolean result) {
+		
+		if(result) {
+			
+			answerFeedbackLabel.setText("Rätt!");
+		}
+		else {answerFeedbackLabel.setText("Fel!");}
+			
+	};
+	
+	private String getAnswer(){
 		
 		return answerField.getText();
 		
 	}
+	
+	private void update(Observable o, Object arg) {}
 
-}
+	
+
+	}
