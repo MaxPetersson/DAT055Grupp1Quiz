@@ -1,2 +1,1 @@
 INDEX VERSION 1.131+/Users/karinperstorper/Documents/GitHub/DAT055Grupp1Quiz/.metadata/.plugins/org.eclipse.jdt.core
-181043463.index
