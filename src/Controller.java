@@ -138,20 +138,18 @@ public class Controller {
 		public void actionPerformed(ActionEvent e) {
 			String question = "";
 			String category = "";
-			ArrayList<String> answer = new ArrayList<String>();
+			ArrayList<String> answers = new ArrayList<String>();
 			Question theQuestion;
 			try {
-//				v_NewQFrame.getQuestion();
-//				v_NewQFrame.getCategory();
-//				v_NewQFrame.getAnswer();
-				answer.add("");
-				theQuestion = new Question(category, question ,answer);
+				question = v_NewQFrame.getQuestion();
+				category = v_NewQFrame.getCategory();
+				answers.addAll(v_NewQFrame.getAnswers());
+				theQuestion = new Question(category, question ,answers);
 				m_game.addQuestionToLocalQuestionBank(theQuestion);
 			}
 			catch(NullPointerException ex) {
 				v_NewQFrame.displayErrorMessage("The error message");
 			}
-			
 		}
 	}
 }

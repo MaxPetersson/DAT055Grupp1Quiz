@@ -72,6 +72,21 @@ public class NewQFrame extends JFrame  {
 		SpringUtilities.makeCompactGrid(panel, 4, 2, 10, 10, 10, 10); //4 rows, 2 columns
 	}
 	
+	
+	public String getCategory(){
+		return categoryTextArea.getText();
+	}
+	
+	public String getQuestion() {
+		return questionTextArea.getText();
+	}
+	
+	public ArrayList<String> getAnswers() {
+		ArrayList<String> answers = new ArrayList<String>();
+		answers.add(questionTextArea.getText());
+		return answers;
+	}
+	
 	//initialize text area and add text prompt
 	private void initializeTextArea(JTextArea textArea, String text, int rows) {
 		tp = new TextPrompt(text, textArea); 
@@ -135,7 +150,6 @@ public class NewQFrame extends JFrame  {
 	public void displayErrorMessage(String error) {
 		JOptionPane.showMessageDialog(this, error);
 	}
-	
 	
 	private void submitQuestion(String category, String question, ArrayList<String> answers) {
 		
