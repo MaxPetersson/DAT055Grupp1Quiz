@@ -35,9 +35,9 @@ public class main_view{
 	private JTextArea qtextarea = new JTextArea();
 	private JLabel qnolabel = new JLabel("X");
 	private JLabel qtotlabel = new JLabel("X");
+	private JButton newQuestionButton = new JButton("+ Ny Fråga");
 	private JButton submitbutton = new JButton("Submit");
 	private JButton startQuizButton = new JButton("Starta Quiz");
-	private String[] qtextarray = {"En båt kör med en hastighet av fyra knop mot en brygga. En meter från bryggan saktar båten ner till tre knop. Har långt tid tar det att laga bryggan?","What is the air-speed velocity of an unladen swallow?","How much wood could a woodchuck chuck if a woodchuck could chuck wood? "};
 	private JLabel amountErrorLabel = new JLabel(" ");
 	private JLabel catLabel = new JLabel("Kategori");
 	private JLabel answerFeedbackLabel = new JLabel(" ");
@@ -80,18 +80,9 @@ public class main_view{
 		panel_1.setMinimumSize(new Dimension(100, 100));
 		panel.add(panel_1, BorderLayout.WEST);
 		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
-		JButton btnNewButton = new JButton("+ Ny Fråga");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				NewQFrame newQuestion = new NewQFrame("Create new question");
-				newQuestion.setVisible(true);
-				
-			}
-		});
-		btnNewButton.setVerticalAlignment(SwingConstants.TOP);
-		panel_1.add(btnNewButton);
+		
+		newQuestionButton.setVerticalAlignment(SwingConstants.TOP);
+		panel_1.add(newQuestionButton);
 		
 		card_pane.setOpaque(false);
 		panel.add(card_pane, BorderLayout.CENTER);
@@ -355,6 +346,10 @@ public class main_view{
     
 	}
 	
+	public void addNewQuestionListener(ActionListener listenForNewQuestion) {
+		newQuestionButton.addActionListener(listenForNewQuestion);
+	}
+	
 	public void displayErrorMessage(String errorMessage) {
         
 		JOptionPane.showMessageDialog(frame, errorMessage);
@@ -403,10 +398,14 @@ public class main_view{
 	        cardLayout.last(card_pane);
 
 
-		}
-		
-		
-		
+		}	
+	}
+	
+	
+	public void changeToStartScreen() {
+		CardLayout cardLayout = (CardLayout) card_pane.getLayout();
+
+        cardLayout.first(card_pane);
 	}
 	
 	public void displayResult ( boolean result) {
@@ -419,10 +418,14 @@ public class main_view{
 			
 	};
 	
-	private String getAnswer(){
+	public String getAnswer(){
 		
 		return answerField.getText();
 		
+	}
+	
+	public String getQuizSize() {
+		return qAmount.getText();
 	}
 	
 	private void update(Observable o, Object arg) {}

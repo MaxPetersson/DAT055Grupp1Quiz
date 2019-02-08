@@ -10,10 +10,9 @@ public class Game {
 
 
     //hardcoding of 3 questions
-    private String[] qtextarray = {"En bï¿½t kï¿½r med en hastighet av fyra knop mot en brygga. En meter frï¿½n bryggan saktar bï¿½ten ner till tre knop. Har lï¿½ngt tid tar det att laga bryggan?",
-            "What is the air-speed velocity of an unladen swallow?",
-            "How much wood could a woodchuck chuck if a woodchuck could chuck wood? "};
-    private String[] catArr = {"Gï¿½tor","Monty Python","Trivia"};
+    private String[] qtextarray = {"En båt kör med en hastighet av fyra knop mot en brygga. En meter från bryggan saktar båten ner till tre knop. Har långt tid tar det att laga bryggan?",
+    		"What is the air-speed velocity of an unladen swallow?","How much wood could a woodchuck chuck if a woodchuck could chuck wood? "};
+    private String[] catArr = {"Gåtor","Monty Python","Trivia"};
     private ArrayList<String> answers1;
     private ArrayList<String> answers2;
     private ArrayList<String> answers3;

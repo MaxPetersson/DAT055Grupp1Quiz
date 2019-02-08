@@ -20,7 +20,7 @@ public class Controller {
 		
 		this.v_main_view.addNewGameListener(new NewGameListener ());
 		this.v_main_view.addSubmitAnswerListener(new SubmitAnswerListener());
-		this.v_main_view.addCreateNewQuestionListener(new CreateNewQuestionListener());
+		this.v_main_view.addNewQuestionListener(new CreateNewQuestionListener());
 		this.v_NewQFrame.addSubmitNewQuestionListener(new SubmitNewQuestionListener());
 	}
 	
@@ -47,7 +47,7 @@ public class Controller {
 				 * Get size of Quiz from UI and save in userInput.
 				 * parse to integer and save in quizSize.
 				 */
-				userInput = v_main_view.getQuizSize;
+				userInput = v_main_view.getQuizSize();
 				quizSize = Integer.parseInt(userInput);
 				
 				//2. Call Game to create new Quiz with size quizSize.
@@ -99,7 +99,7 @@ public class Controller {
 					//5. Get next question from Game.
 					Question nextQuestion = m_game.getNextQuestion();
 					//6. Tell UI to display next question. 
-					v_main_view.openQuestion(nextQuestion.getQuestionText(), nextQuestion.getCategory());
+					v_main_view.displayQuestion(nextQuestion.getQuestionText(), nextQuestion.getCategory(), m_game.getTotalNumberOfQuestionInQuiz(), m_game.getCurrentQuestion());
 					}
 				else {
 					//7. Show the start screen.
@@ -108,7 +108,7 @@ public class Controller {
 					
 			}
 			catch (NullPointerException npex) {
-				v_main_view.displayErrorMessage("The error message")
+				v_main_view.displayErrorMessage("The error message");
 			}
 		}
 	}
@@ -118,7 +118,7 @@ public class Controller {
 	 * 1. Tell UI to show NewQuestionFrame
 	 */
 	class CreateNewQuestionListener implements ActionListener{
-		public void actionPreformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent e) {
 			v_NewQFrame.makeNewWindow();
 		}
 	}
@@ -138,7 +138,7 @@ public class Controller {
 				v_NewQFrame.getQuestion();	
 			}
 			catch(NullPointerException ex) {
-				v_NewQFrame.displayErrorMessage("The error message")
+				v_NewQFrame.displayErrorMessage("The error message");
 			}
 			
 		}
