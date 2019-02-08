@@ -1,4 +1,5 @@
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class Controller {
 
@@ -58,6 +59,7 @@ public class Controller {
 				
 				//4. Tell UI to display first question.
 				v_main_view.changeToQuizScreen();
+				v_main_view.displayQuestion(firstQuestion.getCategory(), firstQuestion.getQuestionText(), m_game.getTotalNumberOfQuestionInQuiz(), m_game.getCurrentQuestion());
 			}
 			catch (NumberFormatException nfex) {
 				v_main_view.displayErrorMessage("Bad input: '" + userInput + "'");
@@ -99,7 +101,7 @@ public class Controller {
 					//5. Get next question from Game.
 					Question nextQuestion = m_game.getNextQuestion();
 					//6. Tell UI to display next question. 
-					v_main_view.displayQuestion(nextQuestion.getQuestionText(), nextQuestion.getCategory(), m_game.getTotalNumberOfQuestionInQuiz(), m_game.getCurrentQuestion());
+					v_main_view.displayQuestion(nextQuestion.getCategory(), nextQuestion.getQuestionText(), m_game.getTotalNumberOfQuestionInQuiz(), m_game.getCurrentQuestion());
 					}
 				else {
 					//7. Show the start screen.
@@ -119,7 +121,7 @@ public class Controller {
 	 */
 	class CreateNewQuestionListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			v_NewQFrame.makeNewWindow();
+			v_NewQFrame.setVisible(true);
 		}
 	}
 	
@@ -133,9 +135,15 @@ public class Controller {
 		public void actionPerformed(ActionEvent e) {
 			String question = "";
 			String category = "";
-			String answer = "";
+			ArrayList<String> answer = new ArrayList<String>();
+			Question theQuestion;
 			try {
-				v_NewQFrame.getQuestion();	
+//				v_NewQFrame.getQuestion();
+//				v_NewQFrame.getCategory();
+//				v_NewQFrame.getAnswer();
+				answer.add("");
+				theQuestion = new Question(category, question ,answer);
+				m_game.addQuestionToLocalQuestionBank(theQuestion);
 			}
 			catch(NullPointerException ex) {
 				v_NewQFrame.displayErrorMessage("The error message");

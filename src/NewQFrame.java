@@ -52,13 +52,13 @@ public class NewQFrame extends JFrame  {
 
 		submit = new JButton("Submit");
 		submit.setBounds(1,1,10,10);
-		submit.addActionListener(new ActionListener() {	//When submit button is pressed, add new question with user inserted text
-				public void actionPerformed(ActionEvent e) {
-					if(fieldsOK()) {
-						submitQuestion(category, question, answers);
-					}	
-				}
-		});
+//		submit.addActionListener(new ActionListener() {	//When submit button is pressed, add new question with user inserted text
+//				public void actionPerformed(ActionEvent e) {
+//					if(fieldsOK()) {
+//						submitQuestion(category, question, answers);
+//					}	
+//				}
+//		});
 		
 		panel = new JPanel(new SpringLayout());
 		panel.add(categorylabel);
@@ -126,6 +126,10 @@ public class NewQFrame extends JFrame  {
 			return false;
 		}
 		else return true;
+	}
+	
+	public void addSubmitNewQuestionListener(ActionListener listenForSubmitQuestion) {
+		submit.addActionListener(listenForSubmitQuestion);
 	}
 	
 	public void displayErrorMessage(String error) {

@@ -43,21 +43,24 @@ public class main_view{
 	private JLabel answerFeedbackLabel = new JLabel(" ");
 
 	
-	public static void main(String[] args) {
+//	public static void main(String[] args) {
+//
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					
+//					main_view window = new main_view();
+//					window.frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					
-					main_view window = new main_view();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	public void setVisible() {
+		frame.setVisible(true);
 	}
-
 	
 	public main_view() {
 		
@@ -355,12 +358,6 @@ public class main_view{
 		JOptionPane.showMessageDialog(frame, errorMessage);
 		
     }
-	
-	public void displayErrorMessage() {
-		
-		
-		
-	}
 
 	public void displayQuestion(String category, String qtext, int qtot, int qnumber) {
 		
