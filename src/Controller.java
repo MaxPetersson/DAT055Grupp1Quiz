@@ -91,7 +91,7 @@ public class Controller {
 				m_game.compareAnswer(userAnswer);
 
 				// 3 & 4. Tell UI to display the result from Game.
-				v_main_view.displayResult(m_game.getResult());
+				// v_main_view.displayResult(m_game.getResult());
 
 				if (m_game.existNextQuestion()) {
 					// 5. Get next question from Game.
@@ -145,9 +145,7 @@ public class Controller {
 					v_NewQFrame.displayErrorMessage("The error message");
 				}
 
-				v_NewQFrame.categoryTextArea.setText(""); // clear fields. User may enter new question(?)
-				v_NewQFrame.questionTextArea.setText("");
-				v_NewQFrame.answerTextArea.setText("");
+				v_NewQFrame.clearWindow();
 
 			}
 

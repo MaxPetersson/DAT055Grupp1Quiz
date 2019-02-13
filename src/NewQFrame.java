@@ -126,4 +126,12 @@ public class NewQFrame extends JFrame {
 	public void displayErrorMessage(String error) {
 		JOptionPane.showMessageDialog(this, error);
 	}
+
+	public void clearWindow() {
+
+		categoryTextArea.setText(""); // clear fields. User may enter new question(?)
+		questionTextArea.setText("");
+		answerTextArea.setText("");
+
+	}
 }

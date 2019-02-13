@@ -8,12 +8,14 @@ import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Observable;
 
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -205,7 +207,7 @@ public class main_view {
 		panel_8.add(panel_12, BorderLayout.SOUTH);
 		panel_12.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
-		JButton returnbutton = new JButton("<- Return");
+		JButton returnbutton = new JButton("< Return");
 		returnbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -279,6 +281,42 @@ public class main_view {
 		panel_11.add(answerField, "4, 6");
 		answerField.setMaximumSize(new Dimension(2147483647, 30));
 		answerField.setColumns(10);
+
+		JPanel result_pane = new JPanel();
+		result_pane.setOpaque(false);
+		card_pane.add(result_pane, "name_1377216972528328");
+		result_pane.setLayout(new BorderLayout(0, 0));
+
+		JPanel panel_17 = new JPanel();
+		panel_17.setOpaque(false);
+		result_pane.add(panel_17, BorderLayout.NORTH);
+
+		JLabel lblResult = new JLabel("Result");
+		lblResult.setFont(new Font("Tahoma", Font.PLAIN, 48));
+		panel_17.add(lblResult);
+
+		JPanel panel_18 = new JPanel();
+		panel_18.setOpaque(false);
+		result_pane.add(panel_18, BorderLayout.WEST);
+
+		Component horizontalStrut_2 = Box.createHorizontalStrut(20);
+		horizontalStrut_2.setPreferredSize(new Dimension(100, 0));
+		panel_18.add(horizontalStrut_2);
+
+		JPanel panel_19 = new JPanel();
+		panel_19.setOpaque(false);
+		result_pane.add(panel_19, BorderLayout.EAST);
+
+		Component horizontalStrut_3 = Box.createHorizontalStrut(20);
+		horizontalStrut_3.setPreferredSize(new Dimension(100, 0));
+		panel_19.add(horizontalStrut_3);
+
+		JPanel panel_20 = new JPanel();
+		panel_20.setOpaque(false);
+		result_pane.add(panel_20, BorderLayout.CENTER);
+
+		JList list = new JList();
+		panel_20.add(list);
 		frame.setAlwaysOnTop(false);
 		frame.setBackground(Color.DARK_GRAY);
 		frame.setForeground(Color.DARK_GRAY);
@@ -330,7 +368,7 @@ public class main_view {
 
 		CardLayout cardLayout = (CardLayout) card_pane.getLayout();
 
-		cardLayout.last(card_pane);
+		cardLayout.next(card_pane);
 
 	}
 
@@ -340,14 +378,7 @@ public class main_view {
 		cardLayout.first(card_pane);
 	}
 
-	public void displayResult(boolean result) {
-
-		if (result) {
-
-			answerFeedbackLabel.setText("Correct!");
-		} else {
-			answerFeedbackLabel.setText("Wrong!");
-		}
+	public void displayResult(ArrayList<Boolean> list) {
 
 	};
 
