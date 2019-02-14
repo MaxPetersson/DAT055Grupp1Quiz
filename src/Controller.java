@@ -56,12 +56,13 @@ public class Controller {
 				m_game.generateQuiz(quizSize);
 
 				// 3. Get first question from Game.
-				Question firstQuestion = m_game.getNextQuestion();
+				// Question firstQuestion = m_game.getNextQuestion();
+				m_game.setNextQuestion();
 
 				// 4. Tell UI to display first question.
 				v_main_view.changeToQuizScreen();
-				v_main_view.displayQuestion(firstQuestion.getCategory(), firstQuestion.getQuestionText(),
-						m_game.getTotalNumberOfQuestionInQuiz(), m_game.getCurrentQuestion());
+//				v_main_view.displayQuestion(firstQuestion.getCategory(), firstQuestion.getQuestionText(),
+//						m_game.getTotalNumberOfQuestionInQuiz(), m_game.getCurrentQuestion());
 			} catch (NumberFormatException nfex) {
 				v_main_view.displayErrorMessage("Bad input: '" + userInput + "'");
 			} catch (BadUserInputException buiex) {
@@ -95,13 +96,17 @@ public class Controller {
 
 				if (m_game.existNextQuestion()) {
 					// 5. Get next question from Game.
-					Question nextQuestion = m_game.getNextQuestion();
+					// Question nextQuestion = m_game.getNextQuestion();
 					// 6. Tell UI to display next question.
-					v_main_view.displayQuestion(nextQuestion.getCategory(), nextQuestion.getQuestionText(),
-							m_game.getTotalNumberOfQuestionInQuiz(), m_game.getCurrentQuestion());
+					// v_main_view.displayQuestion(nextQuestion.getCategory(),
+					// nextQuestion.getQuestionText(),
+					// m_game.getTotalNumberOfQuestionInQuiz(), m_game.getCurrentQuestion());
+
+					m_game.setNextQuestion();
+
 				} else {
 					// 7. Show the start screen.
-					v_main_view.changeToStartScreen();
+					v_main_view.printResult(m_game.results);
 				}
 
 			} catch (NullPointerException npex) {

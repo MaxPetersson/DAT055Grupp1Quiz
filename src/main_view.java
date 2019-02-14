@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -10,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -27,11 +29,10 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
-public class main_view {
+public class main_view implements Observer {
 
 	private JFrame frame;
 	private JTextField qAmount;
-	private JTextField answerField;
 	private JPanel card_pane = new JPanel();
 	private JTextArea qtextarea = new JTextArea();
 	private JLabel qnolabel = new JLabel("X");
@@ -42,6 +43,8 @@ public class main_view {
 	private JLabel amountErrorLabel = new JLabel(" ");
 	private JLabel catLabel = new JLabel("Category");
 	private JLabel answerFeedbackLabel = new JLabel(" ");
+	private JTextArea resultArea = new JTextArea();
+	private JTextField answerField;
 
 	public void setVisible() {
 		frame.setVisible(true);
@@ -105,6 +108,7 @@ public class main_view {
 		main_pane.add(panel_6, BorderLayout.EAST);
 
 		JPanel panel_7 = new JPanel();
+		panel_7.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		panel_7.setOpaque(false);
 		main_pane.add(panel_7, BorderLayout.CENTER);
 		panel_7.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -112,18 +116,28 @@ public class main_view {
 		Box verticalBox = Box.createVerticalBox();
 		panel_7.add(verticalBox);
 
-		verticalBox.add(startQuizButton);
+		JPanel panel_22 = new JPanel();
+		panel_22.setOpaque(false);
+		verticalBox.add(panel_22);
+		panel_22.add(startQuizButton);
+		startQuizButton.setAlignmentY(Component.TOP_ALIGNMENT);
 		startQuizButton.setFont(new Font("Tahoma", Font.PLAIN, 28));
 
 		Component verticalStrut = Box.createVerticalStrut(30);
 		verticalBox.add(verticalStrut);
 
+		JPanel panel_23 = new JPanel();
+		panel_23.setOpaque(false);
+		verticalBox.add(panel_23);
+
 		Box horizontalBox = Box.createHorizontalBox();
+		panel_23.add(horizontalBox);
 		horizontalBox.setAlignmentX(Component.LEFT_ALIGNMENT);
-		verticalBox.add(horizontalBox);
 
 		JLabel lblAntalFrgor = new JLabel("Amount of Questions: ");
-		lblAntalFrgor.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblAntalFrgor.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		lblAntalFrgor.setHorizontalTextPosition(SwingConstants.LEFT);
+		lblAntalFrgor.setHorizontalAlignment(SwingConstants.LEFT);
 		horizontalBox.add(lblAntalFrgor);
 		lblAntalFrgor.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
@@ -249,16 +263,17 @@ public class main_view {
 		JPanel panel_11 = new JPanel();
 		panel_11.setOpaque(false);
 		question_pane.add(panel_11, "2, 2, fill, fill");
-		panel_11.setLayout(new FormLayout(
+		FormLayout fl_panel_11 = new FormLayout(
 				new ColumnSpec[] { FormFactory.LABEL_COMPONENT_GAP_COLSPEC, ColumnSpec.decode("40px"),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC, ColumnSpec.decode("374px:grow"),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC, ColumnSpec.decode("1px"),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC, ColumnSpec.decode("16px"), },
 				new RowSpec[] { FormFactory.LINE_GAP_ROWSPEC, RowSpec.decode("202px"), FormFactory.RELATED_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC, FormFactory.LINE_GAP_ROWSPEC, RowSpec.decode("100px"),
-						FormFactory.LINE_GAP_ROWSPEC, RowSpec.decode("1px"), FormFactory.RELATED_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC,
-						RowSpec.decode("default:grow"), }));
+						FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+						FormFactory.LINE_GAP_ROWSPEC, RowSpec.decode("100px"), FormFactory.LINE_GAP_ROWSPEC,
+						RowSpec.decode("1px"), FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+						FormFactory.RELATED_GAP_ROWSPEC, RowSpec.decode("default:grow"), });
+		panel_11.setLayout(fl_panel_11);
 
 		qtextarea.setFont(new Font("Calibri", Font.PLAIN, 18));
 		qtextarea.setLineWrap(true);
@@ -272,14 +287,17 @@ public class main_view {
 		Component verticalStrut_1 = Box.createVerticalStrut(20);
 		panel_11.add(verticalStrut_1, "4, 4, fill, center");
 
+		Box verticalBox_2 = Box.createVerticalBox();
+		panel_11.add(verticalBox_2, "4, 6");
+
 		JLabel lblSvar = new JLabel("Answer:");
-		panel_11.add(lblSvar, "2, 6, left, center");
+		lblSvar.setAlignmentY(Component.TOP_ALIGNMENT);
+		verticalBox_2.add(lblSvar);
 		lblSvar.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblSvar.setHorizontalAlignment(SwingConstants.LEFT);
 
 		answerField = new JTextField();
-		panel_11.add(answerField, "4, 6");
-		answerField.setMaximumSize(new Dimension(2147483647, 30));
+		verticalBox_2.add(answerField);
 		answerField.setColumns(10);
 
 		JPanel result_pane = new JPanel();
@@ -298,10 +316,26 @@ public class main_view {
 		JPanel panel_18 = new JPanel();
 		panel_18.setOpaque(false);
 		result_pane.add(panel_18, BorderLayout.WEST);
+		panel_18.setLayout(new BorderLayout(0, 0));
 
-		Component horizontalStrut_2 = Box.createHorizontalStrut(20);
+		Component horizontalStrut_2 = Box.createHorizontalStrut(30);
 		horizontalStrut_2.setPreferredSize(new Dimension(100, 0));
 		panel_18.add(horizontalStrut_2);
+
+		JPanel panel_21 = new JPanel();
+		panel_21.setOpaque(false);
+		panel_18.add(panel_21, BorderLayout.SOUTH);
+
+		JButton resultReturn = new JButton("< Return");
+		panel_21.add(resultReturn);
+		resultReturn.setAlignmentX(Component.CENTER_ALIGNMENT);
+		resultReturn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				CardLayout cardLayout = (CardLayout) card_pane.getLayout();
+				cardLayout.first(card_pane);
+			}
+		});
 
 		JPanel panel_19 = new JPanel();
 		panel_19.setOpaque(false);
@@ -314,9 +348,21 @@ public class main_view {
 		JPanel panel_20 = new JPanel();
 		panel_20.setOpaque(false);
 		result_pane.add(panel_20, BorderLayout.CENTER);
+		panel_20.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		JList list = new JList();
 		panel_20.add(list);
+
+		Box verticalBox_1 = Box.createVerticalBox();
+		panel_20.add(verticalBox_1);
+
+		Component verticalStrut_2 = Box.createVerticalStrut(50);
+		verticalBox_1.add(verticalStrut_2);
+		resultArea.setOpaque(false);
+
+		resultArea.setFont(new Font("Calibri", Font.PLAIN, 28));
+		resultArea.setColumns(20);
+		verticalBox_1.add(resultArea);
 		frame.setAlwaysOnTop(false);
 		frame.setBackground(Color.DARK_GRAY);
 		frame.setForeground(Color.DARK_GRAY);
@@ -392,7 +438,44 @@ public class main_view {
 		return qAmount.getText();
 	}
 
-	private void update(Observable o, Object arg) {
+	public void printResult(ArrayList<Boolean> results) {
+
+		resultArea.setRows(results.size());
+
+		String resultText = "";
+		int loop = 1;
+
+		for (Boolean i : results) {
+
+			if (i) {
+
+				resultText += "- " + loop + ". Rätt\n";
+
+			} else {
+
+				resultText += "- " + loop + ". Fel\n";
+
+			}
+			loop++;
+		}
+
+		resultArea.setText(resultText);
+
+		CardLayout cardLayout = (CardLayout) card_pane.getLayout();
+		cardLayout.last(card_pane);
+	}
+
+	public void update(Observable o, Object arg) {
+
+		if (o instanceof Game && arg instanceof QuizQuestion) {
+
+			QuizQuestion question = (QuizQuestion) arg;
+
+			displayQuestion(question.getCategory(), question.getQuestionText(), question.getTotalQuestions(),
+					question.getQuestionNumber());
+
+		}
+
 	}
 
 }

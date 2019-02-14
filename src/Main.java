@@ -6,9 +6,11 @@ public class Main {
 		final main_view theMainView = new main_view();
 		final NewQFrame theNewQFrame = new NewQFrame("QuestionFrame");
 		final Controller theController = new Controller(theMainView, theNewQFrame, theGame);
-		
+
+		theGame.addObserver(theMainView);
+
 		theMainView.setVisible();
-		
+
 	}
 
 }
