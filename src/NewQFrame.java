@@ -84,7 +84,7 @@ public class NewQFrame extends JFrame {
 
 	public ArrayList<String> getAnswers() {
 		ArrayList<String> answers = new ArrayList<String>();
-		answers.add(questionTextArea.getText());
+		answers.add(answerTextArea.getText());
 		return answers;
 	}
 

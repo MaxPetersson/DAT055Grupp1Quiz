@@ -35,8 +35,8 @@ public class Game extends Observable {
 
 		// Remove later
 		localQuestionBank.add(new Question(catArr[0], qtextarray[0], answers1));
-		localQuestionBank.add(new Question(catArr[1], qtextarray[1], answers1));
-		localQuestionBank.add(new Question(catArr[2], qtextarray[2], answers1));
+		localQuestionBank.add(new Question(catArr[1], qtextarray[1], answers2));
+		localQuestionBank.add(new Question(catArr[2], qtextarray[2], answers3));
 
 	}
 

@@ -143,6 +143,7 @@ public class Controller {
 					question = v_NewQFrame.getQuestion();
 					category = v_NewQFrame.getCategory();
 					answers.addAll(v_NewQFrame.getAnswers());
+					System.out.println(v_NewQFrame.getAnswers());
 					theQuestion = new Question(category, question, answers);
 					m_game.addQuestionToLocalQuestionBank(theQuestion);
 					JOptionPane.showMessageDialog(v_NewQFrame, "New question has been added!");

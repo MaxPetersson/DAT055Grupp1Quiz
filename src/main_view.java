@@ -45,6 +45,7 @@ public class main_view implements Observer {
 	private JLabel answerFeedbackLabel = new JLabel(" ");
 	private JTextArea resultArea = new JTextArea();
 	private JTextField answerField;
+	JLabel resultTotLabel = new JLabel("");
 
 	public void setVisible() {
 		frame.setVisible(true);
@@ -340,10 +341,18 @@ public class main_view implements Observer {
 		JPanel panel_19 = new JPanel();
 		panel_19.setOpaque(false);
 		result_pane.add(panel_19, BorderLayout.EAST);
+		panel_19.setLayout(new BorderLayout(0, 0));
 
 		Component horizontalStrut_3 = Box.createHorizontalStrut(20);
 		horizontalStrut_3.setPreferredSize(new Dimension(100, 0));
 		panel_19.add(horizontalStrut_3);
+
+		JPanel panel_24 = new JPanel();
+		panel_24.setOpaque(false);
+		panel_19.add(panel_24, BorderLayout.SOUTH);
+		resultTotLabel.setFont(new Font("Tahoma", Font.PLAIN, 26));
+
+		panel_24.add(resultTotLabel);
 
 		JPanel panel_20 = new JPanel();
 		panel_20.setOpaque(false);
@@ -424,10 +433,6 @@ public class main_view implements Observer {
 		cardLayout.first(card_pane);
 	}
 
-	public void displayResult(ArrayList<Boolean> list) {
-
-	};
-
 	public String getAnswer() {
 
 		return answerField.getText();
@@ -444,12 +449,14 @@ public class main_view implements Observer {
 
 		String resultText = "";
 		int loop = 1;
+		int ratt = 0;
 
 		for (Boolean i : results) {
 
 			if (i) {
 
 				resultText += "- " + loop + ". Rätt\n";
+				ratt++;
 
 			} else {
 
@@ -460,6 +467,7 @@ public class main_view implements Observer {
 		}
 
 		resultArea.setText(resultText);
+		resultTotLabel.setText("Totalt: " + ratt + "/" + (loop - 1));
 
 		CardLayout cardLayout = (CardLayout) card_pane.getLayout();
 		cardLayout.last(card_pane);
