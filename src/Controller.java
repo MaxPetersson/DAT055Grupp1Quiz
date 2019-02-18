@@ -144,9 +144,9 @@ public class Controller {
 					category = v_NewQFrame.getCategory();
 					answers.addAll(v_NewQFrame.getAnswers());
 					theQuestion = new Question(category, question, answers);
-					m_game.addQuestionToLocalQuestionBank(theQuestion);
+					m_game.addQuestionToQuestionBank(theQuestion);
 
-					if (!m_game.catArr.contains(theQuestion.getCategory())) {
+					if (!m_game.fetchCategories().contains(theQuestion.getCategory())) {
 						m_game.addCategory(theQuestion.getCategory());
 					}
 					JOptionPane.showMessageDialog(v_NewQFrame, "New question has been added!");

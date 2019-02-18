@@ -4,48 +4,19 @@ import java.util.List;
 import java.util.Observable;
 
 public class Game extends Observable {
-	ArrayList<Question> localQuestionBank = new ArrayList<Question>();
+
 	ArrayList<Question> currentQuiz;
 	ArrayList<Boolean> results = new ArrayList<Boolean>();
 	ArrayList<Question> categoryQuestions = new ArrayList<Question>();
 	int currentQuestion;
 	int nrOfQuestions;
 	QuizQuestion activeQuestion = new QuizQuestion(null, null, currentQuestion, currentQuestion);
+	private QuestionClient q_client = new QuestionClient();
 
-	// hardcoding of 3 questions
-	private String[] qtextarray = {
-			"En båt kör med en hastighet av fyra knop mot en brygga. En meter från bryggan saktar båten ner till tre knop. Har långt tid tar det att laga bryggan?",
-			"What is the air-speed velocity of an unladen swallow?",
-			"How much wood could a woodchuck chuck if a woodchuck could chuck wood? " };
-
-	// { "Gåtor", "Monty Python", "Trivia" };
-	private ArrayList<String> answers1;
-	private ArrayList<String> answers2;
-	private ArrayList<String> answers3;
-	ArrayList<String> catArr;
-
-	public Game() {
+	public Game(QuestionClient q_client) {
 		currentQuestion = 0;
 
-		// hardcoding of 3 questions
-		answers1 = new ArrayList<String>();
-		answers1.add("1");
-
-		answers2 = new ArrayList<String>();
-		answers2.add("1");
-
-		answers3 = new ArrayList<String>();
-		answers3.add("1");
-
-		catArr = new ArrayList<String>();
-		catArr.add("Gåtor");
-		catArr.add("Monty Python");
-		catArr.add("Trivia");
-
-		// Remove later
-		localQuestionBank.add(new Question(catArr.get(0), qtextarray[0], answers1));
-		localQuestionBank.add(new Question(catArr.get(1), qtextarray[1], answers2));
-		localQuestionBank.add(new Question(catArr.get(2), qtextarray[2], answers3));
+		this.q_client = q_client;
 
 	}
 
@@ -63,15 +34,14 @@ public class Game extends Observable {
 	}
 
 	// SETTER
-	public void addQuestionToLocalQuestionBank(Question qToAdd) {
-		localQuestionBank.add(qToAdd);
+
+	public void addQuestionToQuestionBank(Question qToAdd) {
+		q_client.addQuestionToQuestionBank(qToAdd);
 	}
 
 	public void addCategory(String catToAdd) {
 
-		catArr.add(catToAdd);
-		setChanged();
-		notifyObservers(catToAdd);
+		q_client.addCategory(catToAdd);
 	}
 
 	// returns true if quiz generated successfully
@@ -83,7 +53,7 @@ public class Game extends Observable {
 		results.clear();
 		categoryQuestions.clear();
 
-		for (Question i : localQuestionBank) { // picks out questions from the choosen category
+		for (Question i : q_client.questionBank) { // picks out questions from the choosen category
 			for (String j : category) {
 
 				if (i.getCategory().equals(j)) {
@@ -145,5 +115,17 @@ public class Game extends Observable {
 			return true;
 		}
 		return false;
+	}
+
+	public ArrayList<String> fetchCategories() {
+
+		return q_client.catArr;
+
+	}
+
+	public ArrayList<Question> fetchQuestions() {
+
+		return q_client.questionBank;
+
 	}
 }

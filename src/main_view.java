@@ -520,7 +520,7 @@ public class main_view implements Observer {
 					question.getQuestionNumber());
 
 		}
-		if (o instanceof Game && arg instanceof String) { // adds categories to list
+		if (o instanceof QuestionClient && arg instanceof String) { // adds categories to list
 
 			list_model.addElement((String) arg);
 
