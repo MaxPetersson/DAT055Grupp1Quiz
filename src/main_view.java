@@ -10,6 +10,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -21,9 +22,9 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 
 import com.jgoodies.forms.factories.FormFactory;
@@ -49,8 +50,8 @@ public class main_view implements Observer {
 	private JTextField answerField;
 	private String[] catArr = { "Gåtor", "Monty Python", "Trivia" };
 	private JLabel resultTotLabel = new JLabel("");
-	private DefaultListModel<String> list_model = new DefaultListModel<>();
-	private JList category_list = new JList(list_model);
+	private DefaultListModel<String> list_model = new DefaultListModel<String>();
+	private JList<String> category_list = new JList<String>(list_model);
 
 	public void setVisible() {
 		frame.setVisible(true);
@@ -120,6 +121,8 @@ public class main_view implements Observer {
 		panel_7.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		Box verticalBox = Box.createVerticalBox();
+		verticalBox.setAutoscrolls(true);
+		verticalBox.setMaximumSize(new Dimension(0, 10));
 		panel_7.add(verticalBox);
 
 		JPanel panel_22 = new JPanel();
@@ -132,7 +135,7 @@ public class main_view implements Observer {
 		Component verticalStrut = Box.createVerticalStrut(30);
 		verticalBox.add(verticalStrut);
 
-		JLabel lblKategorier = new JLabel("Kategorier:");
+		JLabel lblKategorier = new JLabel("Categories:");
 		lblKategorier.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		lblKategorier.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		verticalBox.add(lblKategorier);
@@ -141,11 +144,17 @@ public class main_view implements Observer {
 			list_model.addElement(catArr[i]);
 		}
 
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setPreferredSize(new Dimension(2, 60));
+
+		verticalBox.add(scrollPane);
+		scrollPane.setViewportView(category_list);
+		category_list.setVisibleRowCount(4);
+		category_list.setMinimumSize(new Dimension(10, 0));
+
 		category_list.setAlignmentY(Component.TOP_ALIGNMENT);
 		category_list.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		category_list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		category_list.setOpaque(false);
-		verticalBox.add(category_list);
 
 		Component verticalStrut_3 = Box.createVerticalStrut(30);
 		verticalBox.add(verticalStrut_3);
@@ -472,28 +481,33 @@ public class main_view implements Observer {
 
 		String resultText = "";
 		int loop = 1;
-		int ratt = 0;
+		int correct = 0;
 
 		for (Boolean i : results) {
 
 			if (i) {
 
-				resultText += "- " + loop + ". Rätt\n";
-				ratt++;
+				resultText += "- " + loop + ". Correct\n";
+				correct++;
 
 			} else {
 
-				resultText += "- " + loop + ". Fel\n";
+				resultText += "- " + loop + ". Wrong\n";
 
 			}
 			loop++;
 		}
 
 		resultArea.setText(resultText);
-		resultTotLabel.setText("Totalt: " + ratt + "/" + (loop - 1));
+		resultTotLabel.setText("Total: " + correct + "/" + (loop - 1));
 
 		CardLayout cardLayout = (CardLayout) card_pane.getLayout();
 		cardLayout.last(card_pane);
+	}
+
+	public List<String> selectedCategory() {
+
+		return category_list.getSelectedValuesList();
 	}
 
 	public void update(Observable o, Object arg) {
@@ -506,7 +520,7 @@ public class main_view implements Observer {
 					question.getQuestionNumber());
 
 		}
-		if (o instanceof Game && arg instanceof String) { // adderar kategroier
+		if (o instanceof Game && arg instanceof String) { // adds categories to list
 
 			list_model.addElement((String) arg);
 

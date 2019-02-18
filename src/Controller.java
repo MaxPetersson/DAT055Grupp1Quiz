@@ -53,7 +53,7 @@ public class Controller {
 				quizSize = Integer.parseInt(userInput);
 
 				// 2. Call Game to create new Quiz with size quizSize.
-				m_game.generateQuiz(quizSize);
+				m_game.generateQuiz(quizSize, v_main_view.selectedCategory());
 
 				// 3. Get first question from Game.
 				// Question firstQuestion = m_game.getNextQuestion();
@@ -145,7 +145,10 @@ public class Controller {
 					answers.addAll(v_NewQFrame.getAnswers());
 					theQuestion = new Question(category, question, answers);
 					m_game.addQuestionToLocalQuestionBank(theQuestion);
-					m_game.addCategory(theQuestion.getCategory());
+
+					if (!m_game.catArr.contains(theQuestion.getCategory())) {
+						m_game.addCategory(theQuestion.getCategory());
+					}
 					JOptionPane.showMessageDialog(v_NewQFrame, "New question has been added!");
 				} catch (NullPointerException ex) {
 					v_NewQFrame.displayErrorMessage("The error message");

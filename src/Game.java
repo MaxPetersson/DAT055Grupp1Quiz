@@ -1,11 +1,13 @@
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
 public class Game extends Observable {
 	ArrayList<Question> localQuestionBank = new ArrayList<Question>();
 	ArrayList<Question> currentQuiz;
 	ArrayList<Boolean> results = new ArrayList<Boolean>();
+	ArrayList<Question> categoryQuestions = new ArrayList<Question>();
 	int currentQuestion;
 	int nrOfQuestions;
 	QuizQuestion activeQuestion = new QuizQuestion(null, null, currentQuestion, currentQuestion);
@@ -20,7 +22,7 @@ public class Game extends Observable {
 	private ArrayList<String> answers1;
 	private ArrayList<String> answers2;
 	private ArrayList<String> answers3;
-	private ArrayList<String> catArr;
+	ArrayList<String> catArr;
 
 	public Game() {
 		currentQuestion = 0;
@@ -41,9 +43,9 @@ public class Game extends Observable {
 		catArr.add("Trivia");
 
 		// Remove later
-//		localQuestionBank.add(new Question(catArr[0], qtextarray[0], answers1));
-//		localQuestionBank.add(new Question(catArr[1], qtextarray[1], answers2));
-//		localQuestionBank.add(new Question(catArr[2], qtextarray[2], answers3));
+		localQuestionBank.add(new Question(catArr.get(0), qtextarray[0], answers1));
+		localQuestionBank.add(new Question(catArr.get(1), qtextarray[1], answers2));
+		localQuestionBank.add(new Question(catArr.get(2), qtextarray[2], answers3));
 
 	}
 
@@ -75,18 +77,44 @@ public class Game extends Observable {
 	// returns true if quiz generated successfully
 	// returns false if it didnt (most likely because there wasnt enough questions
 	// Set nrOfQuestions to max?
-	public boolean generateQuiz(int nrOfQuestions) throws BadUserInputException {
+	public boolean generateQuiz(int nrOfQuestions, List<String> category) throws BadUserInputException {
 
 		this.nrOfQuestions = nrOfQuestions;
 		results.clear();
+		categoryQuestions.clear();
 
-		if (nrOfQuestions > localQuestionBank.size() || nrOfQuestions < 1) {
+		for (Question i : localQuestionBank) { // picks out questions from the choosen category
+			for (String j : category) {
+
+				if (i.getCategory().equals(j)) {
+
+					categoryQuestions.add(i);
+
+				}
+			}
+		}
+
+		if (nrOfQuestions > categoryQuestions.size() || nrOfQuestions < 1) {
 			throw new BadUserInputException(
-					"There are only " + localQuestionBank.size() + " questions to choose from.");
+					"There are only " + categoryQuestions.size() + " questions to choose from.");
 		} else {
 			currentQuiz = new ArrayList<Question>();
-			for (int i = 0; i < nrOfQuestions; i++) {
-				currentQuiz.add(localQuestionBank.get(i));
+
+			for (int i = 0; i < nrOfQuestions;) {
+
+				int index = (int) Math.round((Math.random() * (categoryQuestions.size() - 1))); // returns a random
+																								// number
+																								// between 0
+																								// and the size of the
+																								// array of the
+																								// choosen category/-ies
+
+				if (!currentQuiz.contains(categoryQuestions.get(index))) { // makes sure that the randomly choosen
+																			// question
+																			// hasnt already been choosen
+					currentQuiz.add(categoryQuestions.get(index));
+					i++; // adds i if and only if a question has been added
+				}
 			}
 			currentQuestion = 0;
 			return true;
