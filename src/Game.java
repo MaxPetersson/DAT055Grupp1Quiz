@@ -15,10 +15,12 @@ public class Game extends Observable {
 			"En båt kör med en hastighet av fyra knop mot en brygga. En meter från bryggan saktar båten ner till tre knop. Har långt tid tar det att laga bryggan?",
 			"What is the air-speed velocity of an unladen swallow?",
 			"How much wood could a woodchuck chuck if a woodchuck could chuck wood? " };
-	private String[] catArr = { "Gåtor", "Monty Python", "Trivia" };
+
+	// { "Gåtor", "Monty Python", "Trivia" };
 	private ArrayList<String> answers1;
 	private ArrayList<String> answers2;
 	private ArrayList<String> answers3;
+	private ArrayList<String> catArr;
 
 	public Game() {
 		currentQuestion = 0;
@@ -33,10 +35,15 @@ public class Game extends Observable {
 		answers3 = new ArrayList<String>();
 		answers3.add("1");
 
+		catArr = new ArrayList<String>();
+		catArr.add("Gåtor");
+		catArr.add("Monty Python");
+		catArr.add("Trivia");
+
 		// Remove later
-		localQuestionBank.add(new Question(catArr[0], qtextarray[0], answers1));
-		localQuestionBank.add(new Question(catArr[1], qtextarray[1], answers2));
-		localQuestionBank.add(new Question(catArr[2], qtextarray[2], answers3));
+//		localQuestionBank.add(new Question(catArr[0], qtextarray[0], answers1));
+//		localQuestionBank.add(new Question(catArr[1], qtextarray[1], answers2));
+//		localQuestionBank.add(new Question(catArr[2], qtextarray[2], answers3));
 
 	}
 
@@ -56,6 +63,13 @@ public class Game extends Observable {
 	// SETTER
 	public void addQuestionToLocalQuestionBank(Question qToAdd) {
 		localQuestionBank.add(qToAdd);
+	}
+
+	public void addCategory(String catToAdd) {
+
+		catArr.add(catToAdd);
+		setChanged();
+		notifyObservers(catToAdd);
 	}
 
 	// returns true if quiz generated successfully

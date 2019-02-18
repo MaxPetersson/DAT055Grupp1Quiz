@@ -14,6 +14,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.Box;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,6 +23,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 
 import com.jgoodies.forms.factories.FormFactory;
@@ -45,7 +47,10 @@ public class main_view implements Observer {
 	private JLabel answerFeedbackLabel = new JLabel(" ");
 	private JTextArea resultArea = new JTextArea();
 	private JTextField answerField;
-	JLabel resultTotLabel = new JLabel("");
+	private String[] catArr = { "Gåtor", "Monty Python", "Trivia" };
+	private JLabel resultTotLabel = new JLabel("");
+	private DefaultListModel<String> list_model = new DefaultListModel<>();
+	private JList category_list = new JList(list_model);
 
 	public void setVisible() {
 		frame.setVisible(true);
@@ -126,6 +131,24 @@ public class main_view implements Observer {
 
 		Component verticalStrut = Box.createVerticalStrut(30);
 		verticalBox.add(verticalStrut);
+
+		JLabel lblKategorier = new JLabel("Kategorier:");
+		lblKategorier.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		lblKategorier.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		verticalBox.add(lblKategorier);
+
+		for (int i = 0; i < catArr.length; i++) {
+			list_model.addElement(catArr[i]);
+		}
+
+		category_list.setAlignmentY(Component.TOP_ALIGNMENT);
+		category_list.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		category_list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		category_list.setOpaque(false);
+		verticalBox.add(category_list);
+
+		Component verticalStrut_3 = Box.createVerticalStrut(30);
+		verticalBox.add(verticalStrut_3);
 
 		JPanel panel_23 = new JPanel();
 		panel_23.setOpaque(false);
@@ -481,6 +504,11 @@ public class main_view implements Observer {
 
 			displayQuestion(question.getCategory(), question.getQuestionText(), question.getTotalQuestions(),
 					question.getQuestionNumber());
+
+		}
+		if (o instanceof Game && arg instanceof String) { // adderar kategroier
+
+			list_model.addElement((String) arg);
 
 		}
 

@@ -145,6 +145,7 @@ public class Controller {
 					answers.addAll(v_NewQFrame.getAnswers());
 					theQuestion = new Question(category, question, answers);
 					m_game.addQuestionToLocalQuestionBank(theQuestion);
+					m_game.addCategory(theQuestion.getCategory());
 					JOptionPane.showMessageDialog(v_NewQFrame, "New question has been added!");
 				} catch (NullPointerException ex) {
 					v_NewQFrame.displayErrorMessage("The error message");
