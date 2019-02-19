@@ -43,14 +43,29 @@ public class QuestionClient extends Observable {
 	// SETTER
 	public void addQuestionToQuestionBank(Question qToAdd) {
 		questionBank.add(qToAdd);
+		setChanged();
+		notifyObservers(questionBank);
 	}
 
 	public void addCategory(String catToAdd) {
 
 		catArr.add(catToAdd);
-
 		setChanged();
 		notifyObservers(catArr);
+	}
+
+	public void removeQuestion(Question theQuestion) {
+
+		questionBank.remove(theQuestion);
+		setChanged();
+		notifyObservers(questionBank);
+
+		if (!questionBank.contains(theQuestion.getCategory())) {
+			catArr.remove(theQuestion.getCategory());
+			setChanged();
+			notifyObservers(catArr);
+		}
+
 	}
 
 }

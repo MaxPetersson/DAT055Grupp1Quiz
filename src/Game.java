@@ -130,4 +130,20 @@ public class Game extends Observable {
 		return q_client.questionBank;
 
 	}
+
+	public void deleteQuestion(String category, String question) {
+
+		ArrayList<Question> questions = fetchQuestions();
+
+		for (Question i : questions) {
+
+			if (i.getQuestionText().equals(question) && i.getCategory().equals(category)) {
+				q_client.removeQuestion(i);
+				break;
+			}
+
+		}
+
+	}
+
 }

@@ -27,6 +27,7 @@ public class Controller {
 		this.v_main_view.addNewQuestionListener(new CreateNewQuestionListener());
 		this.v_NewQFrame.addSubmitNewQuestionListener(new SubmitNewQuestionListener());
 		this.v_main_view.addEditQuestionsListener(new EditQuestionsListener());
+		this.v_main_view.addDeleteQuestionsListener(new DeleteQuestionsListener());
 
 	}
 
@@ -55,7 +56,7 @@ public class Controller {
 				quizSize = Integer.parseInt(userInput);
 
 				// 2. Call Game to create new Quiz with size quizSize.
-				m_game.generateQuiz(quizSize, v_main_view.selectedCategory());
+				m_game.generateQuiz(quizSize, v_main_view.getSelectedCategory());
 
 				// 3. Get first question from Game.
 				// Question firstQuestion = m_game.getNextQuestion();
@@ -153,6 +154,7 @@ public class Controller {
 
 					if (!m_game.fetchCategories().contains(theQuestion.getCategory())) {
 						m_game.addCategory(theQuestion.getCategory());
+						System.out.println("temp");
 					}
 
 					JOptionPane.showMessageDialog(v_NewQFrame, "New question has been added!");
@@ -172,6 +174,17 @@ public class Controller {
 
 			ArrayList<Question> questions = m_game.fetchQuestions();
 			v_main_view.printQuestionsList(questions);
+		}
+
+	}
+
+	class DeleteQuestionsListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+
+			String[] parts = v_main_view.getSelectedQuestion().substring(3).split(" - ");
+
+			m_game.deleteQuestion(parts[0], parts[1]);
+
 		}
 
 	}
