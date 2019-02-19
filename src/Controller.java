@@ -26,6 +26,8 @@ public class Controller {
 		this.v_main_view.addSubmitAnswerListener(new SubmitAnswerListener());
 		this.v_main_view.addNewQuestionListener(new CreateNewQuestionListener());
 		this.v_NewQFrame.addSubmitNewQuestionListener(new SubmitNewQuestionListener());
+		this.v_main_view.addEditQuestionsListener(new EditQuestionsListener());
+
 	}
 
 	///// INNER CLASS NewGameListener
@@ -75,7 +77,7 @@ public class Controller {
 	///// INNER CLASS SubmitAnswerListener
 	///// ////////////////////////////////////////////////////////////////////////////
 	/*
-	 * When AWNSER is submitted. 1. Get answer from UI. 2. Call Game to compare
+	 * When ANSWER is submitted. 1. Get answer from UI. 2. Call Game to compare
 	 * [submitted answer] with [question answer]. 3. Get result from Game. 4. Tell
 	 * UI to display the result. 5. Get next question from Game. 6. Tell UI to
 	 * display question from Game. 7. End game if there is no more questions.
@@ -138,10 +140,13 @@ public class Controller {
 			String category = "";
 			ArrayList<String> answers = new ArrayList<String>();
 			Question theQuestion;
+
 			if (fieldsOK()) {
 				try {
 					question = v_NewQFrame.getQuestion();
-					category = v_NewQFrame.getCategory();
+					category = v_NewQFrame.getCategory().substring(0, 1).toUpperCase() // sets first letter to uppercase
+																						// and leaves rest alone
+							+ v_NewQFrame.getCategory().substring(1);
 					answers.addAll(v_NewQFrame.getAnswers());
 					theQuestion = new Question(category, question, answers);
 					m_game.addQuestionToQuestionBank(theQuestion);
@@ -149,6 +154,7 @@ public class Controller {
 					if (!m_game.fetchCategories().contains(theQuestion.getCategory())) {
 						m_game.addCategory(theQuestion.getCategory());
 					}
+
 					JOptionPane.showMessageDialog(v_NewQFrame, "New question has been added!");
 				} catch (NullPointerException ex) {
 					v_NewQFrame.displayErrorMessage("The error message");
@@ -159,6 +165,15 @@ public class Controller {
 			}
 
 		}
+	}
+
+	class EditQuestionsListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+
+			ArrayList<Question> questions = m_game.fetchQuestions();
+			v_main_view.printQuestionsList(questions);
+		}
+
 	}
 
 	private boolean fieldsOK() { // check if ok to submit

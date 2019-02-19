@@ -12,6 +12,7 @@ public class Game extends Observable {
 	int nrOfQuestions;
 	QuizQuestion activeQuestion = new QuizQuestion(null, null, currentQuestion, currentQuestion);
 	private QuestionClient q_client = new QuestionClient();
+	public ArrayList<String> catArr;
 
 	public Game(QuestionClient q_client) {
 		currentQuestion = 0;
@@ -84,6 +85,7 @@ public class Game extends Observable {
 																			// hasnt already been choosen
 					currentQuiz.add(categoryQuestions.get(index));
 					i++; // adds i if and only if a question has been added
+
 				}
 			}
 			currentQuestion = 0;

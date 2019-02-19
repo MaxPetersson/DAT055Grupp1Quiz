@@ -10,6 +10,8 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -25,6 +27,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
 import com.jgoodies.forms.factories.FormFactory;
@@ -43,15 +46,18 @@ public class main_view implements Observer {
 	private JButton newQuestionButton = new JButton("+ New Question");
 	private JButton submitbutton = new JButton("Submit");
 	private JButton startQuizButton = new JButton("Start Quiz");
+	JButton edit_question_button = new JButton("Edit questions");
 	private JLabel amountErrorLabel = new JLabel(" ");
 	private JLabel catLabel = new JLabel("Category");
 	private JLabel answerFeedbackLabel = new JLabel(" ");
 	private JTextArea resultArea = new JTextArea();
 	private JTextField answerField;
-	private String[] catArr = { "Gåtor", "Monty Python", "Trivia" };
+	public ArrayList<String> catArr;
 	private JLabel resultTotLabel = new JLabel("");
 	private DefaultListModel<String> list_model = new DefaultListModel<String>();
 	private JList<String> category_list = new JList<String>(list_model);
+	private DefaultListModel<String> questionsList_model = new DefaultListModel<String>();
+	JList<String> questionList = new JList<String>(questionsList_model);
 
 	public void setVisible() {
 		frame.setVisible(true);
@@ -73,13 +79,57 @@ public class main_view implements Observer {
 		panel.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel_1 = new JPanel();
+		panel_1.setPreferredSize(new Dimension(140, 10));
 		panel_1.setBackground(new Color(0, 206, 209));
-		panel_1.setMinimumSize(new Dimension(100, 100));
+		panel_1.setMinimumSize(new Dimension(110, 100));
 		panel.add(panel_1, BorderLayout.WEST);
-		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		panel_1.setLayout(new BorderLayout(0, 0));
+
+		Box verticalBox_3 = Box.createVerticalBox();
+		panel_1.add(verticalBox_3);
+
+		Component verticalStrut_7 = Box.createVerticalStrut(20);
+		verticalBox_3.add(verticalStrut_7);
+		newQuestionButton.setHorizontalAlignment(SwingConstants.TRAILING);
+		newQuestionButton.setPreferredSize(new Dimension(125, 25));
+		verticalBox_3.add(newQuestionButton);
 
 		newQuestionButton.setVerticalAlignment(SwingConstants.TOP);
-		panel_1.add(newQuestionButton);
+
+		Component verticalStrut_4 = Box.createVerticalStrut(20);
+		verticalStrut_4.setPreferredSize(new Dimension(0, 10));
+		verticalStrut_4.setMinimumSize(new Dimension(0, 10));
+		verticalBox_3.add(verticalStrut_4);
+
+		edit_question_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		edit_question_button.setMaximumSize(new Dimension(125, 25));
+		edit_question_button.setMinimumSize(new Dimension(125, 25));
+		edit_question_button.setPreferredSize(new Dimension(125, 25));
+		edit_question_button.setVerticalAlignment(SwingConstants.TOP);
+		verticalBox_3.add(edit_question_button);
+
+		JPanel panel_30 = new JPanel();
+		panel_30.setOpaque(false);
+		panel_1.add(panel_30, BorderLayout.SOUTH);
+
+		JButton returnButton = new JButton("< Return");
+		returnButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				CardLayout cardLayout = (CardLayout) card_pane.getLayout();
+				cardLayout.first(card_pane);
+			}
+		});
+		panel_30.add(returnButton);
+
+		JPanel panel_31 = new JPanel();
+		panel_31.setPreferredSize(new Dimension(7, 10));
+		panel_31.setMinimumSize(new Dimension(5, 10));
+		panel_31.setOpaque(false);
+		panel_1.add(panel_31, BorderLayout.WEST);
 
 		card_pane.setOpaque(false);
 		panel.add(card_pane, BorderLayout.CENTER);
@@ -139,10 +189,6 @@ public class main_view implements Observer {
 		lblKategorier.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		lblKategorier.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		verticalBox.add(lblKategorier);
-
-		for (int i = 0; i < catArr.length; i++) {
-			list_model.addElement(catArr[i]);
-		}
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setPreferredSize(new Dimension(2, 60));
@@ -254,17 +300,6 @@ public class main_view implements Observer {
 		panel_8.add(panel_12, BorderLayout.SOUTH);
 		panel_12.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
-		JButton returnbutton = new JButton("< Return");
-		returnbutton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				CardLayout cardLayout = (CardLayout) card_pane.getLayout();
-				cardLayout.first(card_pane);
-
-			}
-		});
-		panel_12.add(returnbutton);
-
 		JPanel panel_9 = new JPanel();
 		panel_9.setOpaque(false);
 		question_pane.add(panel_9, "1, 3, 3, 1, fill, top");
@@ -359,17 +394,6 @@ public class main_view implements Observer {
 		panel_21.setOpaque(false);
 		panel_18.add(panel_21, BorderLayout.SOUTH);
 
-		JButton resultReturn = new JButton("< Return");
-		panel_21.add(resultReturn);
-		resultReturn.setAlignmentX(Component.CENTER_ALIGNMENT);
-		resultReturn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				CardLayout cardLayout = (CardLayout) card_pane.getLayout();
-				cardLayout.first(card_pane);
-			}
-		});
-
 		JPanel panel_19 = new JPanel();
 		panel_19.setOpaque(false);
 		result_pane.add(panel_19, BorderLayout.EAST);
@@ -404,6 +428,47 @@ public class main_view implements Observer {
 		resultArea.setFont(new Font("Calibri", Font.PLAIN, 28));
 		resultArea.setColumns(20);
 		verticalBox_1.add(resultArea);
+
+		JPanel editQuestions_pane = new JPanel();
+		editQuestions_pane.setOpaque(false);
+		card_pane.add(editQuestions_pane, "name_374809113378669");
+		editQuestions_pane.setLayout(new BorderLayout(0, 0));
+
+		JPanel panel_25 = new JPanel();
+		panel_25.setOpaque(false);
+		editQuestions_pane.add(panel_25, BorderLayout.NORTH);
+
+		JLabel lblEditQuestions = new JLabel("Edit Questions");
+		lblEditQuestions.setFont(new Font("Tahoma", Font.PLAIN, 48));
+		panel_25.add(lblEditQuestions);
+
+		JPanel panel_26 = new JPanel();
+		panel_26.setOpaque(false);
+		editQuestions_pane.add(panel_26, BorderLayout.CENTER);
+		panel_26.setLayout(new BorderLayout(0, 0));
+
+		Box verticalBox_4 = Box.createVerticalBox();
+		panel_26.add(verticalBox_4, BorderLayout.NORTH);
+
+		Component verticalStrut_5 = Box.createVerticalStrut(20);
+		verticalStrut_5.setPreferredSize(new Dimension(0, 40));
+		verticalStrut_5.setMinimumSize(new Dimension(0, 40));
+		verticalBox_4.add(verticalStrut_5);
+
+		JPanel panel_28 = new JPanel();
+		verticalBox_4.add(panel_28);
+		panel_28.setOpaque(false);
+
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setPreferredSize(new Dimension(400, 200));
+		scrollPane_1.setMaximumSize(new Dimension(400, 400));
+		scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		panel_28.add(scrollPane_1);
+		questionList.setMaximumSize(new Dimension(400, 400));
+
+		scrollPane_1.setViewportView(questionList);
+
+		questionList.setVisibleRowCount(4);
 		frame.setAlwaysOnTop(false);
 		frame.setBackground(Color.DARK_GRAY);
 		frame.setForeground(Color.DARK_GRAY);
@@ -414,6 +479,12 @@ public class main_view implements Observer {
 	public void addSubmitAnswerListener(ActionListener listenForSubmitAnswer) {
 
 		submitbutton.addActionListener(listenForSubmitAnswer);
+
+	}
+
+	public void addEditQuestionsListener(ActionListener listenForEditQuestion) {
+
+		edit_question_button.addActionListener(listenForEditQuestion);
 
 	}
 
@@ -502,12 +573,47 @@ public class main_view implements Observer {
 		resultTotLabel.setText("Total: " + correct + "/" + (loop - 1));
 
 		CardLayout cardLayout = (CardLayout) card_pane.getLayout();
-		cardLayout.last(card_pane);
+		cardLayout.next(card_pane);
 	}
 
 	public List<String> selectedCategory() {
 
 		return category_list.getSelectedValuesList();
+	}
+
+	public void setCategories(ArrayList<String> categoryArray) {
+
+		this.catArr = categoryArray;
+
+		catArr.sort(null);
+
+		for (int i = 0; i < catArr.size(); i++) {
+			list_model.addElement(catArr.get(i));
+		}
+
+	}
+
+	public void printQuestionsList(ArrayList<Question> questions) {
+
+		questionsList_model.clear();
+
+		Collections.sort(questions, new Comparator<Question>() {
+			@Override
+			public int compare(Question s1, Question s2) {
+				return s1.getCategory().compareToIgnoreCase(s2.getCategory());
+			}
+		});
+
+		for (int i = 0; i < questions.size(); i++) {
+
+			questionsList_model.addElement(
+					i + 1 + ". " + questions.get(i).getCategory() + " - " + questions.get(i).getQuestionText());
+
+		}
+
+		CardLayout cardLayout = (CardLayout) card_pane.getLayout();
+		cardLayout.last(card_pane);
+
 	}
 
 	public void update(Observable o, Object arg) {
@@ -520,9 +626,12 @@ public class main_view implements Observer {
 					question.getQuestionNumber());
 
 		}
-		if (o instanceof QuestionClient && arg instanceof String) { // adds categories to list
+		if (o instanceof QuestionClient && arg instanceof ArrayList<?>) { // adds categories to list
 
-			list_model.addElement((String) arg);
+			ArrayList<String> categoryArray = (ArrayList<String>) arg;
+
+			list_model.clear();
+			setCategories(categoryArray);
 
 		}
 

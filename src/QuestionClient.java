@@ -5,6 +5,7 @@ import java.util.Observable;
 public class QuestionClient extends Observable {
 
 	public ArrayList<Question> questionBank = new ArrayList<Question>();
+	public ArrayList<String> catArr;
 	// hardcoding of 3 questions
 	private String[] qtextarray = {
 			"En båt kör med en hastighet av fyra knop mot en brygga. En meter från bryggan saktar båten ner till tre knop. Har långt tid tar det att laga bryggan?",
@@ -14,7 +15,6 @@ public class QuestionClient extends Observable {
 	private ArrayList<String> answers1;
 	private ArrayList<String> answers2;
 	private ArrayList<String> answers3;
-	public ArrayList<String> catArr;
 
 	public QuestionClient() {
 
@@ -48,8 +48,9 @@ public class QuestionClient extends Observable {
 	public void addCategory(String catToAdd) {
 
 		catArr.add(catToAdd);
+
 		setChanged();
-		notifyObservers(catToAdd);
+		notifyObservers(catArr);
 	}
 
 }
