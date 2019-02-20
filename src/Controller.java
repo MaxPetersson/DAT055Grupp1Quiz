@@ -56,16 +56,22 @@ public class Controller {
 				quizSize = Integer.parseInt(userInput);
 
 				// 2. Call Game to create new Quiz with size quizSize.
-				m_game.generateQuiz(quizSize, v_main_view.getSelectedCategory());
+				if (!v_main_view.getSelectedCategory().isEmpty()) {
+					m_game.generateQuiz(quizSize, v_main_view.getSelectedCategory());
 
-				// 3. Get first question from Game.
-				// Question firstQuestion = m_game.getNextQuestion();
-				m_game.setNextQuestion();
+					// 3. Get first question from Game.
+					// Question firstQuestion = m_game.getNextQuestion();
+					m_game.setNextQuestion();
 
-				// 4. Tell UI to display first question.
-				v_main_view.changeToQuizScreen();
+					// 4. Tell UI to display first question.
+					v_main_view.changeToQuizScreen();
 //				v_main_view.displayQuestion(firstQuestion.getCategory(), firstQuestion.getQuestionText(),
 //						m_game.getTotalNumberOfQuestionInQuiz(), m_game.getCurrentQuestion());
+
+				} else {
+					v_main_view.displayErrorMessage("Choose a category");
+
+				}
 			} catch (NumberFormatException nfex) {
 				v_main_view.displayErrorMessage("Bad input: '" + userInput + "'");
 			} catch (BadUserInputException buiex) {
