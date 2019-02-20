@@ -60,7 +60,15 @@ public class QuestionClient extends Observable {
 		setChanged();
 		notifyObservers(questionBank);
 
-		if (!questionBank.contains(theQuestion.getCategory())) {
+		boolean categoryLeft = false; // this part erases the category from the categorylist should there be no more
+										// questions with that category
+		for (Question i : questionBank) {
+
+			if (i.getCategory().equals(theQuestion.getCategory())) {
+				categoryLeft = true;
+			}
+		}
+		if (!categoryLeft) {
 			catArr.remove(theQuestion.getCategory());
 			setChanged();
 			notifyObservers(catArr);
