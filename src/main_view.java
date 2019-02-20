@@ -601,6 +601,10 @@ public class main_view implements Observer {
 		resultArea.setText(resultText);
 		resultTotLabel.setText("Total: " + correct + "/" + (loop - 1));
 
+		CardLayout cardLayout = (CardLayout) card_pane.getLayout();
+
+		cardLayout.next(card_pane);
+
 	}
 
 	public List<String> getSelectedCategory() {
@@ -653,25 +657,21 @@ public class main_view implements Observer {
 					question.getQuestionNumber());
 
 		}
-		if (o instanceof QuestionClient && arg instanceof ArrayList<?>) { // adds categories to list
+		if (o instanceof QuestionClient && arg instanceof ArrayList<?>) {
 
-			DefaultListModel<String> temp = list_model;
+			if (((ArrayList<Question>) arg).get(0) instanceof Question) {
 
-			try {
+				questionsList_model.clear();
+				ArrayList<Question> qArray = (ArrayList<Question>) arg;
+				printQuestionsList(qArray);
+
+			} else { // adds categories to list
 
 				ArrayList<String> categoryArray = (ArrayList<String>) arg;
 
 				list_model.clear();
 				setCategories(categoryArray);
 
-			} catch (ClassCastException ex) {
-
-				list_model = temp;
-				questionsList_model.clear();
-				ArrayList<Question> qArray = (ArrayList<Question>) arg;
-				printQuestionsList(qArray);
-
-			} finally {
 			}
 
 		}

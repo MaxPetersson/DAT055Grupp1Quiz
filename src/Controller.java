@@ -154,7 +154,7 @@ public class Controller {
 
 					if (!m_game.fetchCategories().contains(theQuestion.getCategory())) {
 						m_game.addCategory(theQuestion.getCategory());
-						System.out.println("temp");
+
 					}
 
 					JOptionPane.showMessageDialog(v_NewQFrame, "New question has been added!");

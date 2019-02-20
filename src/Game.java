@@ -66,8 +66,7 @@ public class Game extends Observable {
 		}
 
 		if (nrOfQuestions > categoryQuestions.size() || nrOfQuestions < 1) {
-			throw new BadUserInputException(
-					"There are only " + categoryQuestions.size() + " questions to choose from.");
+			throw new BadUserInputException("Choose a number between 1 and " + categoryQuestions.size());
 		} else {
 			currentQuiz = new ArrayList<Question>();
 
