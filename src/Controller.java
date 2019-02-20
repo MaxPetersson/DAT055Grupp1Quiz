@@ -55,7 +55,8 @@ public class Controller {
 				userInput = v_main_view.getQuizSize();
 				quizSize = Integer.parseInt(userInput);
 
-				// 2. Call Game to create new Quiz with size quizSize.
+				// 2. Call Game to create new Quiz with size quizSize if atleast one category
+				// has been choosen
 				if (!v_main_view.getSelectedCategory().isEmpty()) {
 					m_game.generateQuiz(quizSize, v_main_view.getSelectedCategory());
 
@@ -65,7 +66,7 @@ public class Controller {
 
 					// 4. Tell UI to display first question.
 					v_main_view.changeToQuizScreen();
-//				v_main_view.displayQuestion(firstQuestion.getCategory(), firstQuestion.getQuestionText(),
+//						v_main_view.displayQuestion(firstQuestion.getCategory(), firstQuestion.getQuestionText(),
 //						m_game.getTotalNumberOfQuestionInQuiz(), m_game.getCurrentQuestion());
 
 				} else {
