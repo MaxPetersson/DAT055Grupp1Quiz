@@ -8,6 +8,8 @@ public class Game extends Observable {
 	ArrayList<Question> currentQuiz;
 	ArrayList<Boolean> results = new ArrayList<Boolean>();
 	ArrayList<Question> categoryQuestions = new ArrayList<Question>();
+	ArrayList<String> userAnswers = new ArrayList<String>();
+
 	int currentQuestion;
 	int nrOfQuestions;
 	QuizQuestion activeQuestion = new QuizQuestion(null, null, currentQuestion, currentQuestion);
@@ -51,6 +53,7 @@ public class Game extends Observable {
 	public boolean generateQuiz(int nrOfQuestions, List<String> category) throws BadUserInputException {
 
 		this.nrOfQuestions = nrOfQuestions;
+		userAnswers.clear();
 		results.clear();
 		categoryQuestions.clear();
 
@@ -96,7 +99,7 @@ public class Game extends Observable {
 	public void compareAnswer(String userAnswer) {
 
 		results.add(currentQuestion - 1, currentQuiz.get(currentQuestion - 1).getAnswers().get(0).equals(userAnswer));
-
+		userAnswers.add(userAnswer);
 	}
 
 	public void setNextQuestion() {

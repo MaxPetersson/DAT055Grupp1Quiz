@@ -28,6 +28,8 @@ public class Controller {
 		this.v_NewQFrame.addSubmitNewQuestionListener(new SubmitNewQuestionListener());
 		this.v_main_view.addEditQuestionsListener(new EditQuestionsListener());
 		this.v_main_view.addDeleteQuestionsListener(new DeleteQuestionsListener());
+		v_main_view.setCategories(m_game.fetchCategories());
+		m_game.fetchQuestions();
 
 	}
 
@@ -116,7 +118,7 @@ public class Controller {
 
 				} else {
 					// 7. Show the start screen.
-					v_main_view.printResult(m_game.results);
+					v_main_view.printResult(m_game.results, m_game.userAnswers, m_game.currentQuiz);
 				}
 
 			} catch (NullPointerException npex) {

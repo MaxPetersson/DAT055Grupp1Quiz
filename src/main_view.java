@@ -29,6 +29,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
+import javax.swing.text.DefaultCaret;
 
 import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -60,6 +61,7 @@ public class main_view implements Observer {
 	private JList<String> questionList = new JList<String>(questionsList_model);
 	private JButton editQuestionButton = new JButton("Edit question");
 	private JButton deleteQuestionButton = new JButton("Delete question");
+	private JLabel lblResult = new JLabel("Result");
 
 	public void setVisible() {
 		frame.setVisible(true);
@@ -102,6 +104,7 @@ public class main_view implements Observer {
 		verticalStrut_4.setPreferredSize(new Dimension(0, 10));
 		verticalStrut_4.setMinimumSize(new Dimension(0, 10));
 		verticalBox_3.add(verticalStrut_4);
+		edit_question_button.setVisible(false);
 
 		edit_question_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -384,7 +387,6 @@ public class main_view implements Observer {
 		panel_17.setOpaque(false);
 		result_pane.add(panel_17, BorderLayout.NORTH);
 
-		JLabel lblResult = new JLabel("Result");
 		lblResult.setFont(new Font("Tahoma", Font.PLAIN, 48));
 		panel_17.add(lblResult);
 
@@ -430,11 +432,26 @@ public class main_view implements Observer {
 
 		Component verticalStrut_2 = Box.createVerticalStrut(50);
 		verticalBox_1.add(verticalStrut_2);
-		resultArea.setOpaque(false);
 
-		resultArea.setFont(new Font("Calibri", Font.PLAIN, 28));
+		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setViewportBorder(null);
+		scrollPane_2.setOpaque(false);
+		scrollPane_2.setBackground(new Color(135, 206, 235));
+		scrollPane_2.setPreferredSize(new Dimension(500, 350));
+
+		verticalBox_1.add(scrollPane_2);
+
+		DefaultCaret caret = (DefaultCaret) resultArea.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
+		resultArea.setBackground(new Color(0, 206, 209));
+		resultArea.setEditable(false);
+		scrollPane_2.setViewportView(resultArea);
+		scrollPane_2.getViewport().setOpaque(false);
+		resultArea.setWrapStyleWord(true);
+		resultArea.setOpaque(false);
+		resultArea.setLineWrap(true);
+		resultArea.setFont(new Font("Calibri", Font.PLAIN, 16));
 		resultArea.setColumns(20);
-		verticalBox_1.add(resultArea);
 
 		JPanel editQuestions_pane = new JPanel();
 		editQuestions_pane.setOpaque(false);
@@ -575,7 +592,7 @@ public class main_view implements Observer {
 		return qAmount.getText();
 	}
 
-	public void printResult(ArrayList<Boolean> results) {
+	public void printResult(ArrayList<Boolean> results, ArrayList<String> answers, ArrayList<Question> questions) {
 
 		resultArea.setRows(results.size());
 
@@ -587,19 +604,24 @@ public class main_view implements Observer {
 
 			if (i) {
 
-				resultText += "- " + loop + ". Correct\n";
+				resultText += "- Question " + loop + ". Correct\n";
+				resultText += "---------------------------------\n";
 				correct++;
 
 			} else {
 
 				resultText += "- " + loop + ". Wrong\n";
+				resultText += "Question: \n" + questions.get(loop - 1).getQuestionText() + "\n\n";
+				resultText += "Answer: " + questions.get(loop - 1).getAnswers().get(0) + "\n\n";
+				resultText += "Your answer: " + answers.get(loop - 1) + "\n\n";
+				resultText += "---------------------------------\n";
 
 			}
 			loop++;
 		}
 
 		resultArea.setText(resultText);
-		resultTotLabel.setText("Total: " + correct + "/" + (loop - 1));
+		lblResult.setText("Result: " + correct + "/" + (loop - 1));
 
 		CardLayout cardLayout = (CardLayout) card_pane.getLayout();
 

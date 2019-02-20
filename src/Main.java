@@ -10,8 +10,7 @@ public class Main {
 
 		theClient.addObserver(theMainView);
 		theGame.addObserver(theMainView);
-		theMainView.setCategories(theGame.fetchCategories());
-		theMainView.printQuestionsList(theGame.fetchQuestions());
+
 		theMainView.setVisible();
 
 	}
