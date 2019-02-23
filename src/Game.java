@@ -23,18 +23,22 @@ public class Game extends Observable {
 
 	}
 
-	// GETTER
+	// GETTERS
+	
+	// Get the total number of questions in the current quiz.
 	public int getTotalNumberOfQuestionInQuiz() {
 		return currentQuiz.size();
 	}
 
+	//Get the number of the current question in the current quiz.
 	public int getCurrentQuestion() {
 		return currentQuestion;
 	}
-
-	public ArrayList<Boolean> getResult() {
-		return results;
-	}
+	
+	// 
+//	public ArrayList<Boolean> getResult() {
+//		return results;
+//	}
 
 	// SETTER
 
@@ -96,10 +100,21 @@ public class Game extends Observable {
 
 	}
 
+	/*
+	 * Compares the users answer with the questions answer.
+	 * 1. Store the users answer.
+	 * 2. Modify question & users answer strings: remove spaces & set letters to lower case.
+	 * 3. Compare modified strings and store result in results.
+	 */
 	public void compareAnswer(String userAnswer) {
-
-		results.add(currentQuestion - 1, currentQuiz.get(currentQuestion - 1).getAnswers().get(0).equals(userAnswer));
+		//1.Store the users answer.
 		userAnswers.add(userAnswer);
+		//2. Create placeholder for the correct answer, remove spaces & set to lower case.
+		String questionAnswer = currentQuiz.get(currentQuestion-1).getAnswers().get(0).toLowerCase().replace(" ", "");
+		// Remove spaces from the users answer and set all letters to lower case.
+		userAnswer = userAnswer.toLowerCase().replaceAll(" ", "");
+		//3.Compare the users answer and the questions answer and store the result in results
+		results.add(userAnswer.equals(questionAnswer));
 	}
 
 	public void setNextQuestion() {

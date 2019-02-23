@@ -13,8 +13,11 @@ public class Controller {
 	private NewQFrame newQuestionFrame;
 	private Game game;
 
-	// Controller constructor.
-
+	/*
+	 * Controller constructor.
+	 * set mainWindow, newQuestionFrame & game.
+	 * Add actionlisteners to buttons in mainWindow & newQuestionFrame
+	 */
 	public Controller(main_view mainWindow, NewQFrame newQuestionFrame, Game game) {
 		this.mainWindow = mainWindow;
 		this.newQuestionFrame = newQuestionFrame;
@@ -131,35 +134,36 @@ public class Controller {
 	 */
 	class SubmitNewQuestionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			String question = "";
-			String category = "";
-			ArrayList<String> answers = new ArrayList<String>();
 			Question theQuestion;
-
-			if (fieldsOK()) {
-				try {
-					question = newQuestionFrame.getQuestion();
-					category = newQuestionFrame.getCategory().substring(0, 1).toUpperCase() // sets first letter to uppercase
-																						// and leaves rest alone
-							+ newQuestionFrame.getCategory().substring(1);
-					answers.addAll(newQuestionFrame.getAnswers());
-					theQuestion = new Question(category, question, answers);
-					game.addQuestionToQuestionBank(theQuestion);
-
-					if (!game.fetchCategories().contains(theQuestion.getCategory())) {
-						game.addCategory(theQuestion.getCategory());
-
-					}
-
-					JOptionPane.showMessageDialog(newQuestionFrame, "New question has been added!");
-				} catch (NullPointerException ex) {
-					newQuestionFrame.displayErrorMessage("The error message");
-				}
-
-				newQuestionFrame.clearWindow();
-
+			String category = newQuestionFrame.getCategory().trim();
+			String question = newQuestionFrame.getQuestion().trim();
+			ArrayList<String> untrimmedAnswers = newQuestionFrame.getAnswers();
+			ArrayList<String> answers = new ArrayList<String>();
+			for(String s:untrimmedAnswers) {
+				answers.add(s.trim());
 			}
-
+			try {
+				//Make sure that the category, question & answer is not empty.
+				if(checkQuestionFieldsNotEmpty(category, question, answers)) {
+					//Set first char in category to upper case.
+					category = category.substring(0, 1).toUpperCase() + category.substring(1);
+					// make a question object with category, question, answers.
+					theQuestion = new Question(category, question, answers);
+					//tell game to add the question to the question bank.
+					game.addQuestionToQuestionBank(theQuestion);
+				}
+				if (!game.fetchCategories().contains(category)) {
+					game.addCategory(category);
+				}
+				newQuestionFrame.clearWindow();
+				JOptionPane.showMessageDialog(newQuestionFrame, "New question has been added!");
+			}
+			catch (NullPointerException ex) {
+				newQuestionFrame.displayErrorMessage("The error message");
+			}
+			catch (BadUserInputException buex) {
+				newQuestionFrame.displayErrorMessage(buex.getMessage());
+			}
 		}
 	}
 
@@ -183,40 +187,31 @@ public class Controller {
 
 	}
 
-	private boolean fieldsOK() { // check if ok to submit
-		String category = newQuestionFrame.getCategory();
-		String question = newQuestionFrame.getQuestion();
-		ArrayList<String> answers = new ArrayList<String>();
-		String[] tempAnswers = newQuestionFrame.answerTextArea.getText().split(",");
-		for (String s : tempAnswers) {
-			answers.add(s);
-		}
 
-		if (category.replaceAll("\\s+", "").equals("")) {
-			newQuestionFrame.displayErrorMessage("Please enter category");
-			return false;
-		} else if (question.replaceAll("\\s+", "").equals("")) {
-			newQuestionFrame.displayErrorMessage("Please enter question");
-			return false;
-		} else if (tempAnswers[0].replaceAll("\\s+", "").equals("")) {
-			newQuestionFrame.displayErrorMessage("Please enter answer");
-			return false;
-		} else
-			return true;
-	}
-
-private boolean checkQuestionFields(String category, String question, ArrayList<String> answers) 
+ /*
+  * Checks if the user entered a category, question and answer.
+  * If fields are ok, returns true.
+  * If a field is missing, throw BadUserInputException.
+  */
+private boolean checkQuestionFieldsNotEmpty(String category, String question, ArrayList<String> answers) 
 throws BadUserInputException {
-	
-	if (category.replaceAll("\\s+", "").equals("")) {
-		throw new BadUserInputException("Enter a category");
+	// Checks if the user entered a category, throw error if not.
+	if (category.equals("")) {
+		throw new BadUserInputException("You must enter a category");
 	}
-	else if (question.replaceAll("\\s+", "").equals("")) {
-		throw new BadUserInputException("Enter a question");
-	} 
-	else if (answers.get(0).equals("")) {
-		throw new BadUserInputException("Enter a category");
+	// Check if the user entered a question, throw error if not.
+	else if (question.equals("")) {
+		throw new BadUserInputException("You must enter a question");
 	}
+	// Check if the user entered an answer, throw error if not.
+	else {
+		for(String s: answers) {
+			if(s.equals("")) {
+				throw new BadUserInputException("You must enter an answer");
+			}
+		}
+	}
+	//Return true if all fields are ok.
 	return true;
 }
 }
