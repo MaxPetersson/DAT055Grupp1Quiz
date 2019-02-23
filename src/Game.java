@@ -35,10 +35,6 @@ public class Game extends Observable {
 		return currentQuestion;
 	}
 	
-	// 
-//	public ArrayList<Boolean> getResult() {
-//		return results;
-//	}
 
 	// SETTER
 
@@ -52,7 +48,7 @@ public class Game extends Observable {
 	}
 
 	// returns true if quiz generated successfully
-	// returns false if it didnt (most likely because there wasnt enough questions
+	// returns false if it did'nt (most likely because there was'nt enough questions
 	// Set nrOfQuestions to max?
 	public boolean generateQuiz(int nrOfQuestions, List<String> category) throws BadUserInputException {
 
@@ -61,7 +57,7 @@ public class Game extends Observable {
 		results.clear();
 		categoryQuestions.clear();
 
-		for (Question i : q_client.questionBank) { // picks out questions from the choosen category
+		for (Question i : q_client.questionBank) { // picks out questions from the chosen category
 			for (String j : category) {
 
 				if (i.getCategory().equals(j)) {
@@ -117,18 +113,27 @@ public class Game extends Observable {
 		results.add(userAnswer.equals(questionAnswer));
 	}
 
+	/*
+	 * Change the current question in the quiz to the next one.
+	 * 1. Increment the currentQuestion.
+	 * 2. Tell activeQuestion to set parameters with next questions parameters.
+	 * 3. set changed & notify observers with activeQuestion.
+	 */
 	public void setNextQuestion() {
-
-		// return currentQuiz.get(currentQuestion++);
+		// 1. Increment the currentQuestion.
 		currentQuestion++;
-
+		// 2. Set activeQuestions parameters with next questions parameters.
 		activeQuestion.setNewQuestion(currentQuiz.get(currentQuestion - 1).getQuestionText(),
 				currentQuiz.get(currentQuestion - 1).getCategory(), currentQuestion, nrOfQuestions);
-
+		// 3. Set changed and notify observers with the change.
 		setChanged();
 		notifyObservers(activeQuestion);
 	}
-
+	
+	/*
+	 * Checks if there are any more questions in the current quiz.
+	 * Returns true if there is.
+	 */
 	public boolean existNextQuestion() {
 		if (currentQuestion < currentQuiz.size()) {
 			return true;
