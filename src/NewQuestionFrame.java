@@ -113,20 +113,20 @@ public class NewQuestionFrame extends JFrame {
 		});
 	}
 
-	// make text area scrollable
+	// make text area scrollable.
 	private void setScrollable(JScrollPane sp, JTextArea ta) {
 		sp.setViewportView(ta);
 		sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 	}
-
+	// add actionListener to submit button.
 	public void addSubmitNewQuestionListener(ActionListener listenForSubmitQuestion) {
 		submit.addActionListener(listenForSubmitQuestion);
 	}
-
+	// display error message in a pop-up window over Question Frame.
 	public void displayErrorMessage(String error) {
 		JOptionPane.showMessageDialog(this, error);
 	}
-
+	// clear all text fields
 	public void clearWindow() {
 
 		categoryTextArea.setText(""); // clear fields. User may enter new question(?)

@@ -176,9 +176,6 @@ public class Controller {
 	 */
 	class EditQuestionsListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-//
-//			ArrayList<Question> questions = game.fetchQuestions();
-//			mainWindow.printQuestionsList(questions);
 			game.loadQuestions();
 		}
 
