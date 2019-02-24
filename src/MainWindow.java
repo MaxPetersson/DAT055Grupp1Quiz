@@ -40,25 +40,25 @@ public class MainWindow implements Observer {
 
 	private JFrame frame;
 	private JTextField qAmount;
-	private JPanel card_pane = new JPanel();
-	private JTextArea qtextarea = new JTextArea();
-	private JLabel qnolabel = new JLabel("X");
-	private JLabel qtotlabel = new JLabel("X");
+	private JPanel cardPane = new JPanel();
+	private JTextArea questionTextArea = new JTextArea();
+	private JLabel questionNumberLabel = new JLabel("X");
+	private JLabel questionTotLabel = new JLabel("X");
 	private JButton newQuestionButton = new JButton("+ New Question");
-	private JButton submitbutton = new JButton("Submit");
+	private JButton submitButton = new JButton("Submit");
 	private JButton startQuizButton = new JButton("Start Quiz");
-	private JButton edit_question_button = new JButton("Edit Questions");
+	private JButton editQuestionsButton = new JButton("Edit Questions");
 	private JLabel amountErrorLabel = new JLabel(" ");
-	private JLabel catLabel = new JLabel("Category");
+	private JLabel categoryLabel = new JLabel("Category");
 	private JLabel answerFeedbackLabel = new JLabel(" ");
 	private JTextArea resultArea = new JTextArea();
 	private JTextField answerField;
-	public ArrayList<String> catArr;
+	public ArrayList<String> categoryArray;
 	private JLabel resultTotLabel = new JLabel("");
-	private DefaultListModel<String> list_model = new DefaultListModel<String>();
-	private JList<String> category_list = new JList<String>(list_model);
-	private DefaultListModel<String> questionsList_model = new DefaultListModel<String>();
-	private JList<String> questionList = new JList<String>(questionsList_model);
+	private DefaultListModel<String> listModel = new DefaultListModel<String>();
+	private JList<String> categoryList = new JList<String>(listModel);
+	private DefaultListModel<String> questionsListModel = new DefaultListModel<String>();
+	private JList<String> questionList = new JList<String>(questionsListModel);
 	private JButton editQuestionButton = new JButton("Edit question");
 	private JButton deleteQuestionButton = new JButton("Delete question");
 	private JLabel lblResult = new JLabel("Result");
@@ -104,21 +104,21 @@ public class MainWindow implements Observer {
 		verticalStrut_4.setPreferredSize(new Dimension(0, 10));
 		verticalStrut_4.setMinimumSize(new Dimension(0, 10));
 		verticalBox_3.add(verticalStrut_4);
-		edit_question_button.setVisible(true);
+		editQuestionsButton.setVisible(true);
 
-		edit_question_button.addActionListener(new ActionListener() {
+		editQuestionsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				CardLayout cardLayout = (CardLayout) card_pane.getLayout();
-				cardLayout.last(card_pane);
+				CardLayout cardLayout = (CardLayout) cardPane.getLayout();
+				cardLayout.last(cardPane);
 
 			}
 		});
-		edit_question_button.setMaximumSize(new Dimension(125, 25));
-		edit_question_button.setMinimumSize(new Dimension(125, 25));
-		edit_question_button.setPreferredSize(new Dimension(125, 25));
-		edit_question_button.setVerticalAlignment(SwingConstants.TOP);
-		verticalBox_3.add(edit_question_button);
+		editQuestionsButton.setMaximumSize(new Dimension(125, 25));
+		editQuestionsButton.setMinimumSize(new Dimension(125, 25));
+		editQuestionsButton.setPreferredSize(new Dimension(125, 25));
+		editQuestionsButton.setVerticalAlignment(SwingConstants.TOP);
+		verticalBox_3.add(editQuestionsButton);
 
 		JPanel panel_30 = new JPanel();
 		panel_30.setPreferredSize(new Dimension(10, 40));
@@ -129,8 +129,8 @@ public class MainWindow implements Observer {
 		returnButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				CardLayout cardLayout = (CardLayout) card_pane.getLayout();
-				cardLayout.first(card_pane);
+				CardLayout cardLayout = (CardLayout) cardPane.getLayout();
+				cardLayout.first(cardPane);
 			}
 		});
 		panel_30.add(returnButton);
@@ -141,13 +141,13 @@ public class MainWindow implements Observer {
 		panel_31.setOpaque(false);
 		panel_1.add(panel_31, BorderLayout.WEST);
 
-		card_pane.setOpaque(false);
-		panel.add(card_pane, BorderLayout.CENTER);
-		card_pane.setLayout(new CardLayout(0, 0));
+		cardPane.setOpaque(false);
+		panel.add(cardPane, BorderLayout.CENTER);
+		cardPane.setLayout(new CardLayout(0, 0));
 
 		JPanel main_pane = new JPanel();
 		main_pane.setOpaque(false);
-		card_pane.add(main_pane, "name_278414619626250");
+		cardPane.add(main_pane, "name_278414619626250");
 		main_pane.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel_3 = new JPanel();
@@ -204,13 +204,13 @@ public class MainWindow implements Observer {
 		scrollPane.setPreferredSize(new Dimension(2, 60));
 
 		verticalBox.add(scrollPane);
-		scrollPane.setViewportView(category_list);
-		category_list.setVisibleRowCount(4);
-		category_list.setMinimumSize(new Dimension(10, 0));
+		scrollPane.setViewportView(categoryList);
+		categoryList.setVisibleRowCount(4);
+		categoryList.setMinimumSize(new Dimension(10, 0));
 
-		category_list.setAlignmentY(Component.TOP_ALIGNMENT);
-		category_list.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		category_list.setOpaque(false);
+		categoryList.setAlignmentY(Component.TOP_ALIGNMENT);
+		categoryList.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		categoryList.setOpaque(false);
 
 		Component verticalStrut_3 = Box.createVerticalStrut(30);
 		verticalBox.add(verticalStrut_3);
@@ -241,7 +241,7 @@ public class MainWindow implements Observer {
 
 		JPanel question_pane = new JPanel();
 		question_pane.setOpaque(false);
-		card_pane.add(question_pane, "name_278418384142294");
+		cardPane.add(question_pane, "name_278418384142294");
 		question_pane.setLayout(new FormLayout(
 				new ColumnSpec[] { ColumnSpec.decode("160px"), ColumnSpec.decode("453px"),
 						ColumnSpec.decode("160px"), },
@@ -258,9 +258,9 @@ public class MainWindow implements Observer {
 		panel_15.setOpaque(false);
 		panel_2.add(panel_15, BorderLayout.NORTH);
 
-		catLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
-		panel_15.add(catLabel);
-		catLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		categoryLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		panel_15.add(categoryLabel);
+		categoryLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		JPanel panel_16 = new JPanel();
 		panel_16.setOpaque(false);
@@ -275,12 +275,12 @@ public class MainWindow implements Observer {
 		lblFrga.setVerticalTextPosition(SwingConstants.BOTTOM);
 		lblFrga.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		lblFrga.setHorizontalAlignment(SwingConstants.RIGHT);
-		horizontalBox_1.add(qnolabel);
-		qnolabel.setVerticalAlignment(SwingConstants.BOTTOM);
-		qnolabel.setVerticalTextPosition(SwingConstants.BOTTOM);
-		qnolabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		horizontalBox_1.add(questionNumberLabel);
+		questionNumberLabel.setVerticalAlignment(SwingConstants.BOTTOM);
+		questionNumberLabel.setVerticalTextPosition(SwingConstants.BOTTOM);
+		questionNumberLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
-		qnolabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		questionNumberLabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
 
 		JLabel lblAv = new JLabel(" of ");
 		horizontalBox_1.add(lblAv);
@@ -288,11 +288,11 @@ public class MainWindow implements Observer {
 		lblAv.setVerticalTextPosition(SwingConstants.BOTTOM);
 		lblAv.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblAv.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		horizontalBox_1.add(qtotlabel);
-		qtotlabel.setVerticalTextPosition(SwingConstants.BOTTOM);
-		qtotlabel.setVerticalAlignment(SwingConstants.BOTTOM);
+		horizontalBox_1.add(questionTotLabel);
+		questionTotLabel.setVerticalTextPosition(SwingConstants.BOTTOM);
+		questionTotLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 
-		qtotlabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		questionTotLabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
 
 		JPanel panel_8 = new JPanel();
 		panel_8.setMinimumSize(new Dimension(1000, 10));
@@ -323,7 +323,7 @@ public class MainWindow implements Observer {
 		panel_13.setOpaque(false);
 		panel_10.add(panel_13, BorderLayout.SOUTH);
 
-		panel_13.add(submitbutton);
+		panel_13.add(submitButton);
 
 		JPanel panel_14 = new JPanel();
 		panel_14.setOpaque(false);
@@ -353,14 +353,14 @@ public class MainWindow implements Observer {
 						FormFactory.RELATED_GAP_ROWSPEC, RowSpec.decode("default:grow"), });
 		panel_11.setLayout(fl_panel_11);
 
-		qtextarea.setFont(new Font("Calibri", Font.PLAIN, 18));
-		qtextarea.setLineWrap(true);
-		qtextarea.setWrapStyleWord(true);
+		questionTextArea.setFont(new Font("Calibri", Font.PLAIN, 18));
+		questionTextArea.setLineWrap(true);
+		questionTextArea.setWrapStyleWord(true);
 
-		qtextarea.setMargin(new Insets(2, 2, 20, 2));
-		qtextarea.setRows(10);
-		qtextarea.setColumns(50);
-		panel_11.add(qtextarea, "4, 2, right, top");
+		questionTextArea.setMargin(new Insets(2, 2, 20, 2));
+		questionTextArea.setRows(10);
+		questionTextArea.setColumns(50);
+		panel_11.add(questionTextArea, "4, 2, right, top");
 
 		Component verticalStrut_1 = Box.createVerticalStrut(20);
 		panel_11.add(verticalStrut_1, "4, 4, fill, center");
@@ -380,7 +380,7 @@ public class MainWindow implements Observer {
 
 		JPanel result_pane = new JPanel();
 		result_pane.setOpaque(false);
-		card_pane.add(result_pane, "name_1377216972528328");
+		cardPane.add(result_pane, "name_1377216972528328");
 		result_pane.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel_17 = new JPanel();
@@ -455,7 +455,7 @@ public class MainWindow implements Observer {
 
 		JPanel editQuestions_pane = new JPanel();
 		editQuestions_pane.setOpaque(false);
-		card_pane.add(editQuestions_pane, "name_374809113378669");
+		cardPane.add(editQuestions_pane, "name_374809113378669");
 		editQuestions_pane.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel_25 = new JPanel();
@@ -518,7 +518,7 @@ public class MainWindow implements Observer {
 
 	public void addSubmitAnswerListener(ActionListener listenForSubmitAnswer) {
 
-		submitbutton.addActionListener(listenForSubmitAnswer);
+		submitButton.addActionListener(listenForSubmitAnswer);
 
 	}
 
@@ -550,12 +550,12 @@ public class MainWindow implements Observer {
 
 	}
 
-	public void displayQuestion(String category, String qtext, int qtot, int qnumber) {
+	public void displayQuestion(String category, String question, int totalNumberOfQuestions, int questionNumber) {
 
-		qtextarea.setText(qtext);
-		qnolabel.setText(Integer.toString(qnumber));
-		catLabel.setText(category);
-		qtotlabel.setText(Integer.toString(qtot));
+		questionTextArea.setText(question);
+		questionNumberLabel.setText(Integer.toString(questionNumber));
+		categoryLabel.setText(category);
+		questionTotLabel.setText(Integer.toString(totalNumberOfQuestions));
 
 		clearAnsFields();
 
@@ -570,16 +570,16 @@ public class MainWindow implements Observer {
 
 	public void changeToQuizScreen() {
 
-		CardLayout cardLayout = (CardLayout) card_pane.getLayout();
+		CardLayout cardLayout = (CardLayout) cardPane.getLayout();
 
-		cardLayout.next(card_pane);
+		cardLayout.next(cardPane);
 
 	}
 
 	public void changeToStartScreen() {
-		CardLayout cardLayout = (CardLayout) card_pane.getLayout();
+		CardLayout cardLayout = (CardLayout) cardPane.getLayout();
 
-		cardLayout.first(card_pane);
+		cardLayout.first(cardPane);
 	}
 
 	public String getAnswer() {
@@ -623,15 +623,15 @@ public class MainWindow implements Observer {
 		resultArea.setText(resultText);
 		lblResult.setText("Result: " + correct + "/" + (loop - 1));
 
-		CardLayout cardLayout = (CardLayout) card_pane.getLayout();
+		CardLayout cardLayout = (CardLayout) cardPane.getLayout();
 
-		cardLayout.next(card_pane);
+		cardLayout.next(cardPane);
 
 	}
 
 	public List<String> getSelectedCategory() {
 
-		return category_list.getSelectedValuesList();
+		return categoryList.getSelectedValuesList();
 	}
 
 	public String getSelectedQuestion() {
@@ -641,12 +641,12 @@ public class MainWindow implements Observer {
 
 	public void setCategories(ArrayList<String> categoryArray) {
 
-		this.catArr = categoryArray;
+		this.categoryArray = categoryArray;
 
-		catArr.sort(null);
+		categoryArray.sort(null);
 
-		for (int i = 0; i < catArr.size(); i++) {
-			list_model.addElement(catArr.get(i));
+		for (int i = 0; i < categoryArray.size(); i++) {
+			listModel.addElement(categoryArray.get(i));
 		}
 
 	}
@@ -662,15 +662,16 @@ public class MainWindow implements Observer {
 
 		for (int i = 0; i < questions.size(); i++) {
 
-			questionsList_model.addElement(
+			questionsListModel.addElement(
 					i + 1 + ". " + questions.get(i).getCategory() + " - " + questions.get(i).getQuestionText());
 
 		}
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public void update(Observable o, Object arg) {
-
+		//Display the updated question
 		if (o instanceof Game && arg instanceof QuizQuestion) {
 
 			QuizQuestion question = (QuizQuestion) arg;
@@ -679,27 +680,35 @@ public class MainWindow implements Observer {
 					question.getQuestionNumber());
 
 		}
+		//Update the displayed question/category list.
 		if (o instanceof QuestionsClient && arg instanceof ArrayList<?>) {
+			//if the length of the sent list is 0 then clear question & category list
+			//(if there are no questions left then there are no categories, and vice versa)
 			if(((ArrayList<?>) arg).size() < 1) {
-				questionsList_model.clear();
-				list_model.clear();
+				//clear question & category lists.
+				questionsListModel.clear();
+				listModel.clear();
 			}
+			//if the elements in the list contains question objects, then update the question list.
 			else if (((ArrayList<Question>) arg).get(0) instanceof Question) {
 
-				questionsList_model.clear();
+				questionsListModel.clear();
 				ArrayList<Question> qArray = (ArrayList<Question>) arg;
 				printQuestionsList(qArray);
 
-			} else { // adds categories to list
+			}
+			// update the category list
+			else {
 
 				ArrayList<String> categoryArray = (ArrayList<String>) arg;
 
-				list_model.clear();
+				listModel.clear();
 				setCategories(categoryArray);
 
 			}
 
 		}
+		//Display the results.
 		if(o instanceof Game && arg instanceof Result) {
 			Result result = (Result)arg;
 			printResult(result.getResults(), result.getAnswers(), result.getQuestions());
