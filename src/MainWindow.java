@@ -36,7 +36,7 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
-public class main_view implements Observer {
+public class MainWindow implements Observer {
 
 	private JFrame frame;
 	private JTextField qAmount;
@@ -67,7 +67,7 @@ public class main_view implements Observer {
 		frame.setVisible(true);
 	}
 
-	public main_view() {
+	public MainWindow() {
 
 		initialize();
 
@@ -679,7 +679,7 @@ public class main_view implements Observer {
 					question.getQuestionNumber());
 
 		}
-		if (o instanceof QuestionClient && arg instanceof ArrayList<?>) {
+		if (o instanceof QuestionsClient && arg instanceof ArrayList<?>) {
 
 			if (((ArrayList<Question>) arg).get(0) instanceof Question) {
 
@@ -696,6 +696,10 @@ public class main_view implements Observer {
 
 			}
 
+		}
+		if(o instanceof Game && arg instanceof Result) {
+			Result result = (Result)arg;
+			printResult(result.getResults(), result.getAnswers(), result.getQuestions());
 		}
 
 	}

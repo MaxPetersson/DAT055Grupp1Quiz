@@ -7,10 +7,12 @@ import javax.swing.JOptionPane;
 public class Controller {
 
 	/*
-	 * 
+	 * The controller contains an instance of MainWindow, NewQuestionFrame and Game.
+	 * it's main purpose is to handle action events from MainWindow/NewQuestionFrame
+	 * and based on those events call for changes in Game. 
 	 */
-	private main_view mainWindow;
-	private NewQFrame newQuestionFrame;
+	private MainWindow mainWindow;
+	private NewQuestionFrame newQuestionFrame;
 	private Game game;
 
 	/*
@@ -18,7 +20,7 @@ public class Controller {
 	 * set mainWindow, newQuestionFrame & game.
 	 * Add actionlisteners to buttons in mainWindow & newQuestionFrame
 	 */
-	public Controller(main_view mainWindow, NewQFrame newQuestionFrame, Game game) {
+	public Controller(MainWindow mainWindow, NewQuestionFrame newQuestionFrame, Game game) {
 		this.mainWindow = mainWindow;
 		this.newQuestionFrame = newQuestionFrame;
 		this.game = game;
@@ -29,8 +31,6 @@ public class Controller {
 		this.newQuestionFrame.addSubmitNewQuestionListener(new SubmitNewQuestionListener());
 		this.mainWindow.addEditQuestionsListener(new EditQuestionsListener());
 		this.mainWindow.addDeleteQuestionsListener(new DeleteQuestionsListener());
-		mainWindow.setCategories(game.fetchCategories());
-		game.fetchQuestions();
 
 	}
 
@@ -105,7 +105,7 @@ public class Controller {
 					game.setNextQuestion();
 				} else {
 					// 4. Display the quiz score in MainWindow.
-					mainWindow.printResult(game.results, game.userAnswers, game.currentQuiz);
+					game.notifyResult();
 				}
 
 			} catch (NullPointerException npex) {
@@ -134,6 +134,7 @@ public class Controller {
 	 */
 	class SubmitNewQuestionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			//1. Get question, category and answer & trim them.
 			Question theQuestion;
 			String category = newQuestionFrame.getCategory().trim();
 			String question = newQuestionFrame.getQuestion().trim();
@@ -149,12 +150,10 @@ public class Controller {
 					category = category.substring(0, 1).toUpperCase() + category.substring(1);
 					// make a question object with category, question, answers.
 					theQuestion = new Question(category, question, answers);
-					//tell game to add the question to the question bank.
+					//2. tell game to add the question to the question bank.
 					game.addQuestionToQuestionBank(theQuestion);
 				}
-				if (!game.fetchCategories().contains(category)) {
-					game.addCategory(category);
-				}
+				//3. Tell newQuestionFrame to clear text fields. Display success message.
 				newQuestionFrame.clearWindow();
 				JOptionPane.showMessageDialog(newQuestionFrame, "New question has been added!");
 			}
@@ -166,16 +165,27 @@ public class Controller {
 			}
 		}
 	}
-
+	
+	///// INNER CLASS EditQuestionListener
+	///// ///////////////////////////////////////////////////////////////////////
+	/*
+	 * If implemented, should implement observer/observable approach.
+	 * Controller should not call printQuestions.
+	 */
 	class EditQuestionsListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-
-			ArrayList<Question> questions = game.fetchQuestions();
-			mainWindow.printQuestionsList(questions);
+//
+//			ArrayList<Question> questions = game.fetchQuestions();
+//			mainWindow.printQuestionsList(questions);
 		}
 
 	}
-
+	
+	///// INNER CLASS EditQuestionListener
+	///// ///////////////////////////////////////////////////////////////////////
+	/*
+	 * 
+	 */
 	class DeleteQuestionsListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 
@@ -193,25 +203,25 @@ public class Controller {
   * If fields are ok, returns true.
   * If a field is missing, throw BadUserInputException.
   */
-private boolean checkQuestionFieldsNotEmpty(String category, String question, ArrayList<String> answers) 
-throws BadUserInputException {
-	// Checks if the user entered a category, throw error if not.
-	if (category.equals("")) {
+	private boolean checkQuestionFieldsNotEmpty(String category, String question, ArrayList<String> answers) 
+			throws BadUserInputException {
+		// Checks if the user entered a category, throw error if not.
+		if (category.equals("")) {
 		throw new BadUserInputException("You must enter a category");
-	}
-	// Check if the user entered a question, throw error if not.
-	else if (question.equals("")) {
-		throw new BadUserInputException("You must enter a question");
-	}
-	// Check if the user entered an answer, throw error if not.
-	else {
-		for(String s: answers) {
-			if(s.equals("")) {
-				throw new BadUserInputException("You must enter an answer");
+		}
+		// Check if the user entered a question, throw error if not.
+		else if (question.equals("")) {
+			throw new BadUserInputException("You must enter a question");
+		}
+		// Check if the user entered an answer, throw error if not.
+		else {
+			for(String s: answers) {
+				if(s.equals("")) {
+					throw new BadUserInputException("You must enter an answer");
+				}
 			}
 		}
+		//Return true if all fields are ok.
+		return true;
 	}
-	//Return true if all fields are ok.
-	return true;
-}
 }

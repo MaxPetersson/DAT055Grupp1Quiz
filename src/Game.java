@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Observable;
 
 public class Game extends Observable {
-
+	Result currentResult;
 	ArrayList<Question> currentQuiz;
 	ArrayList<Boolean> results = new ArrayList<Boolean>();
 	ArrayList<Question> categoryQuestions = new ArrayList<Question>();
@@ -13,39 +13,21 @@ public class Game extends Observable {
 	int currentQuestion;
 	int nrOfQuestions;
 	QuizQuestion activeQuestion = new QuizQuestion(null, null, currentQuestion, currentQuestion);
-	private QuestionClient q_client = new QuestionClient();
+	private QuestionsClient questionClient = new QuestionsClient();
 	public ArrayList<String> catArr;
 
-	public Game(QuestionClient q_client) {
+	public Game(QuestionsClient questionClient) {
 		currentQuestion = 0;
 
-		this.q_client = q_client;
+		this.questionClient = questionClient;
 
-	}
-
-	// GETTERS
-	
-	// Get the total number of questions in the current quiz.
-	public int getTotalNumberOfQuestionInQuiz() {
-		return currentQuiz.size();
-	}
-
-	//Get the number of the current question in the current quiz.
-	public int getCurrentQuestion() {
-		return currentQuestion;
 	}
 	
-
-	// SETTER
-
-	public void addQuestionToQuestionBank(Question qToAdd) {
-		q_client.addQuestionToQuestionBank(qToAdd);
+	// Tell questionClient to add a question to the question bank.
+	public void addQuestionToQuestionBank(Question questionToAdd) {
+		questionClient.addQuestionToQuestionBank(questionToAdd);
 	}
 
-	public void addCategory(String catToAdd) {
-
-		q_client.addCategory(catToAdd);
-	}
 
 	// returns true if quiz generated successfully
 	// returns false if it did'nt (most likely because there was'nt enough questions
@@ -57,7 +39,7 @@ public class Game extends Observable {
 		results.clear();
 		categoryQuestions.clear();
 
-		for (Question i : q_client.questionBank) { // picks out questions from the chosen category
+		for (Question i : questionClient.getQuestionBank()) { // picks out questions from the chosen category
 			for (String j : category) {
 
 				if (i.getCategory().equals(j)) {
@@ -141,31 +123,43 @@ public class Game extends Observable {
 		return false;
 	}
 
-	public ArrayList<String> fetchCategories() {
-
-		return q_client.catArr;
-
-	}
-
-	public ArrayList<Question> fetchQuestions() {
-
-		return q_client.questionBank;
-
-	}
-
+//	public ArrayList<String> fetchCategories() {
+//
+//		return questionClient.categories;
+//
+//	}
+//
+//	public ArrayList<Question> fetchQuestions() {
+//
+//		return questionClient.questionBank;
+//
+//	}
+	
+	/*
+	 * Should be rebuild to use question id.
+	 * Decision will be taken later.
+	 * Should maybe be handled by QuestionClient.
+	 */
 	public void deleteQuestion(String category, String question) {
 
-		ArrayList<Question> questions = fetchQuestions();
+		ArrayList<Question> questions = questionClient.getQuestionBank();
 
 		for (Question i : questions) {
 
 			if (i.getQuestionText().equals(question) && i.getCategory().equals(category)) {
-				q_client.removeQuestion(i);
+				questionClient.removeQuestion(i);
 				break;
 			}
 
 		}
 
 	}
+	
+	//Notify observers with the results.
+	public void notifyResult() {
+		setChanged();
+		notifyObservers(currentResult= new Result(results, userAnswers, currentQuiz));
+	}
+	
 
 }

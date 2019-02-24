@@ -2,14 +2,15 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		final QuestionClient theClient = new QuestionClient();
+		final QuestionsClient theClient = new QuestionsClient();
 		final Game theGame = new Game(theClient);
-		final main_view theMainView = new main_view();
-		final NewQFrame theNewQFrame = new NewQFrame("QuestionFrame");
+		final MainWindow theMainView = new MainWindow();
+		final NewQuestionFrame theNewQFrame = new NewQuestionFrame("QuestionFrame");
 		final Controller theController = new Controller(theMainView, theNewQFrame, theGame);
 
 		theClient.addObserver(theMainView);
 		theGame.addObserver(theMainView);
+		theClient.loadQuestions();
 
 		theMainView.setVisible();
 

@@ -14,7 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SpringLayout;
 
-public class NewQFrame extends JFrame {
+public class NewQuestionFrame extends JFrame {
 	private JPanel panel;
 	private JButton submit;
 	private JLabel categorylabel;
@@ -33,7 +33,7 @@ public class NewQFrame extends JFrame {
 	// private int numCreated = 0; perhaps for later use
 
 	// Constructor
-	public NewQFrame(String title) {
+	public NewQuestionFrame(String title) {
 		super(title);
 		setupPanel();
 		this.setBounds(120, 200, 350, 400);
