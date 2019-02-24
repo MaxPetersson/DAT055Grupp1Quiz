@@ -679,9 +679,30 @@ public class MainWindow implements Observer {
 					question.getQuestionNumber());
 
 		}
+//		if (o instanceof QuestionsClient && arg instanceof ArrayList<?>) {
+//			
+//			if (((ArrayList<Question>) arg).get(0) instanceof Question) {
+//
+//				questionsList_model.clear();
+//				ArrayList<Question> qArray = (ArrayList<Question>) arg;
+//				printQuestionsList(qArray);
+//
+//			} else { // adds categories to list
+//
+//				ArrayList<String> categoryArray = (ArrayList<String>) arg;
+//
+//				list_model.clear();
+//				setCategories(categoryArray);
+//
+//			}
+//
+//		}
 		if (o instanceof QuestionsClient && arg instanceof ArrayList<?>) {
-
-			if (((ArrayList<Question>) arg).get(0) instanceof Question) {
+			if(((ArrayList<?>) arg).size() < 1) {
+				questionsList_model.clear();
+				list_model.clear();
+			}
+			else if (((ArrayList<Question>) arg).get(0) instanceof Question) {
 
 				questionsList_model.clear();
 				ArrayList<Question> qArray = (ArrayList<Question>) arg;
