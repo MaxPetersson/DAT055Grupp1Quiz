@@ -12,7 +12,7 @@ public class Controller {
 	 * and based on those events call for changes in Game. 
 	 */
 	private MainWindow mainWindow;
-	private NewQuestionFrame newQuestionFrame;
+	private NewQuestionWindow newQuestionWindow;
 	private Game game;
 
 	/*
@@ -20,16 +20,16 @@ public class Controller {
 	 * set mainWindow, newQuestionFrame & game.
 	 * Add actionlisteners to buttons in mainWindow & newQuestionFrame
 	 */
-	public Controller(MainWindow mainWindow, NewQuestionFrame newQuestionFrame, Game game) {
+	public Controller(MainWindow mainWindow, NewQuestionWindow newQuestionFrame, Game game) {
 		//initiate local variables.
 		this.mainWindow = mainWindow;
-		this.newQuestionFrame = newQuestionFrame;
+		this.newQuestionWindow = newQuestionFrame;
 		this.game = game;
 		//add action listeners.
 		this.mainWindow.addNewGameListener(new NewGameListener());
 		this.mainWindow.addSubmitAnswerListener(new SubmitAnswerListener());
 		this.mainWindow.addNewQuestionListener(new CreateNewQuestionListener());
-		this.newQuestionFrame.addSubmitNewQuestionListener(new SubmitNewQuestionListener());
+		this.newQuestionWindow.addSubmitNewQuestionListener(new SubmitNewQuestionListener());
 		this.mainWindow.addEditQuestionsListener(new EditQuestionsListener());
 		this.mainWindow.addDeleteQuestionsListener(new DeleteQuestionsListener());
 
@@ -123,7 +123,7 @@ public class Controller {
 	 */
 	class CreateNewQuestionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			newQuestionFrame.setVisible(true);
+			newQuestionWindow.setVisible(true);
 		}
 	}
 
@@ -138,9 +138,9 @@ public class Controller {
 		public void actionPerformed(ActionEvent e) {
 			//1. Get question, category and answer & trim them.
 			Question theQuestion;
-			String category = newQuestionFrame.getCategory().trim();
-			String question = newQuestionFrame.getQuestion().trim();
-			ArrayList<String> untrimmedAnswers = newQuestionFrame.getAnswers();
+			String category = newQuestionWindow.getCategory().trim();
+			String question = newQuestionWindow.getQuestion().trim();
+			ArrayList<String> untrimmedAnswers = newQuestionWindow.getAnswers();
 			ArrayList<String> answers = new ArrayList<String>();
 			for(String s:untrimmedAnswers) {
 				answers.add(s.trim());
@@ -156,14 +156,14 @@ public class Controller {
 					game.addQuestionToQuestionBank(theQuestion);
 				}
 				//3. Tell newQuestionFrame to clear text fields. Display success message.
-				newQuestionFrame.clearWindow();
-				JOptionPane.showMessageDialog(newQuestionFrame, "New question has been added!");
+				newQuestionWindow.clearWindow();
+				JOptionPane.showMessageDialog(newQuestionWindow, "New question has been added!");
 			}
 			catch (NullPointerException ex) {
-				newQuestionFrame.displayErrorMessage("The error message");
+				newQuestionWindow.displayErrorMessage("The error message");
 			}
 			catch (BadUserInputException buex) {
-				newQuestionFrame.displayErrorMessage(buex.getMessage());
+				newQuestionWindow.displayErrorMessage(buex.getMessage());
 			}
 		}
 	}

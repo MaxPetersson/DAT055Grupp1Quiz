@@ -1,10 +1,10 @@
 
 public class QuizQuestion {
 
-	public String question;
-	public String category;
-	public int questionNumber;
-	public int totalQuestions;
+	private String question;
+	private String category;
+	private int questionNumber;
+	private int totalQuestions;
 
 	public QuizQuestion(String question, String category, int questionNumber, int totalQuestions) {
 

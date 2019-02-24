@@ -43,11 +43,13 @@ public class QuestionsClient extends Observable {
 	public ArrayList<Question> getQuestionBank(){
 		return questionBank;
 	}
-	//Notify the observers with the categories and question bank.
+	
+	//Notify the observers with the question bank.
 	public void loadQuestions() {
 		setChanged();
 		notifyObservers(questionBank);
 	}
+	//Notify the observers with the categories.
 	public void loadCategories() {
 
 		setChanged();

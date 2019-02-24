@@ -6,7 +6,7 @@ public class Main {
 		final QuestionsClient theClient = new QuestionsClient();
 		final Game theGame = new Game(theClient);
 		final MainWindow theMainView = new MainWindow();
-		final NewQuestionFrame theNewQFrame = new NewQuestionFrame("QuestionFrame");
+		final NewQuestionWindow theNewQFrame = new NewQuestionWindow("QuestionFrame");
 		
 		final Controller theController = new Controller(theMainView, theNewQFrame, theGame);
 

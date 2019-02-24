@@ -14,26 +14,23 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SpringLayout;
 
-public class NewQuestionFrame extends JFrame {
+public class NewQuestionWindow extends JFrame {
 	private JPanel panel;
 	private JButton submit;
 	private JLabel categorylabel;
 	private JLabel questionlabel;
 	private JLabel answerlabel;
-	JTextArea categoryTextArea;
-	JTextArea questionTextArea;
-	JTextArea answerTextArea;
+	private JTextArea categoryTextArea;
+	private JTextArea questionTextArea;
+	private JTextArea answerTextArea;
 	private JScrollPane categoryScrollPane = new JScrollPane();
 	private JScrollPane questionScrollPane = new JScrollPane();
 	private JScrollPane answerScrollPane = new JScrollPane();
 	private TextPrompt tp;
-	private String category;
-	private String question;
-	private ArrayList<String> answers;
 	// private int numCreated = 0; perhaps for later use
 
 	// Constructor
-	public NewQuestionFrame(String title) {
+	public NewQuestionWindow(String title) {
 		super(title);
 		setupPanel();
 		this.setBounds(120, 200, 350, 400);
