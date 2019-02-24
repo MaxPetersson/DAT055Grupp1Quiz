@@ -10,7 +10,8 @@ public class Main {
 
 		theClient.addObserver(theMainView);
 		theGame.addObserver(theMainView);
-		theClient.loadQuestions();
+//		theClient.loadQuestions();
+		theClient.loadCategories();
 
 		theMainView.setVisible();
 

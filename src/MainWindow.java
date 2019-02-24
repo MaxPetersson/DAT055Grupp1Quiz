@@ -104,7 +104,7 @@ public class MainWindow implements Observer {
 		verticalStrut_4.setPreferredSize(new Dimension(0, 10));
 		verticalStrut_4.setMinimumSize(new Dimension(0, 10));
 		verticalBox_3.add(verticalStrut_4);
-		edit_question_button.setVisible(false);
+		edit_question_button.setVisible(true);
 
 		edit_question_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

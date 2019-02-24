@@ -39,14 +39,19 @@ public class QuestionsClient extends Observable {
 		questionBank.add(new Question(categories.get(2), qtextarray[2], answers3));
 
 	}
+	//Returns the question bank.
 	public ArrayList<Question> getQuestionBank(){
 		return questionBank;
 	}
+	//Notify the observers with the categories and question bank.
 	public void loadQuestions() {
 		setChanged();
-		notifyObservers(categories);
-		setChanged();
 		notifyObservers(questionBank);
+	}
+	public void loadCategories() {
+
+		setChanged();
+		notifyObservers(categories);
 	}
 
 	// Adds a question to the question bank.

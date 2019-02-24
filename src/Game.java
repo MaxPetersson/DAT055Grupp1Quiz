@@ -123,17 +123,6 @@ public class Game extends Observable {
 		return false;
 	}
 
-//	public ArrayList<String> fetchCategories() {
-//
-//		return questionClient.categories;
-//
-//	}
-//
-//	public ArrayList<Question> fetchQuestions() {
-//
-//		return questionClient.questionBank;
-//
-//	}
 	
 	/*
 	 * Should be rebuild to use question id.
@@ -161,5 +150,8 @@ public class Game extends Observable {
 		notifyObservers(currentResult= new Result(results, userAnswers, currentQuiz));
 	}
 	
+	public void loadQuestions() {
+		questionClient.loadQuestions();
+	}
 
 }

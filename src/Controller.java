@@ -177,11 +177,12 @@ public class Controller {
 //
 //			ArrayList<Question> questions = game.fetchQuestions();
 //			mainWindow.printQuestionsList(questions);
+			game.loadQuestions();
 		}
 
 	}
 	
-	///// INNER CLASS EditQuestionListener
+	///// INNER CLASS DeleteQuestionListener
 	///// ///////////////////////////////////////////////////////////////////////
 	/*
 	 * 
