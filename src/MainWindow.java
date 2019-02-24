@@ -53,7 +53,7 @@ public class MainWindow implements Observer {
 	private JLabel answerFeedbackLabel = new JLabel(" ");
 	private JTextArea resultArea = new JTextArea();
 	private JTextField answerField;
-	public ArrayList<String> categoryArray;
+	private ArrayList<String> categoryArray;
 	private JLabel resultTotLabel = new JLabel("");
 	private DefaultListModel<String> listModel = new DefaultListModel<String>();
 	private JList<String> categoryList = new JList<String>(listModel);
@@ -550,7 +550,7 @@ public class MainWindow implements Observer {
 
 	}
 
-	public void displayQuestion(String category, String question, int totalNumberOfQuestions, int questionNumber) {
+	private void displayQuestion(String category, String question, int totalNumberOfQuestions, int questionNumber) {
 
 		questionTextArea.setText(question);
 		questionNumberLabel.setText(Integer.toString(questionNumber));
@@ -592,7 +592,7 @@ public class MainWindow implements Observer {
 		return qAmount.getText();
 	}
 
-	public void printResult(ArrayList<Boolean> results, ArrayList<String> answers, ArrayList<Question> questions) {
+	private void printResult(ArrayList<Boolean> results, ArrayList<String> answers, ArrayList<Question> questions) {
 
 		resultArea.setRows(results.size());
 
@@ -639,7 +639,7 @@ public class MainWindow implements Observer {
 		return questionList.getSelectedValue();
 	}
 
-	public void setCategories(ArrayList<String> categoryArray) {
+	private void setCategories(ArrayList<String> categoryArray) {
 
 		this.categoryArray = categoryArray;
 
@@ -651,7 +651,7 @@ public class MainWindow implements Observer {
 
 	}
 
-	public void printQuestionsList(ArrayList<Question> questions) {
+	private void printQuestionsList(ArrayList<Question> questions) {
 
 		Collections.sort(questions, new Comparator<Question>() {
 			@Override
