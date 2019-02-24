@@ -4,17 +4,21 @@ import java.util.List;
 import java.util.Observable;
 
 public class Game extends Observable {
-	Result currentResult;
-	ArrayList<Question> currentQuiz;
-	ArrayList<Boolean> results = new ArrayList<Boolean>();
-	ArrayList<Question> categoryQuestions = new ArrayList<Question>();
-	ArrayList<String> userAnswers = new ArrayList<String>();
+	
+	private ArrayList<Question> currentQuiz;
+	private ArrayList<Question> categoryQuestions = new ArrayList<Question>();
+	private ArrayList<Boolean> results = new ArrayList<Boolean>();
+	private ArrayList<String> userAnswers = new ArrayList<String>();
+	//int value representing the number of the current question in the current quiz.
+	private int currentQuestion;
+	//int value representing the total number of questions in the current quiz.
+	private int nrOfQuestions;
+	
+	//Object used to update observers (QuizQuestion & Result)
+	private QuizQuestion activeQuestion = new QuizQuestion(null, null, currentQuestion, currentQuestion);
+	private Result currentResult;
 
-	int currentQuestion;
-	int nrOfQuestions;
-	QuizQuestion activeQuestion = new QuizQuestion(null, null, currentQuestion, currentQuestion);
-	private QuestionsClient questionClient = new QuestionsClient();
-	public ArrayList<String> catArr;
+	private QuestionsClient questionClient;
 
 	public Game(QuestionsClient questionClient) {
 		currentQuestion = 0;
@@ -28,51 +32,51 @@ public class Game extends Observable {
 		questionClient.addQuestionToQuestionBank(questionToAdd);
 	}
 
-
-	// returns true if quiz generated successfully
-	// returns false if it did'nt (most likely because there was'nt enough questions
-	// Set nrOfQuestions to max?
+	/*
+	 * Generates a quiz with a given size and list of categories.
+	 * throws BadUserInputException if the chosen size of the quiz exceeds
+	 * the number of available questions in that category.
+	 */
 	public boolean generateQuiz(int nrOfQuestions, List<String> category) throws BadUserInputException {
-
+		//set nrOfQuestions to chosen number of questions.
 		this.nrOfQuestions = nrOfQuestions;
+		//Reset quiz parameters.
 		userAnswers.clear();
 		results.clear();
 		categoryQuestions.clear();
-
-		for (Question i : questionClient.getQuestionBank()) { // picks out questions from the chosen category
+		currentQuestion = 0;
+		
+		// picks out all questions with the chosen categories from question bank.
+		// questions are stored in categoryQuestions.
+		for (Question i : questionClient.getQuestionBank()) { 
 			for (String j : category) {
 
 				if (i.getCategory().equals(j)) {
-
 					categoryQuestions.add(i);
 
 				}
 			}
 		}
-
+		// If the chosen number of questions are out of categoryQuestions bounds then throw BadUserInputException.
 		if (nrOfQuestions > categoryQuestions.size() || nrOfQuestions < 1) {
 			throw new BadUserInputException("Choose a number between 1 and " + categoryQuestions.size());
-		} else {
+		}
+		// If chosen number of questions for the quiz is within the reach of categoryQyestions, create the quiz.
+		else {
+			// Set currentQuiz to new ArrayList of Question
 			currentQuiz = new ArrayList<Question>();
-
+			// This for loop fills currentQuiz with random questions from categoryQuesions
 			for (int i = 0; i < nrOfQuestions;) {
-
-				int index = (int) Math.round((Math.random() * (categoryQuestions.size() - 1))); // returns a random
-																								// number
-																								// between 0
-																								// and the size of the
-																								// array of the
-																								// choosen category/-ies
-
-				if (!currentQuiz.contains(categoryQuestions.get(index))) { // makes sure that the randomly choosen
-																			// question
-																			// hasnt already been choosen
+				// Set index to a random number between 0 and the size of categoryQuestions
+				int index = (int) Math.round((Math.random() * (categoryQuestions.size() - 1)));
+				// If the randomly chosen question DOES'NT exist in currentQuiz, add it.
+				if (!currentQuiz.contains(categoryQuestions.get(index))) {
+					// Add question to currentQuiz from categoryQuestions
 					currentQuiz.add(categoryQuestions.get(index));
-					i++; // adds i if and only if a question has been added
-
+					// i is only incremented when a question is added.
+					i++;
 				}
 			}
-			currentQuestion = 0;
 			return true;
 		}
 
@@ -144,12 +148,14 @@ public class Game extends Observable {
 
 	}
 	
-	//Notify observers with the results.
+	//Notify observers with the quiz results.
 	public void notifyResult() {
+		currentResult= new Result(results, userAnswers, currentQuiz);
 		setChanged();
-		notifyObservers(currentResult= new Result(results, userAnswers, currentQuiz));
+		notifyObservers(currentResult);
 	}
 	
+	//call questionClient to load all Questions.
 	public void loadQuestions() {
 		questionClient.loadQuestions();
 	}

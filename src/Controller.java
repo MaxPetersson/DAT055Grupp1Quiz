@@ -21,10 +21,11 @@ public class Controller {
 	 * Add actionlisteners to buttons in mainWindow & newQuestionFrame
 	 */
 	public Controller(MainWindow mainWindow, NewQuestionFrame newQuestionFrame, Game game) {
+		//initiate local variables.
 		this.mainWindow = mainWindow;
 		this.newQuestionFrame = newQuestionFrame;
 		this.game = game;
-
+		//add action listeners.
 		this.mainWindow.addNewGameListener(new NewGameListener());
 		this.mainWindow.addSubmitAnswerListener(new SubmitAnswerListener());
 		this.mainWindow.addNewQuestionListener(new CreateNewQuestionListener());
@@ -53,6 +54,7 @@ public class Controller {
 				 * 1. Get size of Quiz from UI and save in userInput. parse to integer and save in quizSize.
 				 */
 				userInput = mainWindow.getQuizSize();
+				//may throw NumberFormatException.
 				quizSize = Integer.parseInt(userInput);
 				
 				//2. Call Game to create new Quiz with this quizSize in selected categories.
