@@ -89,7 +89,6 @@ public class QuestionsClient extends Observable {
 		setChanged();
 
 		notifyObservers(questionBank);
-//		checkIfNewCategory(questionToAdd.getCategory());
 		setChanged();
 		notifyObservers(questionBank);
 	}
@@ -141,7 +140,8 @@ public class QuestionsClient extends Observable {
 
 		for (Question i : questionBank) {
 
-			if (!categories.contains(i.getCategory())) {
+			if (!categories.contains(i.getCategory())) { // // If the category does'nt exist, call addCategory with the
+															// category.
 				categories.add(i.getCategory());
 			}
 
@@ -150,13 +150,6 @@ public class QuestionsClient extends Observable {
 		setChanged();
 		notifyObservers(categories);
 	}
-
-//	// If the category does'nt exist, call addCategory with the category.
-//	private void checkIfNewCategory(String category) {
-//		if (!categories.contains(category)) {
-//			addCategory(category);
-//		}
-//	}
 
 	// Remove the question object from the question bank.
 	public void removeQuestion(Question theQuestion) {
