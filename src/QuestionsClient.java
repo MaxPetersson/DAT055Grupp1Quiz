@@ -1,4 +1,10 @@
 
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.net.InetAddress;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -39,47 +45,120 @@ public class QuestionsClient extends Observable {
 		questionBank.add(new Question(categories.get(2), qtextarray[2], answers3));
 
 	}
-	//Returns the question bank.
-	public ArrayList<Question> getQuestionBank(){
+
+	// Returns the question bank.
+	public ArrayList<Question> getQuestionBank() {
 		return questionBank;
 	}
-	
-	//Notify the observers with the question bank.
+
+	// Notify the observers with the question bank.
 	public void loadQuestions() {
-		setChanged();
-		notifyObservers(questionBank);
-	}
-	//Notify the observers with the categories.
-	public void loadCategories() {
+
+		int serverPort = 6060;
+
+		try {
+			InetAddress inetAdd = InetAddress.getByName("127.0.0.1");
+			Socket socket = new Socket(inetAdd, serverPort);
+
+			// Generic streams
+			InputStream in = socket.getInputStream();
+			OutputStream out = socket.getOutputStream();
+
+			// Objects Stream use also for bool
+			ObjectOutputStream oOut = new ObjectOutputStream(out);
+			ObjectInputStream oIn = new ObjectInputStream(in);
+
+			// Tell the server that we only want to load questions.
+			oOut.writeBoolean(false);
+			oOut.flush();
+
+			// Read the arraylist of questions that the server has written.
+			questionBank = (ArrayList<Question>) oIn.readObject();
+
+			// Close all streams.
+			in.close();
+			out.close();
+			oOut.close();
+			oIn.close();
+			socket.close();
+
+		} catch (Exception e) {
+			System.out.println("Exceptionet som kastades var: " + e.getMessage());
+		}
 
 		setChanged();
-		notifyObservers(categories);
+
+		notifyObservers(questionBank);
+//		checkIfNewCategory(questionToAdd.getCategory());
+		setChanged();
+		notifyObservers(questionBank);
 	}
 
 	// Adds a question to the question bank.
 	public void addQuestionToQuestionBank(Question questionToAdd) {
-		questionBank.add(questionToAdd);
-		setChanged();
-		notifyObservers(questionBank);
-		checkIfNewCategory(questionToAdd.getCategory());
+
+		int serverPort = 6060;
+
+		try {
+			InetAddress inetAdd = InetAddress.getByName("127.0.0.1");
+			Socket socket = new Socket(inetAdd, serverPort);
+
+			// Generic Streams
+			InputStream in = socket.getInputStream();
+			OutputStream out = (OutputStream) socket.getOutputStream();
+
+			// Objects Streams
+			ObjectOutputStream oOut = new ObjectOutputStream(out);
+			ObjectInputStream oIn = new ObjectInputStream(in);
+
+			// Tell the server we have a question to save.
+			oOut.writeBoolean(true);
+			oOut.flush();
+
+			// Write the question-object to the stream.
+			oOut.writeObject(questionToAdd);
+			oOut.flush();
+
+			// Close all streams.
+			in.close();
+			out.close();
+			oOut.close();
+			oIn.close();
+			socket.close();
+		} catch (Exception e) {
+			// Please take care of me.
+		}
+
+		loadQuestions();
+		loadCategories();
+
 	}
 
-	//Add category to categories then notify observers with categories.
-	public void addCategory(String categoryToAdd) {
+	// Add category to categories then notify observers with categories.
+	public void loadCategories() {
 
-		categories.add(categoryToAdd);
+		categories.clear();
+
+		for (Question i : questionBank) {
+
+			if (!categories.contains(i.getCategory())) {
+				categories.add(i.getCategory());
+			}
+
+		}
+
 		setChanged();
 		notifyObservers(categories);
 	}
-	
-	//If the category does'nt exist, call addCategory with the category.
-	private void checkIfNewCategory(String category) {
-		if (!categories.contains(category)) {
-			addCategory(category);
-		}
-	}
 
-	//Remove the question object from the question bank.
+//	// If the category does'nt exist, call addCategory with the category.
+//	private void checkIfNewCategory(String category) {
+//		if (!categories.contains(category)) {
+//			addCategory(category);
+//		}
+//	}
+
+	// Remove the question object from the question bank.
 	public void removeQuestion(Question theQuestion) {
 
 		questionBank.remove(theQuestion);

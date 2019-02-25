@@ -31,17 +31,16 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.text.DefaultCaret;
 
-import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
-public class MainWindow implements Observer {
+public class Main_Window implements Observer {
 
 	private JFrame frame;
 	private JTextField qAmount;
 	private JPanel cardPane = new JPanel();
-	private JTextArea questionTextArea = new JTextArea();
+	private JTextArea questionTextArea = new JTextArea("");
 	private JLabel questionNumberLabel = new JLabel("X");
 	private JLabel questionTotLabel = new JLabel("X");
 	private JButton newQuestionButton = new JButton("+ New Question");
@@ -63,11 +62,7 @@ public class MainWindow implements Observer {
 	private JButton deleteQuestionButton = new JButton("Delete question");
 	private JLabel lblResult = new JLabel("Result");
 
-	public void setVisible() {
-		frame.setVisible(true);
-	}
-
-	public MainWindow() {
+	public Main_Window() {
 
 		initialize();
 
@@ -104,7 +99,7 @@ public class MainWindow implements Observer {
 		verticalStrut_4.setPreferredSize(new Dimension(0, 10));
 		verticalStrut_4.setMinimumSize(new Dimension(0, 10));
 		verticalBox_3.add(verticalStrut_4);
-		editQuestionsButton.setVisible(true);
+		editQuestionsButton.setVisible(false);
 
 		editQuestionsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -341,17 +336,19 @@ public class MainWindow implements Observer {
 		JPanel panel_11 = new JPanel();
 		panel_11.setOpaque(false);
 		question_pane.add(panel_11, "2, 2, fill, fill");
-		FormLayout fl_panel_11 = new FormLayout(
-				new ColumnSpec[] { FormFactory.LABEL_COMPONENT_GAP_COLSPEC, ColumnSpec.decode("40px"),
-						FormFactory.LABEL_COMPONENT_GAP_COLSPEC, ColumnSpec.decode("374px:grow"),
-						FormFactory.LABEL_COMPONENT_GAP_COLSPEC, ColumnSpec.decode("1px"),
-						FormFactory.LABEL_COMPONENT_GAP_COLSPEC, ColumnSpec.decode("16px"), },
-				new RowSpec[] { FormFactory.LINE_GAP_ROWSPEC, RowSpec.decode("202px"), FormFactory.RELATED_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC, RowSpec.decode("100px"), FormFactory.LINE_GAP_ROWSPEC,
-						RowSpec.decode("1px"), FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.RELATED_GAP_ROWSPEC, RowSpec.decode("default:grow"), });
-		panel_11.setLayout(fl_panel_11);
+		panel_11.setLayout(new BorderLayout(0, 0));
+
+		Box verticalBox_5 = Box.createVerticalBox();
+		panel_11.add(verticalBox_5, BorderLayout.NORTH);
+
+		JScrollPane scrollPane_3 = new JScrollPane();
+		verticalBox_5.add(scrollPane_3);
+
+		DefaultCaret caret = (DefaultCaret) questionTextArea.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
+
+		scrollPane_3.setPreferredSize(new Dimension(500, 320));
+		scrollPane_3.setViewportView(questionTextArea);
 
 		questionTextArea.setFont(new Font("Calibri", Font.PLAIN, 18));
 		questionTextArea.setLineWrap(true);
@@ -359,18 +356,17 @@ public class MainWindow implements Observer {
 
 		questionTextArea.setMargin(new Insets(2, 2, 20, 2));
 		questionTextArea.setRows(10);
-		questionTextArea.setColumns(50);
-		panel_11.add(questionTextArea, "4, 2, right, top");
-
-		Component verticalStrut_1 = Box.createVerticalStrut(20);
-		panel_11.add(verticalStrut_1, "4, 4, fill, center");
+		questionTextArea.setColumns(22);
 
 		Box verticalBox_2 = Box.createVerticalBox();
-		panel_11.add(verticalBox_2, "4, 6");
+		verticalBox_5.add(verticalBox_2);
+
+		Component verticalStrut_1 = Box.createVerticalStrut(20);
+		verticalBox_2.add(verticalStrut_1);
 
 		JLabel lblSvar = new JLabel("Answer:");
-		lblSvar.setAlignmentY(Component.TOP_ALIGNMENT);
 		verticalBox_2.add(lblSvar);
+		lblSvar.setAlignmentY(Component.TOP_ALIGNMENT);
 		lblSvar.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblSvar.setHorizontalAlignment(SwingConstants.LEFT);
 
@@ -441,8 +437,8 @@ public class MainWindow implements Observer {
 
 		verticalBox_1.add(scrollPane_2);
 
-		DefaultCaret caret = (DefaultCaret) resultArea.getCaret();
-		caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
+		DefaultCaret caret1 = (DefaultCaret) resultArea.getCaret();
+		caret1.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
 		resultArea.setBackground(new Color(0, 206, 209));
 		resultArea.setEditable(false);
 		scrollPane_2.setViewportView(resultArea);
@@ -514,6 +510,10 @@ public class MainWindow implements Observer {
 		frame.setForeground(Color.DARK_GRAY);
 		frame.setBounds(100, 100, 896, 544);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+	public void setVisible() {
+		frame.setVisible(true);
 	}
 
 	public void addSubmitAnswerListener(ActionListener listenForSubmitAnswer) {
@@ -639,14 +639,15 @@ public class MainWindow implements Observer {
 		return questionList.getSelectedValue();
 	}
 
-	private void setCategories(ArrayList<String> categoryArray) {
+	private void setCategories(ArrayList<String> catArr) {
 
-		this.categoryArray = categoryArray;
+		this.categoryArray = catArr;
 
 		categoryArray.sort(null);
 
 		for (int i = 0; i < categoryArray.size(); i++) {
 			listModel.addElement(categoryArray.get(i));
+
 		}
 
 	}
@@ -671,7 +672,7 @@ public class MainWindow implements Observer {
 
 	@SuppressWarnings("unchecked")
 	public void update(Observable o, Object arg) {
-		//Display the updated question
+		// Display the updated question
 		if (o instanceof Game && arg instanceof QuizQuestion) {
 
 			QuizQuestion question = (QuizQuestion) arg;
@@ -680,16 +681,17 @@ public class MainWindow implements Observer {
 					question.getQuestionNumber());
 
 		}
-		//Update the displayed question/category list.
+		// Update the displayed question/category list.
 		if (o instanceof QuestionsClient && arg instanceof ArrayList<?>) {
-			//if the length of the sent list is 0 then clear question & category list
-			//(if there are no questions left then there are no categories, and vice versa)
-			if(((ArrayList<?>) arg).size() < 1) {
-				//clear question & category lists.
+			// if the length of the sent list is 0 then clear question & category list
+			// (if there are no questions left then there are no categories, and vice versa)
+			if (((ArrayList<?>) arg).size() < 1) {
+				// clear question & category lists.
 				questionsListModel.clear();
 				listModel.clear();
 			}
-			//if the elements in the list contains question objects, then update the question list.
+			// if the elements in the list contains question objects, then update the
+			// question list.
 			else if (((ArrayList<Question>) arg).get(0) instanceof Question) {
 
 				questionsListModel.clear();
@@ -700,17 +702,17 @@ public class MainWindow implements Observer {
 			// update the category list
 			else {
 
-				ArrayList<String> categoryArray = (ArrayList<String>) arg;
+				ArrayList<String> catArr = (ArrayList<String>) arg;
 
 				listModel.clear();
-				setCategories(categoryArray);
+				setCategories(catArr);
 
 			}
 
 		}
-		//Display the results.
-		if(o instanceof Game && arg instanceof Result) {
-			Result result = (Result)arg;
+		// Display the results.
+		if (o instanceof Game && arg instanceof Result) {
+			Result result = (Result) arg;
 			printResult(result.getResults(), result.getAnswers(), result.getQuestions());
 		}
 

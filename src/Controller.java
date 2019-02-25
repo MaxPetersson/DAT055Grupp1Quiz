@@ -9,23 +9,22 @@ public class Controller {
 	/*
 	 * The controller contains an instance of MainWindow, NewQuestionFrame and Game.
 	 * it's main purpose is to handle action events from MainWindow/NewQuestionFrame
-	 * and based on those events call for changes in Game. 
+	 * and based on those events call for changes in Game.
 	 */
-	private MainWindow mainWindow;
+	private Main_Window mainWindow;
 	private NewQuestionWindow newQuestionWindow;
 	private Game game;
 
 	/*
-	 * Controller constructor.
-	 * set mainWindow, newQuestionFrame & game.
-	 * Add actionlisteners to buttons in mainWindow & newQuestionFrame
+	 * Controller constructor. set mainWindow, newQuestionFrame & game. Add
+	 * actionlisteners to buttons in mainWindow & newQuestionFrame
 	 */
-	public Controller(MainWindow mainWindow, NewQuestionWindow newQuestionFrame, Game game) {
-		//initiate local variables.
-		this.mainWindow = mainWindow;
+	public Controller(Main_Window theMainView, NewQuestionWindow newQuestionFrame, Game game) {
+		// initiate local variables.
+		this.mainWindow = theMainView;
 		this.newQuestionWindow = newQuestionFrame;
 		this.game = game;
-		//add action listeners.
+		// add action listeners.
 		this.mainWindow.addNewGameListener(new NewGameListener());
 		this.mainWindow.addSubmitAnswerListener(new SubmitAnswerListener());
 		this.mainWindow.addNewQuestionListener(new CreateNewQuestionListener());
@@ -38,11 +37,9 @@ public class Controller {
 	///// INNER CLASS NewGameListener
 	///// /////////////////////////////////////////////////////////////////////////////////
 	/*
-	 * When NEW GAME is requested. 
-	 * 1. Get size of quiz from UI. 
-	 * 2. Call Game to create new Quiz with this size in selected categories. 
-	 * 3. Set first question in Game.
-	 * 4. Change to quiz screen in MainWindow. 
+	 * When NEW GAME is requested. 1. Get size of quiz from UI. 2. Call Game to
+	 * create new Quiz with this size in selected categories. 3. Set first question
+	 * in Game. 4. Change to quiz screen in MainWindow.
 	 */
 
 	class NewGameListener implements ActionListener {
@@ -51,13 +48,14 @@ public class Controller {
 			int quizSize = 0;
 			try {
 				/*
-				 * 1. Get size of Quiz from UI and save in userInput. parse to integer and save in quizSize.
+				 * 1. Get size of Quiz from UI and save in userInput. parse to integer and save
+				 * in quizSize.
 				 */
 				userInput = mainWindow.getQuizSize();
-				//may throw NumberFormatException.
+				// may throw NumberFormatException.
 				quizSize = Integer.parseInt(userInput);
-				
-				//2. Call Game to create new Quiz with this quizSize in selected categories.
+
+				// 2. Call Game to create new Quiz with this quizSize in selected categories.
 				if (!mainWindow.getSelectedCategory().isEmpty()) {
 					// Generating quiz with size = quizSise and chosen categories.
 					game.generateQuiz(quizSize, mainWindow.getSelectedCategory());
@@ -66,7 +64,8 @@ public class Controller {
 					game.setNextQuestion();
 
 					// 4. Tell UI to display quiz screen.
-					mainWindow.changeToQuizScreen();;
+					mainWindow.changeToQuizScreen();
+					;
 
 				} else {
 					// If no category is chosen, throw BadUserInputException.
@@ -85,11 +84,9 @@ public class Controller {
 	///// INNER CLASS SubmitAnswerListener
 	///// ////////////////////////////////////////////////////////////////////////////
 	/*
-	 * When ANSWER is submitted.
-	 * 1. Get answer from UI. 
-	 * 2. Call Game to compare the submitted answer with question answer.
-	 * 3. Set next question in Game.  
-	 * 4. Show quiz score if there is no more questions.
+	 * When ANSWER is submitted. 1. Get answer from UI. 2. Call Game to compare the
+	 * submitted answer with question answer. 3. Set next question in Game. 4. Show
+	 * quiz score if there is no more questions.
 	 */
 	class SubmitAnswerListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -101,7 +98,7 @@ public class Controller {
 
 				// 2. Compare userAwnser to the current question's answer.
 				game.compareAnswer(userAnswer);
-				
+
 				if (game.existNextQuestion()) {
 					// 3. Set next question in Game.
 					game.setNextQuestion();
@@ -130,49 +127,46 @@ public class Controller {
 	///// INNER CLASS SubmitNewQuestionListener
 	///// ///////////////////////////////////////////////////////////////////////
 	/*
-	 * 1. Get Category, Question & Answer from UI. 
-	 * 2. Tell game to create new Question.
-	 * 3. Tell UI to clear question form.
+	 * 1. Get Category, Question & Answer from UI. 2. Tell game to create new
+	 * Question. 3. Tell UI to clear question form.
 	 */
 	class SubmitNewQuestionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			//1. Get question, category and answer & trim them.
+			// 1. Get question, category and answer & trim them.
 			Question theQuestion;
 			String category = newQuestionWindow.getCategory().trim();
 			String question = newQuestionWindow.getQuestion().trim();
 			ArrayList<String> untrimmedAnswers = newQuestionWindow.getAnswers();
 			ArrayList<String> answers = new ArrayList<String>();
-			for(String s:untrimmedAnswers) {
+			for (String s : untrimmedAnswers) {
 				answers.add(s.trim());
 			}
 			try {
-				//Make sure that the category, question & answer is not empty.
-				if(checkQuestionFieldsNotEmpty(category, question, answers)) {
-					//Set first char in category to upper case.
+				// Make sure that the category, question & answer is not empty.
+				if (checkQuestionFieldsNotEmpty(category, question, answers)) {
+					// Set first char in category to upper case.
 					category = category.substring(0, 1).toUpperCase() + category.substring(1);
 					// make a question object with category, question, answers.
 					theQuestion = new Question(category, question, answers);
-					//2. tell game to add the question to the question bank.
+					// 2. tell game to add the question to the question bank.
 					game.addQuestionToQuestionBank(theQuestion);
 				}
-				//3. Tell newQuestionFrame to clear text fields. Display success message.
+				// 3. Tell newQuestionFrame to clear text fields. Display success message.
 				newQuestionWindow.clearWindow();
 				JOptionPane.showMessageDialog(newQuestionWindow, "New question has been added!");
-			}
-			catch (NullPointerException ex) {
+			} catch (NullPointerException ex) {
 				newQuestionWindow.displayErrorMessage("The error message");
-			}
-			catch (BadUserInputException buex) {
+			} catch (BadUserInputException buex) {
 				newQuestionWindow.displayErrorMessage(buex.getMessage());
 			}
 		}
 	}
-	
+
 	///// INNER CLASS EditQuestionListener
 	///// ///////////////////////////////////////////////////////////////////////
 	/*
-	 * If implemented, should implement observer/observable approach.
-	 * Controller should not call printQuestions.
+	 * If implemented, should implement observer/observable approach. Controller
+	 * should not call printQuestions.
 	 */
 	class EditQuestionsListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -180,7 +174,7 @@ public class Controller {
 		}
 
 	}
-	
+
 	///// INNER CLASS DeleteQuestionListener
 	///// ///////////////////////////////////////////////////////////////////////
 	/*
@@ -197,17 +191,15 @@ public class Controller {
 
 	}
 
-
- /*
-  * Checks if the user entered a category, question and answer.
-  * If fields are ok, returns true.
-  * If a field is missing, throw BadUserInputException.
-  */
-	private boolean checkQuestionFieldsNotEmpty(String category, String question, ArrayList<String> answers) 
+	/*
+	 * Checks if the user entered a category, question and answer. If fields are ok,
+	 * returns true. If a field is missing, throw BadUserInputException.
+	 */
+	private boolean checkQuestionFieldsNotEmpty(String category, String question, ArrayList<String> answers)
 			throws BadUserInputException {
 		// Checks if the user entered a category, throw error if not.
 		if (category.equals("")) {
-		throw new BadUserInputException("You must enter a category");
+			throw new BadUserInputException("You must enter a category");
 		}
 		// Check if the user entered a question, throw error if not.
 		else if (question.equals("")) {
@@ -215,13 +207,13 @@ public class Controller {
 		}
 		// Check if the user entered an answer, throw error if not.
 		else {
-			for(String s: answers) {
-				if(s.equals("")) {
+			for (String s : answers) {
+				if (s.equals("")) {
 					throw new BadUserInputException("You must enter an answer");
 				}
 			}
 		}
-		//Return true if all fields are ok.
+		// Return true if all fields are ok.
 		return true;
 	}
 }
