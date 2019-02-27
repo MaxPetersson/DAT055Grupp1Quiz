@@ -7,6 +7,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.concurrent.TimeUnit;
 
 public class QuestionsClient extends Observable {
 
@@ -98,6 +99,17 @@ public class QuestionsClient extends Observable {
 			socket.close();
 		} catch (Exception e) {
 			// Please take care of me.
+		}
+
+		if (questionBank.isEmpty()) {
+
+			try {
+				TimeUnit.SECONDS.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
 
 		loadQuestions();
