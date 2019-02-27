@@ -75,13 +75,13 @@ public class Main_Window implements Observer {
 		frame = new JFrame();
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(176, 224, 230));
+		panel.setBackground(new Color(30, 144, 255));
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setPreferredSize(new Dimension(140, 10));
-		panel_1.setBackground(new Color(0, 206, 209));
+		panel_1.setBackground(new Color(25, 25, 112));
 		panel_1.setMinimumSize(new Dimension(110, 100));
 		panel.add(panel_1, BorderLayout.WEST);
 		panel_1.setLayout(new BorderLayout(0, 0));
@@ -458,6 +458,7 @@ public class Main_Window implements Observer {
 		verticalBox_1.add(verticalStrut_2);
 
 		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBorder(null);
 		scrollPane_2.setViewportBorder(null);
 		scrollPane_2.setOpaque(false);
 		scrollPane_2.setBackground(new Color(135, 206, 235));
