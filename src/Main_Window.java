@@ -218,7 +218,7 @@ public class Main_Window implements Observer {
 		panel_23.add(horizontalBox);
 		horizontalBox.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-		JLabel lblAntalFrgor = new JLabel("Amount of Questions: ");
+		JLabel lblAntalFrgor = new JLabel("Number of questions: ");
 		lblAntalFrgor.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		lblAntalFrgor.setHorizontalTextPosition(SwingConstants.LEFT);
 		lblAntalFrgor.setHorizontalAlignment(SwingConstants.LEFT);
@@ -353,6 +353,7 @@ public class Main_Window implements Observer {
 		questionTextArea.setFont(new Font("Calibri", Font.PLAIN, 18));
 		questionTextArea.setLineWrap(true);
 		questionTextArea.setWrapStyleWord(true);
+		questionTextArea.setEditable(false);
 
 		questionTextArea.setMargin(new Insets(2, 2, 20, 2));
 		questionTextArea.setRows(10);
