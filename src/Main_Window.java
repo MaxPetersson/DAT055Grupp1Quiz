@@ -18,6 +18,7 @@ import java.util.Observer;
 
 import javax.swing.Box;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -61,6 +62,7 @@ public class Main_Window implements Observer {
 	private JButton editQuestionButton = new JButton("Edit question");
 	private JButton deleteQuestionButton = new JButton("Delete question");
 	private JLabel lblResult = new JLabel("Result");
+	private JButton refreshButton = new JButton("");
 
 	public Main_Window() {
 
@@ -164,6 +166,11 @@ public class Main_Window implements Observer {
 		JPanel panel_5 = new JPanel();
 		panel_5.setOpaque(false);
 		main_pane.add(panel_5, BorderLayout.SOUTH);
+		panel_5.setLayout(new BorderLayout(0, 0));
+
+		JPanel panel_32 = new JPanel();
+		panel_32.setOpaque(false);
+		panel_5.add(panel_32, BorderLayout.EAST);
 
 		JPanel panel_6 = new JPanel();
 		panel_6.setOpaque(false);
@@ -190,17 +197,37 @@ public class Main_Window implements Observer {
 		Component verticalStrut = Box.createVerticalStrut(30);
 		verticalBox.add(verticalStrut);
 
+		Box horizontalBox_2 = Box.createHorizontalBox();
+		verticalBox.add(horizontalBox_2);
+
 		JLabel lblKategorier = new JLabel("Categories:");
+		horizontalBox_2.add(lblKategorier);
 		lblKategorier.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		lblKategorier.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		verticalBox.add(lblKategorier);
+
+		Component horizontalStrut_4 = Box.createHorizontalStrut(20);
+		horizontalStrut_4.setMaximumSize(new Dimension(200, 32767));
+		horizontalStrut_4.setSize(new Dimension(50, 0));
+		horizontalStrut_4.setPreferredSize(new Dimension(50, 0));
+		horizontalBox_2.add(horizontalStrut_4);
+		refreshButton.setToolTipText("Refresh Categories");
+		refreshButton.setMaximumSize(new Dimension(30, 30));
+		horizontalBox_2.add(refreshButton);
+		refreshButton.setPreferredSize(new Dimension(30, 30));
+		refreshButton.setOpaque(false);
+		refreshButton.setIcon(
+				new ImageIcon(Main_Window.class.getResource("/com/sun/javafx/scene/web/skin/Redo_16x16_JFX.png")));
+
+		Component verticalStrut_6 = Box.createVerticalStrut(20);
+		verticalStrut_6.setPreferredSize(new Dimension(0, 10));
+		verticalStrut_6.setMinimumSize(new Dimension(0, 10));
+		verticalBox.add(verticalStrut_6);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setPreferredSize(new Dimension(2, 60));
+		scrollPane.setPreferredSize(new Dimension(2, 140));
 
 		verticalBox.add(scrollPane);
 		scrollPane.setViewportView(categoryList);
-		categoryList.setVisibleRowCount(4);
 		categoryList.setMinimumSize(new Dimension(10, 0));
 
 		categoryList.setAlignmentY(Component.TOP_ALIGNMENT);
@@ -523,6 +550,12 @@ public class Main_Window implements Observer {
 
 	}
 
+	public void addRefreshListener(ActionListener listenForRefresh) {
+
+		refreshButton.addActionListener(listenForRefresh);
+
+	}
+
 	public void addEditQuestionsListener(ActionListener listenForEditQuestion) {
 
 		editQuestionButton.addActionListener(listenForEditQuestion);
@@ -673,6 +706,7 @@ public class Main_Window implements Observer {
 
 	@SuppressWarnings("unchecked")
 	public void update(Observable o, Object arg) {
+
 		// Display the updated question
 		if (o instanceof Game && arg instanceof QuizQuestion) {
 
@@ -690,6 +724,7 @@ public class Main_Window implements Observer {
 				// clear question & category lists.
 				questionsListModel.clear();
 				listModel.clear();
+
 			}
 			// if the elements in the list contains question objects, then update the
 			// question list.

@@ -4,17 +4,18 @@ import java.util.List;
 import java.util.Observable;
 
 public class Game extends Observable {
-	
+
 	private ArrayList<Question> currentQuiz;
 	private ArrayList<Question> categoryQuestions = new ArrayList<Question>();
 	private ArrayList<Boolean> results = new ArrayList<Boolean>();
 	private ArrayList<String> userAnswers = new ArrayList<String>();
-	//int value representing the number of the current question in the current quiz.
+	// int value representing the number of the current question in the current
+	// quiz.
 	private int currentQuestion;
-	//int value representing the total number of questions in the current quiz.
+	// int value representing the total number of questions in the current quiz.
 	private int nrOfQuestions;
-	
-	//Object used to update observers (QuizQuestion & Result)
+
+	// Object used to update observers (QuizQuestion & Result)
 	private QuizQuestion activeQuestion = new QuizQuestion(null, null, currentQuestion, currentQuestion);
 	private Result currentResult;
 
@@ -26,29 +27,29 @@ public class Game extends Observable {
 		this.questionClient = questionClient;
 
 	}
-	
+
 	// Tell questionClient to add a question to the question bank.
 	public void addQuestionToQuestionBank(Question questionToAdd) {
 		questionClient.addQuestionToQuestionBank(questionToAdd);
 	}
 
 	/*
-	 * Generates a quiz with a given size and list of categories.
-	 * throws BadUserInputException if the chosen size of the quiz exceeds
-	 * the number of available questions in that category.
+	 * Generates a quiz with a given size and list of categories. throws
+	 * BadUserInputException if the chosen size of the quiz exceeds the number of
+	 * available questions in that category.
 	 */
 	public boolean generateQuiz(int nrOfQuestions, List<String> category) throws BadUserInputException {
-		//set nrOfQuestions to chosen number of questions.
+		// set nrOfQuestions to chosen number of questions.
 		this.nrOfQuestions = nrOfQuestions;
-		//Reset quiz parameters.
+		// Reset quiz parameters.
 		userAnswers.clear();
 		results.clear();
 		categoryQuestions.clear();
 		currentQuestion = 0;
-		
+
 		// picks out all questions with the chosen categories from question bank.
 		// questions are stored in categoryQuestions.
-		for (Question i : questionClient.getQuestionBank()) { 
+		for (Question i : questionClient.getQuestionBank()) {
 			for (String j : category) {
 
 				if (i.getCategory().equals(j)) {
@@ -57,11 +58,13 @@ public class Game extends Observable {
 				}
 			}
 		}
-		// If the chosen number of questions are out of categoryQuestions bounds then throw BadUserInputException.
+		// If the chosen number of questions are out of categoryQuestions bounds then
+		// throw BadUserInputException.
 		if (nrOfQuestions > categoryQuestions.size() || nrOfQuestions < 1) {
 			throw new BadUserInputException("Choose a number between 1 and " + categoryQuestions.size());
 		}
-		// If chosen number of questions for the quiz is within the reach of categoryQyestions, create the quiz.
+		// If chosen number of questions for the quiz is within the reach of
+		// categoryQyestions, create the quiz.
 		else {
 			// Set currentQuiz to new ArrayList of Question
 			currentQuiz = new ArrayList<Question>();
@@ -83,27 +86,28 @@ public class Game extends Observable {
 	}
 
 	/*
-	 * Compares the users answer with the questions answer.
-	 * 1. Store the users answer.
-	 * 2. Modify question & users answer strings: remove spaces & set letters to lower case.
-	 * 3. Compare modified strings and store result in results.
+	 * Compares the users answer with the questions answer. 1. Store the users
+	 * answer. 2. Modify question & users answer strings: remove spaces & set
+	 * letters to lower case. 3. Compare modified strings and store result in
+	 * results.
 	 */
 	public void compareAnswer(String userAnswer) {
-		//1.Store the users answer.
+		// 1.Store the users answer.
 		userAnswers.add(userAnswer);
-		//2. Create placeholder for the correct answer, remove spaces & set to lower case.
-		String questionAnswer = currentQuiz.get(currentQuestion-1).getAnswers().get(0).toLowerCase().replace(" ", "");
+		// 2. Create placeholder for the correct answer, remove spaces & set to lower
+		// case.
+		String questionAnswer = currentQuiz.get(currentQuestion - 1).getAnswers().get(0).toLowerCase().replace(" ", "");
 		// Remove spaces from the users answer and set all letters to lower case.
 		userAnswer = userAnswer.toLowerCase().replaceAll(" ", "");
-		//3.Compare the users answer and the questions answer and store the result in results
+		// 3.Compare the users answer and the questions answer and store the result in
+		// results
 		results.add(userAnswer.equals(questionAnswer));
 	}
 
 	/*
-	 * Change the current question in the quiz to the next one.
-	 * 1. Increment the currentQuestion.
-	 * 2. Tell activeQuestion to set parameters with next questions parameters.
-	 * 3. set changed & notify observers with activeQuestion.
+	 * Change the current question in the quiz to the next one. 1. Increment the
+	 * currentQuestion. 2. Tell activeQuestion to set parameters with next questions
+	 * parameters. 3. set changed & notify observers with activeQuestion.
 	 */
 	public void setNextQuestion() {
 		// 1. Increment the currentQuestion.
@@ -115,10 +119,10 @@ public class Game extends Observable {
 		setChanged();
 		notifyObservers(activeQuestion);
 	}
-	
+
 	/*
-	 * Checks if there are any more questions in the current quiz.
-	 * Returns true if there is.
+	 * Checks if there are any more questions in the current quiz. Returns true if
+	 * there is.
 	 */
 	public boolean existNextQuestion() {
 		if (currentQuestion < currentQuiz.size()) {
@@ -127,11 +131,9 @@ public class Game extends Observable {
 		return false;
 	}
 
-	
 	/*
-	 * Should be rebuild to use question id.
-	 * Decision will be taken later.
-	 * Should maybe be handled by QuestionClient.
+	 * Should be rebuild to use question id. Decision will be taken later. Should
+	 * maybe be handled by QuestionClient.
 	 */
 	public void deleteQuestion(String category, String question) {
 
@@ -147,17 +149,22 @@ public class Game extends Observable {
 		}
 
 	}
-	
-	//Notify observers with the quiz results.
+
+	// Notify observers with the quiz results.
 	public void notifyResult() {
-		currentResult= new Result(results, userAnswers, currentQuiz);
+		currentResult = new Result(results, userAnswers, currentQuiz);
 		setChanged();
 		notifyObservers(currentResult);
 	}
-	
-	//call questionClient to load all Questions.
+
+	// call questionClient to load all Questions.
 	public void loadQuestions() {
 		questionClient.loadQuestions();
+	}
+
+	// call questionClient to load all Categories.
+	public void loadCategories() {
+		questionClient.loadCategories();
 	}
 
 }

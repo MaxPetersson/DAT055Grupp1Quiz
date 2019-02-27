@@ -31,6 +31,7 @@ public class Controller {
 		this.newQuestionWindow.addSubmitNewQuestionListener(new SubmitNewQuestionListener());
 		this.mainWindow.addEditQuestionsListener(new EditQuestionsListener());
 		this.mainWindow.addDeleteQuestionsListener(new DeleteQuestionsListener());
+		this.mainWindow.addRefreshListener(new RefreshQuestionsListener());
 
 	}
 
@@ -159,6 +160,14 @@ public class Controller {
 			} catch (BadUserInputException buex) {
 				newQuestionWindow.displayErrorMessage(buex.getMessage());
 			}
+		}
+	}
+
+	class RefreshQuestionsListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+
+			game.loadQuestions();
+			game.loadCategories();
 		}
 	}
 

@@ -29,35 +29,42 @@ public class QuestionsClient extends Observable {
 	public void loadQuestions() {
 
 		int serverPort = 6060;
+		questionBank.clear();
+		int loop = 0;
 
-		try {
-			InetAddress inetAdd = InetAddress.getByName("127.0.0.1");
-			Socket socket = new Socket(inetAdd, serverPort);
+		while (questionBank.isEmpty() && loop < 3) {
 
-			// Generic streams
-			InputStream in = socket.getInputStream();
-			OutputStream out = socket.getOutputStream();
+			try {
+				InetAddress inetAdd = InetAddress.getByName("127.0.0.1");
+				Socket socket = new Socket(inetAdd, serverPort);
 
-			// Objects Stream use also for bool
-			ObjectOutputStream oOut = new ObjectOutputStream(out);
-			ObjectInputStream oIn = new ObjectInputStream(in);
+				// Generic streams
+				InputStream in = socket.getInputStream();
+				OutputStream out = socket.getOutputStream();
 
-			// Tell the server that we only want to load questions.
-			oOut.writeBoolean(false);
-			oOut.flush();
+				// Objects Stream use also for bool
+				ObjectOutputStream oOut = new ObjectOutputStream(out);
+				ObjectInputStream oIn = new ObjectInputStream(in);
 
-			// Read the arraylist of questions that the server has written.
-			questionBank = (ArrayList<Question>) oIn.readObject();
+				// Tell the server that we only want to load questions.
+				oOut.writeBoolean(false);
+				oOut.flush();
 
-			// Close all streams.
-			in.close();
-			out.close();
-			oOut.close();
-			oIn.close();
-			socket.close();
+				// Read the arraylist of questions that the server has written.
+				questionBank = (ArrayList<Question>) oIn.readObject();
 
-		} catch (Exception e) {
-			System.out.println("Exceptionet som kastades var: " + e.getMessage());
+				// Close all streams.
+				in.close();
+				out.close();
+				oOut.close();
+				oIn.close();
+				socket.close();
+
+			} catch (Exception e) {
+				System.out.println("Exceptionet som kastades var: " + e.getMessage());
+			}
+
+			loop++;
 		}
 
 		setChanged();
