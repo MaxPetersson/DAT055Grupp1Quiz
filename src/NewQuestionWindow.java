@@ -14,6 +14,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SpringLayout;
 
+/**
+ * NewQuestionWindow is a UI component used for displaying a window where the
+ * user can add a question to the questionbank
+ * 
+ * @author ntaus
+ *
+ */
 public class NewQuestionWindow extends JFrame {
 	private JPanel panel;
 	private JButton submit;
@@ -29,7 +36,11 @@ public class NewQuestionWindow extends JFrame {
 	private TextPrompt tp;
 	// private int numCreated = 0; perhaps for later use
 
-	// Constructor
+	/**
+	 * Constructor
+	 * 
+	 * @param title
+	 */
 	public NewQuestionWindow(String title) {
 		super(title);
 		setupPanel();
@@ -39,6 +50,9 @@ public class NewQuestionWindow extends JFrame {
 		this.pack();
 	}
 
+	/**
+	 * Initializes the question window
+	 */
 	private void setupPanel() {
 		categorylabel = new JLabel("Category:");
 		questionlabel = new JLabel("Question:");
@@ -71,21 +85,42 @@ public class NewQuestionWindow extends JFrame {
 		SpringUtilities.makeCompactGrid(panel, 4, 2, 10, 10, 10, 10); // 4 rows, 2 columns
 	}
 
+	/**
+	 * Gets the inputted category
+	 * 
+	 * @return
+	 */
 	public String getCategory() {
 		return categoryTextArea.getText();
 	}
 
+	/**
+	 * Gets the inputted question
+	 * 
+	 * @return
+	 */
 	public String getQuestion() {
 		return questionTextArea.getText();
 	}
 
+	/**
+	 * Gets the inputted answers
+	 * 
+	 * @return
+	 */
 	public ArrayList<String> getAnswers() {
 		ArrayList<String> answers = new ArrayList<String>();
 		answers.add(answerTextArea.getText());
 		return answers;
 	}
 
-	// initialize text area and add text prompt
+	/**
+	 * initialize text area and add text prompt
+	 * 
+	 * @param textArea
+	 * @param text
+	 * @param rows
+	 */
 	private void initializeTextArea(JTextArea textArea, String text, int rows) {
 		tp = new TextPrompt(text, textArea);
 		tp.setForeground(Color.GRAY);
@@ -110,20 +145,38 @@ public class NewQuestionWindow extends JFrame {
 		});
 	}
 
-	// make text area scrollable.
+	/**
+	 * Makes the text area scrollable.
+	 * 
+	 * @param sp
+	 * @param ta
+	 */
 	private void setScrollable(JScrollPane sp, JTextArea ta) {
 		sp.setViewportView(ta);
 		sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 	}
-	// add actionListener to submit button.
+
+	/**
+	 * Adds actionListener to submit button.
+	 * 
+	 * @param listenForSubmitQuestion
+	 */
 	public void addSubmitNewQuestionListener(ActionListener listenForSubmitQuestion) {
 		submit.addActionListener(listenForSubmitQuestion);
 	}
-	// display error message in a pop-up window over Question Frame.
+
+	/**
+	 * Displays error message in a pop-up window over Question Frame.
+	 * 
+	 * @param error
+	 */
 	public void displayErrorMessage(String error) {
 		JOptionPane.showMessageDialog(this, error);
 	}
-	// clear all text fields
+
+	/**
+	 * Clears all text fields
+	 */
 	public void clearWindow() {
 
 		categoryTextArea.setText(""); // clear fields. User may enter new question(?)

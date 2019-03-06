@@ -4,20 +4,24 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+/**
+ * The controller contains an instance of MainWindow, NewQuestionFrame and Game.
+ * it's main purpose is to handle action events from MainWindow/NewQuestionFrame
+ * and based on those events call for changes in Game.
+ */
 public class Controller {
 
-	/*
-	 * The controller contains an instance of MainWindow, NewQuestionFrame and Game.
-	 * it's main purpose is to handle action events from MainWindow/NewQuestionFrame
-	 * and based on those events call for changes in Game.
-	 */
 	private Main_Window mainWindow;
 	private NewQuestionWindow newQuestionWindow;
 	private Game game;
 
-	/*
+	/**
 	 * Controller constructor. set mainWindow, newQuestionFrame & game. Add
 	 * actionlisteners to buttons in mainWindow & newQuestionFrame
+	 * 
+	 * @param theMainView
+	 * @param newQuestionFrame
+	 * @param game
 	 */
 	public Controller(Main_Window theMainView, NewQuestionWindow newQuestionFrame, Game game) {
 		// initiate local variables.
@@ -37,7 +41,7 @@ public class Controller {
 
 	///// INNER CLASS NewGameListener
 	///// /////////////////////////////////////////////////////////////////////////////////
-	/*
+	/**
 	 * When NEW GAME is requested. 1. Get size of quiz from UI. 2. Call Game to
 	 * create new Quiz with this size in selected categories. 3. Set first question
 	 * in Game. 4. Change to quiz screen in MainWindow.
@@ -84,7 +88,7 @@ public class Controller {
 
 	///// INNER CLASS SubmitAnswerListener
 	///// ////////////////////////////////////////////////////////////////////////////
-	/*
+	/**
 	 * When ANSWER is submitted. 1. Get answer from UI. 2. Call Game to compare the
 	 * submitted answer with question answer. 3. Set next question in Game. 4. Show
 	 * quiz score if there is no more questions.
@@ -116,8 +120,8 @@ public class Controller {
 
 	///// INNER CLASS CreateNewQuestionListener
 	///// ///////////////////////////////////////////////////////////////////////
-	/*
-	 * 1. Tell UI to show NewQuestionFrame
+	/**
+	 * Tells UI to show NewQuestionFrame
 	 */
 	class CreateNewQuestionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -127,7 +131,7 @@ public class Controller {
 
 	///// INNER CLASS SubmitNewQuestionListener
 	///// ///////////////////////////////////////////////////////////////////////
-	/*
+	/**
 	 * 1. Get Category, Question & Answer from UI. 2. Tell game to create new
 	 * Question. 3. Tell UI to clear question form.
 	 */
@@ -163,6 +167,12 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * ActionListener that fetches questions from the server and updates categories
+	 * 
+	 * @author ntaus
+	 *
+	 */
 	class RefreshQuestionsListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 
@@ -173,9 +183,9 @@ public class Controller {
 
 	///// INNER CLASS EditQuestionListener
 	///// ///////////////////////////////////////////////////////////////////////
-	/*
-	 * If implemented, should implement observer/observable approach. Controller
-	 * should not call printQuestions.
+	/**
+	 * NOT USED
+	 *
 	 */
 	class EditQuestionsListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -186,8 +196,8 @@ public class Controller {
 
 	///// INNER CLASS DeleteQuestionListener
 	///// ///////////////////////////////////////////////////////////////////////
-	/*
-	 * 
+	/**
+	 * Deletes question from questionbank - NOT USED
 	 */
 	class DeleteQuestionsListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -200,7 +210,7 @@ public class Controller {
 
 	}
 
-	/*
+	/**
 	 * Checks if the user entered a category, question and answer. If fields are ok,
 	 * returns true. If a field is missing, throw BadUserInputException.
 	 */

@@ -36,6 +36,12 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
+/**
+ * Main_Window controls the UI and is an observer of Game and QuestionClient
+ * 
+ * @author ntaus
+ *
+ */
 public class Main_Window implements Observer {
 
 	private JFrame frame;
@@ -70,6 +76,10 @@ public class Main_Window implements Observer {
 
 	}
 
+	/**
+	 * Initializes the UI
+	 * 
+	 */
 	private void initialize() {
 
 		frame = new JFrame();
@@ -541,50 +551,97 @@ public class Main_Window implements Observer {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
+	/**
+	 * Sets the UI frame to visible
+	 * 
+	 */
 	public void setVisible() {
 		frame.setVisible(true);
 	}
 
+	/**
+	 * Takes a actions listener as argument and adds to submitbutton.
+	 * 
+	 * @param listenForSubmitAnswer
+	 */
 	public void addSubmitAnswerListener(ActionListener listenForSubmitAnswer) {
 
 		submitButton.addActionListener(listenForSubmitAnswer);
 
 	}
 
+	/**
+	 * Takes a actions listener as argument and adds to refreshbutton.
+	 * 
+	 * @param listenForRefresh
+	 */
 	public void addRefreshListener(ActionListener listenForRefresh) {
 
 		refreshButton.addActionListener(listenForRefresh);
 
 	}
 
+	/**
+	 * Takes a actions listener as argument and adds to editQuestionButton.
+	 * 
+	 * @param listenForEditQuestion
+	 */
 	public void addEditQuestionsListener(ActionListener listenForEditQuestion) {
 
 		editQuestionButton.addActionListener(listenForEditQuestion);
 
 	}
 
+	/**
+	 * Takes a actions listener as argument and adds to deleteQuestionButton.
+	 * 
+	 * @param listenForDeleteQuestion
+	 */
 	public void addDeleteQuestionsListener(ActionListener listenForDeleteQuestion) {
 
 		deleteQuestionButton.addActionListener(listenForDeleteQuestion);
 
 	}
 
+	/**
+	 * Takes a actions listener as argument and adds to startQuizButton.
+	 * 
+	 * @param listenForNewGame
+	 */
 	public void addNewGameListener(ActionListener listenForNewGame) {
 
 		startQuizButton.addActionListener(listenForNewGame);
 
 	}
 
+	/**
+	 * Takes a actions listener as argument and adds to newQuestionButton.
+	 * 
+	 * @param listenForNewQuestion
+	 */
 	public void addNewQuestionListener(ActionListener listenForNewQuestion) {
 		newQuestionButton.addActionListener(listenForNewQuestion);
 	}
 
+	/**
+	 * Takes a string and displays it in a message dialog
+	 * 
+	 * @param errorMessage
+	 */
 	public void displayErrorMessage(String errorMessage) {
 
 		JOptionPane.showMessageDialog(frame, errorMessage);
 
 	}
 
+	/**
+	 * Updates the parameters in the question pane.
+	 * 
+	 * @param category
+	 * @param question
+	 * @param totalNumberOfQuestions
+	 * @param questionNumber
+	 */
 	private void displayQuestion(String category, String question, int totalNumberOfQuestions, int questionNumber) {
 
 		questionTextArea.setText(question);
@@ -596,6 +653,10 @@ public class Main_Window implements Observer {
 
 	}
 
+	/**
+	 * Clears the answer from answerfield in the question pane.
+	 * 
+	 */
 	private void clearAnsFields() {
 
 		answerField.setText("");
@@ -603,6 +664,10 @@ public class Main_Window implements Observer {
 
 	}
 
+	/**
+	 * Switches active pane to that of the questionPane to start the quiz.
+	 * 
+	 */
 	public void changeToQuizScreen() {
 
 		CardLayout cardLayout = (CardLayout) cardPane.getLayout();
@@ -611,22 +676,43 @@ public class Main_Window implements Observer {
 
 	}
 
+	/**
+	 * Switches active pane to the first pane i.e. the main pane.
+	 * 
+	 */
 	public void changeToStartScreen() {
 		CardLayout cardLayout = (CardLayout) cardPane.getLayout();
 
 		cardLayout.first(cardPane);
 	}
 
+	/**
+	 * Returns the value of answerField.
+	 * 
+	 * @return
+	 */
 	public String getAnswer() {
 
 		return answerField.getText();
 
 	}
 
+	/**
+	 * Returns the requested quiz size from the qAmount field.
+	 * 
+	 * @return
+	 */
 	public String getQuizSize() {
 		return qAmount.getText();
 	}
 
+	/**
+	 * Prints the results and sets the resultPane as the active pane.
+	 * 
+	 * @param results
+	 * @param answers
+	 * @param questions
+	 */
 	private void printResult(ArrayList<Boolean> results, ArrayList<String> answers, ArrayList<Question> questions) {
 
 		resultArea.setRows(results.size());
@@ -664,16 +750,31 @@ public class Main_Window implements Observer {
 
 	}
 
+	/**
+	 * Returns the selected categories in the main pane.
+	 * 
+	 * @return
+	 */
 	public List<String> getSelectedCategory() {
 
 		return categoryList.getSelectedValuesList();
 	}
 
+	/**
+	 * Returns the selected question in the edit questions pane.
+	 * 
+	 * @return
+	 */
 	public String getSelectedQuestion() {
 
 		return questionList.getSelectedValue();
 	}
 
+	/**
+	 * Sets the available categories in the main pane.
+	 * 
+	 * @param catArr
+	 */
 	private void setCategories(ArrayList<String> catArr) {
 
 		this.categoryArray = catArr;
@@ -687,6 +788,12 @@ public class Main_Window implements Observer {
 
 	}
 
+	/**
+	 * Prints the category and question in the questionlist in the edit questions
+	 * pane.
+	 * 
+	 * @param questions
+	 */
 	private void printQuestionsList(ArrayList<Question> questions) {
 
 		Collections.sort(questions, new Comparator<Question>() {
@@ -705,6 +812,11 @@ public class Main_Window implements Observer {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
 	@SuppressWarnings("unchecked")
 	public void update(Observable o, Object arg) {
 

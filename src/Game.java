@@ -3,6 +3,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+/**
+ * Game generates a and runs a quiz and stores the results. It also acts as a
+ * proxy between controller and questionClient for question storage
+ * 
+ * @author ntaus
+ *
+ */
 public class Game extends Observable {
 
 	private ArrayList<Question> currentQuiz;
@@ -28,15 +35,24 @@ public class Game extends Observable {
 
 	}
 
-	// Tell questionClient to add a question to the question bank.
+	/**
+	 * Tell questionClient to add a question to the question bank.
+	 * 
+	 * @param questionToAdd
+	 */
 	public void addQuestionToQuestionBank(Question questionToAdd) {
 		questionClient.addQuestionToQuestionBank(questionToAdd);
 	}
 
-	/*
+	/**
 	 * Generates a quiz with a given size and list of categories. throws
 	 * BadUserInputException if the chosen size of the quiz exceeds the number of
 	 * available questions in that category.
+	 * 
+	 * @param nrOfQuestions
+	 * @param category
+	 * @return
+	 * @throws BadUserInputException
 	 */
 	public boolean generateQuiz(int nrOfQuestions, List<String> category) throws BadUserInputException {
 		// set nrOfQuestions to chosen number of questions.
@@ -85,12 +101,15 @@ public class Game extends Observable {
 
 	}
 
-	/*
+	/**
 	 * Compares the users answer with the questions answer. 1. Store the users
 	 * answer. 2. Modify question & users answer strings: remove spaces & set
 	 * letters to lower case. 3. Compare modified strings and store result in
 	 * results.
+	 * 
+	 * @param userAnswer
 	 */
+
 	public void compareAnswer(String userAnswer) {
 		// 1.Store the users answer.
 		userAnswers.add(userAnswer);
@@ -104,7 +123,7 @@ public class Game extends Observable {
 		results.add(userAnswer.equals(questionAnswer));
 	}
 
-	/*
+	/**
 	 * Change the current question in the quiz to the next one. 1. Increment the
 	 * currentQuestion. 2. Tell activeQuestion to set parameters with next questions
 	 * parameters. 3. set changed & notify observers with activeQuestion.
@@ -120,7 +139,7 @@ public class Game extends Observable {
 		notifyObservers(activeQuestion);
 	}
 
-	/*
+	/**
 	 * Checks if there are any more questions in the current quiz. Returns true if
 	 * there is.
 	 */
@@ -131,9 +150,12 @@ public class Game extends Observable {
 		return false;
 	}
 
-	/*
-	 * Should be rebuild to use question id. Decision will be taken later. Should
-	 * maybe be handled by QuestionClient.
+	/**
+	 * Calls for questionClient to delete a question with the given parameters - NOT
+	 * USED
+	 * 
+	 * @param category
+	 * @param question
 	 */
 	public void deleteQuestion(String category, String question) {
 
@@ -150,19 +172,25 @@ public class Game extends Observable {
 
 	}
 
-	// Notify observers with the quiz results.
+	/**
+	 * Notify observers with the quiz results.
+	 */
 	public void notifyResult() {
 		currentResult = new Result(results, userAnswers, currentQuiz);
 		setChanged();
 		notifyObservers(currentResult);
 	}
 
-	// call questionClient to load all Questions.
+	/**
+	 * call questionClient to load all Questions.
+	 */
 	public void loadQuestions() {
 		questionClient.loadQuestions();
 	}
 
-	// call questionClient to load all Categories.
+	/**
+	 * call questionClient to load all Categories.
+	 */
 	public void loadCategories() {
 		questionClient.loadCategories();
 	}

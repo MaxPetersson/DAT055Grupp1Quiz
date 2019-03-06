@@ -9,6 +9,13 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * QuestionClient stores teh questions and is used to load and store new
+ * questions from/in a server
+ * 
+ * @author ntaus
+ *
+ */
 public class QuestionsClient extends Observable {
 
 	private ArrayList<Question> questionBank = new ArrayList<Question>();
@@ -20,12 +27,19 @@ public class QuestionsClient extends Observable {
 
 	}
 
-	// Returns the question bank.
+	/**
+	 * Returns the question bank.
+	 * 
+	 * @return
+	 */
 	public ArrayList<Question> getQuestionBank() {
 		return questionBank;
 	}
 
-	// Notify the observers with the question bank.
+	/**
+	 * Fetches the questions from server and notifies the observers
+	 * 
+	 */
 	public void loadQuestions() {
 
 		int serverPort = 6060;
@@ -73,7 +87,13 @@ public class QuestionsClient extends Observable {
 
 	}
 
-	// Adds a question to the question bank.
+	//
+	/**
+	 * Sends a new question to be stored on the server and then calls load questions
+	 * to update the question bank.
+	 * 
+	 * @param questionToAdd
+	 */
 	public void addQuestionToQuestionBank(Question questionToAdd) {
 
 		int serverPort = 6060;
@@ -124,7 +144,11 @@ public class QuestionsClient extends Observable {
 
 	}
 
-	// Add category to categories then notify observers with categories.
+	//
+	/**
+	 * Sets the available categories then notify observers with categories.
+	 * 
+	 */
 	public void loadCategories() {
 
 		if (!categories.isEmpty()) {
@@ -144,7 +168,11 @@ public class QuestionsClient extends Observable {
 		notifyObservers(categories);
 	}
 
-	// Remove the question object from the question bank.
+	/**
+	 * Removes the question object from the question bank and notifies observers.
+	 * 
+	 * @param theQuestion
+	 */
 	public void removeQuestion(Question theQuestion) {
 
 		questionBank.remove(theQuestion);
