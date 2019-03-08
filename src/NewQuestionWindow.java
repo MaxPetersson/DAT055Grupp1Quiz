@@ -18,8 +18,8 @@ import javax.swing.SpringLayout;
  * NewQuestionWindow is a UI component used for displaying a window where the
  * user can add a question to the questionbank
  * 
- * @author ntaus
- *
+ * @author Karin Perstorper
+ * @version 2019-03-08
  */
 public class NewQuestionWindow extends JFrame {
 	private JPanel panel;

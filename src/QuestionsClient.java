@@ -13,8 +13,8 @@ import java.util.concurrent.TimeUnit;
  * QuestionClient stores teh questions and is used to load and store new
  * questions from/in a server
  * 
- * @author ntaus
- *
+ * @author Niclas Tauson CO-Author: Max Petersson
+ * @version 2019-03-08
  */
 public class QuestionsClient extends Observable {
 
@@ -30,7 +30,7 @@ public class QuestionsClient extends Observable {
 	/**
 	 * Returns the question bank.
 	 * 
-	 * @return
+	 * @return ArrayList<Question>
 	 */
 	public ArrayList<Question> getQuestionBank() {
 		return questionBank;

@@ -5,7 +5,7 @@ import java.util.ArrayList;
  * session and if the answer was right
  * 
  * @author ntaus
- *
+ * @version 2019-03-08
  */
 public class Result {
 	ArrayList<Boolean> results;
@@ -21,7 +21,7 @@ public class Result {
 	/**
 	 * Returns the results of the object
 	 * 
-	 * @return
+	 * @return ArrayList<Boolean>
 	 */
 	public ArrayList<Boolean> getResults() {
 		return results;
@@ -30,7 +30,7 @@ public class Result {
 	/**
 	 * Returns the answers of result
 	 * 
-	 * @return
+	 * @return ArrayList<String>
 	 */
 	public ArrayList<String> getAnswers() {
 		return answers;
@@ -39,7 +39,7 @@ public class Result {
 	/**
 	 * Returns the questions of result
 	 * 
-	 * @return
+	 * @return ArrayList<Question>
 	 */
 	public ArrayList<Question> getQuestions() {
 		return questions;

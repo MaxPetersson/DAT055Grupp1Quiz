@@ -1,5 +1,13 @@
 public class Main {
 
+	/**
+	 * Initializes and runs the application
+	 * 
+	 * @Oscar Thureborn
+	 * 
+	 * @param args
+	 * @version 2019-03-08
+	 */
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 

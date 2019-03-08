@@ -39,7 +39,8 @@ import com.jgoodies.forms.layout.RowSpec;
 /**
  * Main_Window controls the UI and is an observer of Game and QuestionClient
  * 
- * @author ntaus
+ * @author Niclas Tauson
+ * @version 2019-03-08
  *
  */
 public class Main_Window implements Observer {
@@ -163,7 +164,7 @@ public class Main_Window implements Observer {
 		panel_3.setOpaque(false);
 		main_pane.add(panel_3, BorderLayout.NORTH);
 
-		JLabel lblMainView = new JLabel("Main View");
+		JLabel lblMainView = new JLabel("Quizzzer");
 		lblMainView.setHorizontalTextPosition(SwingConstants.LEFT);
 		lblMainView.setHorizontalAlignment(SwingConstants.LEFT);
 		lblMainView.setFont(new Font("Tahoma", Font.PLAIN, 38));
@@ -560,7 +561,7 @@ public class Main_Window implements Observer {
 	}
 
 	/**
-	 * Takes a actions listener as argument and adds to submitbutton.
+	 * Takes an actionlistener as argument and adds to submitbutton.
 	 * 
 	 * @param listenForSubmitAnswer
 	 */
@@ -571,7 +572,7 @@ public class Main_Window implements Observer {
 	}
 
 	/**
-	 * Takes a actions listener as argument and adds to refreshbutton.
+	 * Takes an actionlistener as argument and adds to refreshbutton.
 	 * 
 	 * @param listenForRefresh
 	 */
@@ -582,7 +583,7 @@ public class Main_Window implements Observer {
 	}
 
 	/**
-	 * Takes a actions listener as argument and adds to editQuestionButton.
+	 * Takes an actionlistener as argument and adds to editQuestionButton.
 	 * 
 	 * @param listenForEditQuestion
 	 */
@@ -593,7 +594,7 @@ public class Main_Window implements Observer {
 	}
 
 	/**
-	 * Takes a actions listener as argument and adds to deleteQuestionButton.
+	 * Takes an actionlistener as argument and adds to deleteQuestionButton.
 	 * 
 	 * @param listenForDeleteQuestion
 	 */
@@ -604,7 +605,7 @@ public class Main_Window implements Observer {
 	}
 
 	/**
-	 * Takes a actions listener as argument and adds to startQuizButton.
+	 * Takes an actionlistener as argument and adds to startQuizButton.
 	 * 
 	 * @param listenForNewGame
 	 */
@@ -615,7 +616,7 @@ public class Main_Window implements Observer {
 	}
 
 	/**
-	 * Takes a actions listener as argument and adds to newQuestionButton.
+	 * Takes an actionlistener as argument and adds to newQuestionButton.
 	 * 
 	 * @param listenForNewQuestion
 	 */
@@ -689,7 +690,7 @@ public class Main_Window implements Observer {
 	/**
 	 * Returns the value of answerField.
 	 * 
-	 * @return
+	 * @return String
 	 */
 	public String getAnswer() {
 
@@ -700,7 +701,7 @@ public class Main_Window implements Observer {
 	/**
 	 * Returns the requested quiz size from the qAmount field.
 	 * 
-	 * @return
+	 * @return String
 	 */
 	public String getQuizSize() {
 		return qAmount.getText();
@@ -763,7 +764,7 @@ public class Main_Window implements Observer {
 	/**
 	 * Returns the selected question in the edit questions pane.
 	 * 
-	 * @return
+	 * @return String
 	 */
 	public String getSelectedQuestion() {
 

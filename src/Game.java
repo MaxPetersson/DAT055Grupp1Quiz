@@ -7,8 +7,8 @@ import java.util.Observable;
  * Game generates a and runs a quiz and stores the results. It also acts as a
  * proxy between controller and questionClient for question storage
  * 
- * @author ntaus
- *
+ * @author Niclas Tauson
+ * @version 2019-03-08
  */
 public class Game extends Observable {
 
@@ -51,7 +51,7 @@ public class Game extends Observable {
 	 * 
 	 * @param nrOfQuestions
 	 * @param category
-	 * @return
+	 *
 	 * @throws BadUserInputException
 	 */
 	public boolean generateQuiz(int nrOfQuestions, List<String> category) throws BadUserInputException {

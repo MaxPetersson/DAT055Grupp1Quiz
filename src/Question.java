@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * The question class is used to store the questions used in a generated quiz
  * 
  * @author ntaus
- *
+ * @version 2019-03-08
  */
 public class Question implements Serializable {
 	private String category;
@@ -42,7 +42,7 @@ public class Question implements Serializable {
 	/**
 	 * Returns the category of the question
 	 * 
-	 * @return
+	 * @return String
 	 */
 	public String getCategory() {
 		return this.category;
@@ -51,7 +51,7 @@ public class Question implements Serializable {
 	/**
 	 * Returns the question text
 	 * 
-	 * @return
+	 * @return String
 	 */
 	public String getQuestionText() {
 		return this.questionText;
@@ -60,7 +60,7 @@ public class Question implements Serializable {
 	/**
 	 * Returns the answers to the question
 	 * 
-	 * @return
+	 * @return ArrayList<String>
 	 */
 	public ArrayList<String> getAnswers() {
 		return this.answers;
@@ -69,7 +69,7 @@ public class Question implements Serializable {
 	/**
 	 * Returns the creation datetime of the questio
 	 * 
-	 * @return
+	 * @return LocalDateTime
 	 */
 	public LocalDateTime getCreated() {
 		return this.created;
