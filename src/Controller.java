@@ -8,6 +8,8 @@ import javax.swing.JOptionPane;
  * The controller contains an instance of MainWindow, NewQuestionFrame and Game.
  * it's main purpose is to handle action events from MainWindow/NewQuestionFrame
  * and based on those events call for changes in Game.
+ * @autor Oscar Thureborn
+ * @version 2019-03-08
  */
 public class Controller {
 
