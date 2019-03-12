@@ -4,7 +4,7 @@ import java.util.ArrayList;
  * The Result class is used to store the questions and answers from a quiz
  * session and if the answer was right
  * 
- * @author ntaus
+ * @author Oscar Thureborn
  * @version 2019-03-08
  */
 public class Result {
