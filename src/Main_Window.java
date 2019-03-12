@@ -164,7 +164,7 @@ public class Main_Window implements Observer {
 		panel_3.setOpaque(false);
 		main_pane.add(panel_3, BorderLayout.NORTH);
 
-		JLabel lblMainView = new JLabel("Quizzzer");
+		JLabel lblMainView = new JLabel("Quizler");
 		lblMainView.setHorizontalTextPosition(SwingConstants.LEFT);
 		lblMainView.setHorizontalAlignment(SwingConstants.LEFT);
 		lblMainView.setFont(new Font("Tahoma", Font.PLAIN, 38));
