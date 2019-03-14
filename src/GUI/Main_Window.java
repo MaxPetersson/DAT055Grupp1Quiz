@@ -1,3 +1,4 @@
+package GUI;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -35,6 +36,12 @@ import javax.swing.text.DefaultCaret;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
+
+import Engine.Game;
+import Engine.Question;
+import Engine.QuestionsClient;
+import Update.QuizQuestion;
+import Update.Result;
 
 /**
  * Main_Window controls the UI and is an observer of Game and QuestionClient

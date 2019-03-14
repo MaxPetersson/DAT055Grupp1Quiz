@@ -1,3 +1,10 @@
+package Quizler;
+import Controller.Controller;
+import Engine.Game;
+import Engine.QuestionsClient;
+import GUI.Main_Window;
+import GUI.NewQuestionWindow;
+
 public class Main {
 
 	/**

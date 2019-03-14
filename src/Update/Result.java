@@ -1,4 +1,7 @@
+package Update;
 import java.util.ArrayList;
+
+import Engine.Question;
 
 /**
  * The Result class is used to store the questions and answers from a quiz
@@ -12,7 +15,7 @@ public class Result {
 	ArrayList<String> answers;
 	ArrayList<Question> questions;
 
-	Result(ArrayList<Boolean> results, ArrayList<String> answers, ArrayList<Question> questions) {
+	public Result(ArrayList<Boolean> results, ArrayList<String> answers, ArrayList<Question> questions) {
 		this.results = results;
 		this.answers = answers;
 		this.questions = questions;

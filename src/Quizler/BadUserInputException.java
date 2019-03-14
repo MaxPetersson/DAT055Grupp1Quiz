@@ -1,3 +1,4 @@
+package Quizler;
 
 /**
  * Throws an exception with the input errorMessage

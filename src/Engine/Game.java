@@ -1,7 +1,12 @@
+package Engine;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+
+import Quizler.BadUserInputException;
+import Update.QuizQuestion;
+import Update.Result;
 
 /**
  * Game generates a and runs a quiz and stores the results. It also acts as a
