@@ -1,4 +1,5 @@
 package GUI;
+
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -38,8 +39,8 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
 import engine.Game;
-import engine.Question;
 import engine.QuestionsClient;
+import shared.Question;
 import update.QuizQuestion;
 import update.Result;
 
@@ -721,7 +722,8 @@ public class Main_Window implements Observer {
 	 * @param answers
 	 * @param questions
 	 */
-	private void printResult(ArrayList<Boolean> results, ArrayList<String> answers, ArrayList<Question> questions) {
+	private void printResult(ArrayList<Boolean> results, ArrayList<String> answers,
+			ArrayList<shared.Question> questions) {
 
 		resultArea.setRows(results.size());
 
@@ -802,9 +804,9 @@ public class Main_Window implements Observer {
 	 * 
 	 * @param questions
 	 */
-	private void printQuestionsList(ArrayList<Question> questions) {
+	private void printQuestionsList(ArrayList<shared.Question> questions) {
 
-		Collections.sort(questions, new Comparator<Question>() {
+		Collections.sort(questions, new Comparator<shared.Question>() {
 			@Override
 			public int compare(Question s1, Question s2) {
 				return s1.getCategory().compareToIgnoreCase(s2.getCategory());

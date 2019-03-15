@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.concurrent.TimeUnit;
 
+import shared.Question;
+
 /**
  * QuestionClient stores teh questions and is used to load and store new
  * questions from/in a server
@@ -19,7 +21,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class QuestionsClient extends Observable {
 
-	private ArrayList<Question> questionBank = new ArrayList<Question>();
+	private ArrayList<shared.Question> questionBank = new ArrayList<shared.Question>();
 	private ArrayList<String> categories;
 
 	public QuestionsClient() {
@@ -33,7 +35,7 @@ public class QuestionsClient extends Observable {
 	 * 
 	 * @return ArrayList<Question>
 	 */
-	public ArrayList<Question> getQuestionBank() {
+	public ArrayList<shared.Question> getQuestionBank() {
 		return questionBank;
 	}
 
@@ -66,7 +68,7 @@ public class QuestionsClient extends Observable {
 				oOut.flush();
 
 				// Read the arraylist of questions that the server has written.
-				questionBank = (ArrayList<Question>) oIn.readObject();
+				questionBank = (ArrayList<shared.Question>) oIn.readObject();
 
 				// Close all streams.
 				in.close();
@@ -76,7 +78,7 @@ public class QuestionsClient extends Observable {
 				socket.close();
 
 			} catch (Exception e) {
-				System.out.println("Exceptionet som kastades var: " + e.getMessage());
+				System.out.println("Exceptionet som kastades var: " + e);
 			}
 
 			loop++;

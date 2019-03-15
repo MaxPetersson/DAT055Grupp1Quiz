@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Observable;
 
 import quizler.BadUserInputException;
+import shared.Question;
 import update.QuizQuestion;
 import update.Result;
 
@@ -17,8 +18,8 @@ import update.Result;
  */
 public class Game extends Observable {
 
-	private ArrayList<Question> currentQuiz;
-	private ArrayList<Question> categoryQuestions = new ArrayList<Question>();
+	private ArrayList<shared.Question> currentQuiz;
+	private ArrayList<shared.Question> categoryQuestions = new ArrayList<shared.Question>();
 	private ArrayList<Boolean> results = new ArrayList<Boolean>();
 	private ArrayList<String> userAnswers = new ArrayList<String>();
 	// int value representing the number of the current question in the current

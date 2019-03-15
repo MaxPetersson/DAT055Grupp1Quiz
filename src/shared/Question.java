@@ -1,4 +1,5 @@
-package engine;
+package shared;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;

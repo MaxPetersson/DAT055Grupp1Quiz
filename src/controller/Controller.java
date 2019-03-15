@@ -1,4 +1,5 @@
 package controller;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -8,8 +9,8 @@ import javax.swing.JOptionPane;
 import GUI.Main_Window;
 import GUI.NewQuestionWindow;
 import engine.Game;
-import engine.Question;
 import quizler.BadUserInputException;
+import shared.Question;
 
 /**
  * The controller contains an instance of MainWindow, NewQuestionFrame and Game.
@@ -148,7 +149,7 @@ public class Controller {
 	class SubmitNewQuestionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			// 1. Get question, category and answer & trim them.
-			Question theQuestion;
+			shared.Question theQuestion;
 			String category = newQuestionWindow.getCategory().trim();
 			String question = newQuestionWindow.getQuestion().trim();
 			ArrayList<String> untrimmedAnswers = newQuestionWindow.getAnswers();
