@@ -1,4 +1,4 @@
-package Engine;
+package engine;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -9,6 +9,7 @@ import java.util.ArrayList;
  * @author ntaus
  * @version 2019-03-08
  */
+@SuppressWarnings("serial")
 public class Question implements Serializable {
 	private String category;
 	private String questionText;

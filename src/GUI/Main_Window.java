@@ -37,11 +37,11 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
-import Engine.Game;
-import Engine.Question;
-import Engine.QuestionsClient;
-import Update.QuizQuestion;
-import Update.Result;
+import engine.Game;
+import engine.Question;
+import engine.QuestionsClient;
+import update.QuizQuestion;
+import update.Result;
 
 /**
  * Main_Window controls the UI and is an observer of Game and QuestionClient

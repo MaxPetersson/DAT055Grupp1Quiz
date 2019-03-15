@@ -1,15 +1,15 @@
-package Controller;
+package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import Engine.Game;
-import Engine.Question;
 import GUI.Main_Window;
 import GUI.NewQuestionWindow;
-import Quizler.BadUserInputException;
+import engine.Game;
+import engine.Question;
+import quizler.BadUserInputException;
 
 /**
  * The controller contains an instance of MainWindow, NewQuestionFrame and Game.

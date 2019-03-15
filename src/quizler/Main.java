@@ -1,9 +1,9 @@
-package Quizler;
-import Controller.Controller;
-import Engine.Game;
-import Engine.QuestionsClient;
+package quizler;
 import GUI.Main_Window;
 import GUI.NewQuestionWindow;
+import controller.Controller;
+import engine.Game;
+import engine.QuestionsClient;
 
 public class Main {
 

@@ -1,4 +1,4 @@
-package Update;
+package update;
 
 /**
  * QuizQuestion is used to be able to update the UI with a questions and it's

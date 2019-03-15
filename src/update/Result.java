@@ -1,7 +1,7 @@
-package Update;
+package update;
 import java.util.ArrayList;
 
-import Engine.Question;
+import engine.Question;
 
 /**
  * The Result class is used to store the questions and answers from a quiz

@@ -1,4 +1,4 @@
-package Quizler;
+package quizler;
 
 /**
  * Throws an exception with the input errorMessage
