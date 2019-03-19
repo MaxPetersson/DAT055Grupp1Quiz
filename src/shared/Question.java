@@ -10,12 +10,13 @@ import java.util.ArrayList;
  * @author ntaus
  * @version 2019-03-08
  */
-@SuppressWarnings("serial")
+
 public class Question implements Serializable {
 	private String category;
 	private String questionText;
 	private ArrayList<String> answers;
 	private LocalDateTime created;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Empty Constructor
